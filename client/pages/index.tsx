@@ -1,9 +1,8 @@
 import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "next/font/google";
 import styles from "@component/styles/Home.module.css";
-
-const inter = Inter({ subsets: ["latin"] });
+import { FcGoogle } from "react-icons/fc";
+import { GiNotebook } from "react-icons/gi";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -15,7 +14,22 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <h1>Home Cook Recipe Book</h1>
+        <h1>
+          Home Cook Recipe Book <GiNotebook />
+        </h1>
+        <div className={styles["register-login"]}>
+          <button className={styles["register-button"]}>
+            <div>
+              <FcGoogle />
+            </div>
+            Sign Up with Google
+          </button>
+          <span className={styles.query}>Already have an account?</span>
+          <button className={styles["login-button"]}>
+            <FcGoogle />
+            Log in with Google
+          </button>
+        </div>
       </main>
     </>
   );

@@ -1,10 +1,18 @@
 .main {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
   padding: 6rem;
   min-height: 100vh;
+  background: white;
+  background-image: url("../public/bread.jpg");
+}
+
+.main h1 {
+  color: #104210;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 4em;
 }
 
 .description {
@@ -97,7 +105,7 @@
 
 .center::before,
 .center::after {
-  content: '';
+  content: "";
   left: 50%;
   position: absolute;
   filter: blur(45px);
@@ -106,6 +114,58 @@
 
 .logo {
   position: relative;
+}
+
+.register-login {
+  display: flex;
+  flex-direction: column;
+  background: #ffb85d;
+  border-radius: 10px;
+  opacity: 0.9;
+}
+
+.register-button {
+  width: 15em;
+  height: 3.5em;
+  border: 2px solid #ff5c4d;
+  border-radius: 30px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px;
+  background: #ffed86;
+  color: #ff7636;
+  font-size: 1em;
+  font-weight: 500;
+  margin: 15px;
+  cursor: pointer;
+}
+
+.login-button {
+  width: 15em;
+  height: 3.5em;
+  border: 2px solid #7a871e;
+  border-radius: 30px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px;
+  background: #dad870;
+  color: #104210;
+  font-size: 1em;
+  font-weight: 500;
+  margin: 15px;
+  cursor: pointer;
+}
+
+.img {
+  border-radius: 10px;
+}
+
+.query {
+  text-align: center;
+  font-family: "Courier New", Courier, monospace;
+  color: black;
 }
 /* Enable hover only on non-touch devices */
 @media (hover: hover) and (pointer: fine) {
