@@ -11,7 +11,7 @@
 
 .main h1 {
   color: #104210;
-  font-family: "Courier New", Courier, monospace;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 4em;
 }
 
@@ -119,24 +119,25 @@
 .register-login {
   display: flex;
   flex-direction: column;
-  background: #ffb85d;
+
   border-radius: 10px;
   opacity: 0.9;
 }
 
 .register-button {
-  width: 15em;
+  width: 16em;
   height: 3.5em;
   border: 2px solid #ff5c4d;
-  border-radius: 30px;
+  border-radius: 55px;
   display: flex;
   justify-content: space-around;
   align-items: center;
   padding: 10px;
   background: #ffed86;
   color: #ff7636;
-  font-size: 1em;
-  font-weight: 500;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 2em;
+  font-weight: 600;
   margin: 15px;
   cursor: pointer;
 }

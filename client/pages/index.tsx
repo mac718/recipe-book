@@ -24,11 +24,11 @@ export default function Home() {
             </div>
             Sign Up with Google
           </button>
-          <span className={styles.query}>Already have an account?</span>
+          {/* <span className={styles.query}>Already have an account?</span>
           <button className={styles["login-button"]}>
             <FcGoogle />
             Log in with Google
-          </button>
+          </button> */}
         </div>
       </main>
     </>
