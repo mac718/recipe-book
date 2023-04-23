@@ -119,7 +119,6 @@
 .register-login {
   display: flex;
   flex-direction: column;
-
   border-radius: 10px;
   opacity: 0.9;
 }

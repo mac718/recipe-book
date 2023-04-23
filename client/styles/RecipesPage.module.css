@@ -1,0 +1,42 @@
+.heading {
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  color: #3b707d;
+}
+
+.search {
+  margin: 0 auto 20px auto;
+  display: block;
+  width: 50%;
+  line-height: 200%;
+  border: 0.5px solid darkgray;
+  border-radius: 15px;
+  padding: 5px;
+}
+
+.add-button {
+  margin: auto;
+  display: block;
+  width: 20rem;
+  height: 8rem;
+  background-color: #ff5c4d;
+  color: white;
+  border: #ff5c4d;
+  border-radius: 5px;
+  font-size: 20px;
+}
+
+.recipes {
+  background: #f0f7e0;
+  height: 100vh;
+  padding-top: 2rem;
+}
+
+.recipe-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(auto-fill, 1fr);
+  width: 80vw;
+  overflow: scroll;
+  margin: auto;
+}

@@ -1,0 +1,52 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.form h1 {
+  text-align: center;
+}
+
+.form label {
+  font-weight: 600;
+  color: #333;
+}
+
+.form input {
+  width: 50%;
+  border-radius: 3px;
+  border: 0.5px solid black;
+  margin-right: 10rem;
+  float: right;
+  line-height: 150%;
+}
+.form textarea {
+  overflow: scroll;
+  border-radius: 5px;
+  vertical-align: top;
+  width: 100%;
+}
+
+.label-input,
+.label-textarea {
+  margin-bottom: 10px;
+}
+
+.label-textarea label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.save {
+  width: 200px;
+  height: 100px;
+  border-radius: 10px;
+  background-color: #fd7f20;
+  color: white;
+  font-size: 20px;
+  border: none;
+  margin: auto;
+  box-shadow: 5px 5px 10px 10px lightyellow;
+}
