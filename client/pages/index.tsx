@@ -35,7 +35,7 @@ export default function Home() {
               <div>
                 <FcGoogle />
               </div>
-              Sign Up with Google
+              Continue with Google
             </button>
           </a>
           {/* <span className={styles.query}>Already have an account?</span>

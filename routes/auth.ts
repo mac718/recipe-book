@@ -10,5 +10,6 @@ auth
 auth
   .route("/auth/google/callback")
   .get(passport.authenticate("google", { session: false }), (req, res) => {
-    res.send("logged in");
+    console.log("user", req.user);
+    res.redirect("http://localhost:3000/recipes");
   });

@@ -4,16 +4,34 @@
   color: #3b707d;
 }
 
-.search {
-  margin: 0 auto 20px auto;
-  display: block;
+.search-container {
+  position: relative;
   width: 50%;
+  margin: 0 auto 20px auto;
+}
+
+.search {
+  display: block;
+  width: 100%;
   line-height: 200%;
   border: 0.5px solid darkgray;
   border-radius: 15px;
   padding: 5px;
 }
 
+.clear {
+  position: absolute;
+  border: none;
+  display: block;
+  height: 90%;
+  width: 15px;
+  right: 5px;
+  top: 1px;
+  bottom: 0;
+  background-color: white;
+  outline: none;
+  cursor: pointer;
+}
 .add-button {
   margin: auto;
   display: block;
@@ -30,6 +48,7 @@
   /* background: #f0f7e0; */
   height: 100vh;
   padding-top: 2rem;
+  position: relative;
 }
 
 .recipe-grid {
@@ -39,4 +58,30 @@
   width: 80vw;
   overflow: scroll;
   margin: auto;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
 }
