@@ -1,10 +1,10 @@
-import mongoose from "mongoose";
+import * as mongoose from "mongoose";
 
 interface IUser {
   google: { id: string; name: string; email: string };
 }
 
-const UserSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema<IUser>({
   google: {
     id: String,
     name: String,
@@ -12,5 +12,4 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
-const User = mongoose.model("User", UserSchema);
-module.exports = User;
+export const User = mongoose.model("User", UserSchema);

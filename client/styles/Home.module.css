@@ -158,6 +158,10 @@
   cursor: pointer;
 }
 
+.google-link {
+  text-decoration: none;
+}
+
 .img {
   border-radius: 10px;
 }
