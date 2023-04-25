@@ -1,5 +1,6 @@
 import AddRecipe from "@component/components/AddRecipe";
 import Modal from "@component/components/Modal";
+import RecipeGridCard from "@component/components/RecipeGridCard";
 import { ChangeEvent, useState } from "react";
 import styles from "../styles/RecipesPage.module.css";
 
@@ -41,16 +42,11 @@ const RecipesPage = () => {
         className={styles["add-button"]}
         onClick={() => setOpenRecipeForm(true)}
       >
-        <div className={styles.tooltip}>
-          Add Recipe
-          <span className={styles.tooltiptext}>
-            Add a new recipe to your collection!
-          </span>
-        </div>
+        Add Recipe
       </button>
       <section className={styles["recipe-grid"]}>
-        <div>1</div>
-        <div>2</div>
+        <RecipeGridCard name="Meatloaf" />
+        <RecipeGridCard name="Chicken Parm" />
       </section>
     </div>
   );
