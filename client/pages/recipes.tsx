@@ -29,7 +29,7 @@ const RecipesPage = () => {
           type="text"
           id="search-receipes"
           className={styles.search}
-          placeholder="search recipes by name, cuisine, or ingredients..."
+          placeholder="Find a receipe! Search recipes by name, cuisine, or ingredients..."
           value={searchTerms}
           onChange={handleSearchTermChange}
         />
