@@ -6,12 +6,14 @@ import passport from "passport";
 import cors from "cors";
 import cookieSession from "cookie-session";
 import { auth } from "./routes/auth";
+import { recipes } from "./routes/recipes";
 
 const app: Express = express();
 
 dotenv.config();
 
 const port = 8000;
+
 app.use(
   cors({
     origin: [
@@ -23,17 +25,20 @@ app.use(
   })
 );
 
+//app.use(epxress_session({ secret: "secret" }));
 app.use(
   cookieSession({
     maxAge: 24 * 60 * 60 * 1000,
     keys: [process.env.COOKIE_KEY!],
   })
 );
+app.use(express.json());
 
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(auth);
+app.use(recipes);
 
 mongoose
   .connect(process.env.MONGODB_URI!, {} as mongoose.ConnectOptions)

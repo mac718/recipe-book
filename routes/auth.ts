@@ -1,5 +1,6 @@
 import { Router } from "express";
 import passport from "passport";
+import { zeroMQ } from "../controllers/auth";
 
 export const auth = Router();
 
@@ -9,7 +10,12 @@ auth
 
 auth
   .route("/auth/google/callback")
-  .get(passport.authenticate("google", { session: false }), (req, res) => {
-    console.log("user", req.user);
-    res.redirect("http://localhost:3000/recipes");
-  });
+  .get(
+    passport.authenticate("google", { failureRedirect: "/" }),
+    (req, res) => {
+      console.log("user", req.user);
+      res.redirect("http://localhost:3000/recipes");
+    }
+  );
+
+auth.route("/zeroMQ").post(zeroMQ);

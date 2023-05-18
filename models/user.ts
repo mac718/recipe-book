@@ -1,6 +1,6 @@
 import * as mongoose from "mongoose";
 
-interface IUser {
+export interface IUser {
   google: { id: string; name: string; email: string };
 }
 
