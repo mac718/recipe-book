@@ -4,6 +4,7 @@ export const isLoggedIn = (req: Request, res: Response, next: NextFunction) => {
   if (req.user) {
     next();
   } else {
-    res.sendStatus(401);
+    res.redirect("http://localhost:3000");
+    //res.sendStatus(401);
   }
 };

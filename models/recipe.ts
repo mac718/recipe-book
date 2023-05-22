@@ -6,7 +6,9 @@ export interface IRecipe {
   cookTime: string;
   ingredients: string;
   directions: string;
+  cuisine: string;
   user_email: string;
+  image: string;
 }
 
 const RecipeSchema = new mongoose.Schema<IRecipe>({
@@ -15,7 +17,9 @@ const RecipeSchema = new mongoose.Schema<IRecipe>({
   cookTime: String,
   ingredients: String,
   directions: String,
+  cuisine: String,
   user_email: String,
+  image: String,
 });
 
 export const Recipe = mongoose.model("Recipe", RecipeSchema);

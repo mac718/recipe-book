@@ -32,7 +32,7 @@ app.use(
     keys: [process.env.COOKIE_KEY!],
   })
 );
-app.use(express.json());
+app.use(express.json({ limit: "20mb" }));
 
 app.use(passport.initialize());
 app.use(passport.session());

@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import * as zmq from "zeromq";
 
 // export const registerOrLogin = async (req: Request, res: Response) => {
-//   passport.authenticate("google", { scope: ["email", "profile"] });
+//   await passport.authenticate("google", { scope: ["email", "profile"] });
 //   res.send();
 // };
 

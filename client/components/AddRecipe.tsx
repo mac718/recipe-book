@@ -9,15 +9,32 @@ type AddRecipeProps = {
 
 const AddRecipe = ({ onClose, getRecipes }: AddRecipeProps) => {
   const [name, setName] = useState("");
+  const [cuisine, setCuisine] = useState("");
   const [prepTime, setPrepTime] = useState("");
   const [cookTime, setCookTime] = useState("");
   const [ingredients, setIngredients] = useState("");
   const [directions, setDirections] = useState("");
+  const [image, setImage] = useState<any>();
+  const [imageName, setImageName] = useState("");
 
   const ingredientsPlaceholder =
     "Enter ingredients separated by '/'. For example: eggs/butter/salt...";
   const directionPlaceholder =
     "Enter directions in order separated by '/'. For example: preheat oven/cube chicken/add celery to dutch oven...";
+
+  const handleAttachImage = (event: ChangeEvent<HTMLInputElement>) => {
+    const name = event.target.value.split("\\");
+    console.log(name);
+    const reader = new FileReader();
+    reader.readAsDataURL(event.target.files![0]);
+
+    reader.onload = () => {
+      const binary = reader.result?.slice(23);
+      console.log(binary);
+      setImage(binary);
+      setImageName(name[name.length - 1]);
+    };
+  };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -26,10 +43,13 @@ const AddRecipe = ({ onClose, getRecipes }: AddRecipeProps) => {
         "http://localhost:8000/addRecipe",
         {
           name,
+          cuisine,
           prepTime,
           cookTime,
           ingredients,
           directions,
+          image,
+          imageName,
         },
         { withCredentials: true }
       );
@@ -53,6 +73,16 @@ const AddRecipe = ({ onClose, getRecipes }: AddRecipeProps) => {
         />
       </div>
       <div className={styles["label-input"]}>
+        <label htmlFor="cuisine">Cuisine</label>
+        <input
+          type="text"
+          id="cuisine"
+          onChange={(event: ChangeEvent<HTMLInputElement>) =>
+            setCuisine(event.target.value)
+          }
+        />
+      </div>
+      <div className={styles["label-input"]}>
         <label htmlFor="prep-time">Prep Time</label>
         <input
           type="text"
@@ -70,6 +100,15 @@ const AddRecipe = ({ onClose, getRecipes }: AddRecipeProps) => {
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             setCookTime(event.target.value)
           }
+        />
+      </div>
+      <div className={styles["image"]}>
+        <label htmlFor="image">Picture</label>
+        <input
+          type="file"
+          id="image"
+          accept="image/jpg, image/jpeg, image/png"
+          onChange={handleAttachImage}
         />
       </div>
       <div className={styles["label-textarea"]}>
@@ -96,6 +135,7 @@ const AddRecipe = ({ onClose, getRecipes }: AddRecipeProps) => {
           }
         />
       </div>
+
       <button className={styles.save} type="submit">
         Save Recipe
       </button>

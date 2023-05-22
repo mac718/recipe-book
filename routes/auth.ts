@@ -14,6 +14,7 @@ auth
     passport.authenticate("google", { failureRedirect: "/" }),
     (req, res) => {
       console.log("user", req.user);
+      res.cookie("user", req.user?.google.email, { httpOnly: true });
       res.redirect("http://localhost:3000/recipes");
     }
   );

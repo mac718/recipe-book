@@ -27,6 +27,7 @@ passport.use(
       callbackURL: "http://localhost:8000/auth/google/callback",
     },
     async (accessToken, refreshToken, profile, done) => {
+      console.log("hello from auth");
       try {
         const user = await User.findOne({ "google.id": profile.id });
         console.log("userpass", user);

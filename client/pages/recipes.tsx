@@ -4,6 +4,7 @@ import RecipeGridCard from "@component/components/RecipeGridCard";
 import { ChangeEvent, ReactElement, useEffect, useState } from "react";
 import styles from "../styles/RecipesPage.module.css";
 import axios from "axios";
+import { GetServerSideProps } from "next";
 
 type Recipe = {
   name: string;
@@ -11,13 +12,21 @@ type Recipe = {
   cookTime: string;
   ingredients: string;
   directions: string;
+  cuisine: string;
+  image: string;
 };
 
-const RecipesPage = () => {
+type RecipesPageProps = {
+  user_email: string;
+};
+
+const RecipesPage = ({ user_email }: RecipesPageProps) => {
   const [openRecipeForm, setOpenRecipeForm] = useState(false);
   const [searchTerms, setSearchTerms] = useState("");
   const [allRecipes, setAllRecipes] = useState<Recipe[] | undefined>();
   const [recipes, setRecipes] = useState<Recipe[] | undefined>();
+
+  console.log("recs", recipes);
 
   const onClose = () => {
     setOpenRecipeForm(false);
@@ -28,11 +37,14 @@ const RecipesPage = () => {
     console.log(searchTerms);
     let filteredRecipes;
     if (searchTerms.length > 0) {
-      filteredRecipes = recipes?.filter((recipe) =>
-        recipe.name.includes(searchTerms)
+      filteredRecipes = recipes?.filter(
+        (recipe) =>
+          recipe.name.includes(searchTerms) ||
+          recipe.ingredients.includes(searchTerms) ||
+          recipe.cuisine.includes(searchTerms)
       );
     } else {
-      console.log(allRecipes);
+      //console.log(allRecipes);
       filteredRecipes = allRecipes;
     }
     setRecipes(filteredRecipes);
@@ -49,8 +61,8 @@ const RecipesPage = () => {
     } catch (err) {
       console.log(err);
     }
-    setAllRecipes(recipes.data);
-    setRecipes(recipes.data);
+    setAllRecipes(recipes ? recipes.data : []);
+    setRecipes(recipes ? recipes.data : []);
   };
 
   useEffect(() => {
@@ -58,7 +70,9 @@ const RecipesPage = () => {
   }, []);
 
   recipeCards = recipes
-    ? recipes.map((recipe) => <RecipeGridCard name={recipe.name} />)
+    ? recipes.map((recipe) => (
+        <RecipeGridCard name={recipe.name} imageUrl={recipe.image} />
+      ))
     : [];
 
   return (
@@ -94,11 +108,28 @@ const RecipesPage = () => {
       </button>
       <section className={styles["recipe-grid"]}>
         {recipeCards}
-        <RecipeGridCard name="Meatloaf" />
-        <RecipeGridCard name="Chicken Parm" />
+        <RecipeGridCard name="Meatloaf" imageUrl="" />
+        <RecipeGridCard name="Chicken Parm" imageUrl="" />
       </section>
     </div>
   );
 };
 
 export default RecipesPage;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const user_email = context.req.cookies.user;
+  if (!user_email) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/",
+      },
+    };
+  }
+  return {
+    props: {
+      user_email,
+    },
+  };
+};
