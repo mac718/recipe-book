@@ -108,8 +108,8 @@ const RecipesPage = ({ user_email }: RecipesPageProps) => {
       </button>
       <section className={styles["recipe-grid"]}>
         {recipeCards}
-        <RecipeGridCard name="Meatloaf" imageUrl="" />
-        <RecipeGridCard name="Chicken Parm" imageUrl="" />
+        {/* <RecipeGridCard name="Meatloaf" imageUrl="" />
+        <RecipeGridCard name="Chicken Parm" imageUrl="" /> */}
       </section>
     </div>
   );
