@@ -11,6 +11,7 @@ export const addRecipe = async (req: Request, res: Response) => {
     prepTime,
     ingredients,
     directions,
+    cuisine,
     image,
     imageName,
   } = req.body;

@@ -1,7 +1,7 @@
 import AddRecipe from "@component/components/AddRecipe";
 import Modal from "@component/components/Modal";
 import RecipeGridCard from "@component/components/RecipeGridCard";
-import { ChangeEvent, ReactElement, useEffect, useState } from "react";
+import { ChangeEvent, ReactElement, useEffect, useRef, useState } from "react";
 import styles from "../styles/RecipesPage.module.css";
 import axios from "axios";
 import { GetServerSideProps } from "next";
@@ -26,6 +26,8 @@ const RecipesPage = ({ user_email }: RecipesPageProps) => {
   const [allRecipes, setAllRecipes] = useState<Recipe[] | undefined>();
   const [recipes, setRecipes] = useState<Recipe[] | undefined>();
 
+  const searchBarRef = useRef<HTMLInputElement>(null); //null eliminates type error
+
   console.log("recs", recipes);
 
   const onClose = () => {
@@ -33,15 +35,17 @@ const RecipesPage = ({ user_email }: RecipesPageProps) => {
   };
 
   const handleSearchTermChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearchTerms(event.target.value);
-    console.log(searchTerms);
+    console.log(searchBarRef.current);
     let filteredRecipes;
-    if (searchTerms.length > 0) {
+    if (
+      searchBarRef &&
+      searchBarRef.current &&
+      searchBarRef.current.value !== ""
+    ) {
       filteredRecipes = recipes?.filter(
-        (recipe) =>
-          recipe.name.includes(searchTerms) ||
-          recipe.ingredients.includes(searchTerms) ||
-          recipe.cuisine.includes(searchTerms)
+        (recipe) => recipe.name.includes(searchBarRef.current!.value) //||
+        // recipe.ingredients.includes(searchTerms) ||
+        // recipe.cuisine.includes(searchTerms)
       );
     } else {
       //console.log(allRecipes);
@@ -89,8 +93,9 @@ const RecipesPage = ({ user_email }: RecipesPageProps) => {
           id="search-receipes"
           className={styles.search}
           placeholder="Find a receipe! Search recipes by name, cuisine, or ingredients..."
-          value={searchTerms}
+          //value={searchTerms}
           onChange={handleSearchTermChange}
+          ref={searchBarRef}
         />
         <button className={styles.clear} onClick={() => setSearchTerms("")}>
           x

@@ -63,6 +63,7 @@ const AddRecipe = ({ onClose, getRecipes }: AddRecipeProps) => {
       console.log(err);
     }
   };
+
   return (
     <div>
       {showSpinner && <Spinner />}
