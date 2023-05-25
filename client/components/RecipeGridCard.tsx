@@ -5,13 +5,23 @@ import Modal from "./Modal";
 import DeleteWarning from "./DeleteWarning";
 import { useState } from "react";
 import Image from "next/image";
+import AddRecipe from "./AddRecipe";
 
 type RecipeGridCardProps = {
   name: string;
   imageUrl: string;
+  onOpenEditForm: () => void;
+  getRecipes: () => void;
+  onClose: () => void;
 };
 
-const RecipeGridCard = ({ name, imageUrl }: RecipeGridCardProps) => {
+const RecipeGridCard = ({
+  name,
+  imageUrl,
+  onOpenEditForm,
+  onClose,
+  getRecipes,
+}: RecipeGridCardProps) => {
   const [openDeleteWarning, setOpenDeleteWarning] = useState(false);
 
   const handleModalClose = () => {
@@ -22,9 +32,14 @@ const RecipeGridCard = ({ name, imageUrl }: RecipeGridCardProps) => {
     <>
       {openDeleteWarning && (
         <Modal onClose={handleModalClose}>
-          <DeleteWarning name={name} />
+          <DeleteWarning
+            name={name}
+            onClose={onClose}
+            getRecipes={getRecipes}
+          />
         </Modal>
       )}
+
       <div className={styles.box}>
         <div className={styles.pic}>
           <Image loader={() => imageUrl} alt="" src={imageUrl} fill={true} />
@@ -34,7 +49,7 @@ const RecipeGridCard = ({ name, imageUrl }: RecipeGridCardProps) => {
           <div className={styles["icon-container"]}>
             <div className={styles.tooltip}>
               <span className={styles.tooltiptext}>Edit Recipe</span>
-              <GrEdit />
+              <GrEdit onClick={onOpenEditForm} />
             </div>
           </div>
           <div

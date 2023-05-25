@@ -7,6 +7,7 @@ import axios from "axios";
 import { GetServerSideProps } from "next";
 
 type Recipe = {
+  _id: string;
   name: string;
   prepTime: string;
   cookTime: string;
@@ -32,6 +33,10 @@ const RecipesPage = ({ user_email }: RecipesPageProps) => {
 
   const onClose = () => {
     setOpenRecipeForm(false);
+  };
+
+  const onOpenEditForm = () => {
+    setOpenRecipeForm(true);
   };
 
   const handleSearchTermChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -82,7 +87,14 @@ const RecipesPage = ({ user_email }: RecipesPageProps) => {
 
   recipeCards = recipes
     ? recipes.map((recipe) => (
-        <RecipeGridCard name={recipe.name} imageUrl={recipe.image} />
+        <RecipeGridCard
+          name={recipe.name}
+          imageUrl={recipe.image}
+          getRecipes={getRecipes}
+          onOpenEditForm={onOpenEditForm}
+          onClose={onClose}
+          key={recipe._id}
+        />
       ))
     : [];
 

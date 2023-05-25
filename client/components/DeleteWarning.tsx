@@ -3,14 +3,18 @@ import styles from "./styles/DeleteWarning.module.css";
 
 type DeleteWarningProps = {
   name: string;
+  getRecipes: () => void;
+  onClose: () => void;
 };
 
-const DeleteWarning = ({ name }: DeleteWarningProps) => {
+const DeleteWarning = ({ name, getRecipes, onClose }: DeleteWarningProps) => {
   console.log("rec name", name);
   const handleDeleteRecipe = async () => {
     console.log("hello from delete");
     try {
       await axios.delete(`http://localhost:8000/${name}`);
+      onClose();
+      getRecipes();
     } catch (err) {
       console.log(err);
     }
