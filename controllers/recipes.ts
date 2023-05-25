@@ -15,18 +15,23 @@ export const addRecipe = async (req: Request, res: Response) => {
     image,
     imageName,
   } = req.body;
-  console.log(name, cookTime, prepTime, ingredients, directions);
+
   const user_email = req.user?.google.email;
   let image_url = "";
 
+  const axiosInstance = axios.create({
+    baseURL: "http://localhost:8080/",
+    timeout: 3000,
+    httpAgent: new http.Agent({ keepAlive: true }),
+  });
+
+  const uploadImage = async () => {};
+
+  const fetchImage = async () => {};
+
   if (image) {
-    const instance = axios.create({
-      baseURL: "http://localhost:8080/",
-      timeout: 3000,
-      httpAgent: new http.Agent({ keepAlive: true }),
-    });
     try {
-      const res = await instance.post("images", {
+      const res = await axiosInstance.post("images", {
         image,
         filename: imageName,
         objectname: imageName,
@@ -37,7 +42,7 @@ export const addRecipe = async (req: Request, res: Response) => {
     }
 
     try {
-      const res = await instance.get(
+      const res = await axiosInstance.get(
         `images?filename=${imageName}&objectname=${imageName}`,
         { proxy: false }
       );
@@ -64,8 +69,22 @@ export const addRecipe = async (req: Request, res: Response) => {
 
 export const getRecipes = async (req: Request, res: Response) => {
   const user = req.user;
-  console.log("usercon", user?.google.email);
-  const recipes = await Recipe.find({ user_email: user!.google.email });
-  // console.log("back", recipes);
-  res.json(recipes);
+  try {
+    const recipes = await Recipe.find({ user_email: user!.google.email });
+    res.json(recipes);
+  } catch (err) {
+    res.json(err);
+  }
+};
+
+export const deleteRecipe = async (req: Request, res: Response) => {
+  const recipeName = req.params.name;
+  console.log("snarf", recipeName);
+
+  try {
+    await Recipe.deleteOne({ name: recipeName });
+    res.sendStatus(200);
+  } catch (err) {
+    res.json(err);
+  }
 };

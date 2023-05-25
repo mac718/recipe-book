@@ -18,14 +18,11 @@ const RecipeGridCard = ({ name, imageUrl }: RecipeGridCardProps) => {
     setOpenDeleteWarning(false);
   };
 
-  // const src =
-  //   "https://recipe-book-cs361.s3.amazonaws.com/graphs_for_question_1.jpg";
-
   return (
     <>
       {openDeleteWarning && (
         <Modal onClose={handleModalClose}>
-          <DeleteWarning />
+          <DeleteWarning name={name} />
         </Modal>
       )}
       <div className={styles.box}>
