@@ -55,6 +55,7 @@ export const addRecipe = async (req: Request, res: Response) => {
     ingredients,
     directions,
     user_email,
+    cuisine,
     image: image_url,
   });
   await newRecipe.save();

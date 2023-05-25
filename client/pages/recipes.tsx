@@ -43,9 +43,16 @@ const RecipesPage = ({ user_email }: RecipesPageProps) => {
       searchBarRef.current.value !== ""
     ) {
       filteredRecipes = recipes?.filter(
-        (recipe) => recipe.name.includes(searchBarRef.current!.value) //||
-        // recipe.ingredients.includes(searchTerms) ||
-        // recipe.cuisine.includes(searchTerms)
+        (recipe) =>
+          recipe.name
+            .toLowerCase()
+            .includes(searchBarRef.current!.value.toLowerCase()) ||
+          recipe.ingredients
+            .toLowerCase()
+            .includes(searchBarRef.current!.value.toLowerCase()) ||
+          recipe.cuisine
+            .toLowerCase()
+            .includes(searchBarRef.current!.value.toLowerCase())
       );
     } else {
       //console.log(allRecipes);
@@ -97,7 +104,12 @@ const RecipesPage = ({ user_email }: RecipesPageProps) => {
           onChange={handleSearchTermChange}
           ref={searchBarRef}
         />
-        <button className={styles.clear} onClick={() => setSearchTerms("")}>
+        <button
+          className={styles.clear}
+          onClick={() =>
+            searchBarRef.current ? (searchBarRef.current.value = "") : null
+          }
+        >
           x
         </button>
       </div>
