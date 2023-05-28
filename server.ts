@@ -25,20 +25,19 @@ app.use(
   })
 );
 
-//app.use(epxress_session({ secret: "secret" }));
 app.use(
   cookieSession({
     maxAge: 24 * 60 * 60 * 1000,
     keys: [process.env.COOKIE_KEY!],
   })
 );
-app.use(express.json({ limit: "20mb" }));
+app.use(express.json({ limit: "20mb" })); //facilitates image uploads
 
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(auth);
-app.use(recipes);
+app.use("/recipes", recipes);
 
 mongoose
   .connect(process.env.MONGODB_URI!, {} as mongoose.ConnectOptions)

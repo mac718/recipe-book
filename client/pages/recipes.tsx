@@ -73,7 +73,7 @@ const RecipesPage = ({ user_email }: RecipesPageProps) => {
   const getRecipes = async () => {
     let recipes: any;
     try {
-      recipes = await axios.get("http://localhost:8000/getAllRecipes", {
+      recipes = await axios.get("http://localhost:8000/recipes/getAllRecipes", {
         withCredentials: true,
       });
     } catch (err) {
@@ -148,9 +148,10 @@ const RecipesPage = ({ user_email }: RecipesPageProps) => {
         />
         <button
           className={styles.clear}
-          onClick={() =>
-            searchBarRef.current ? (searchBarRef.current.value = "") : null
-          }
+          onClick={() => {
+            if (searchBarRef.current) searchBarRef.current.value = "";
+            setRecipes(allRecipes);
+          }}
         >
           x
         </button>
@@ -160,6 +161,7 @@ const RecipesPage = ({ user_email }: RecipesPageProps) => {
         className={styles["add-button"]}
         onClick={(event) => {
           event.preventDefault();
+          setEditMode(false);
           setRecipeToEdit(null);
           setOpenRecipeForm(true);
         }}
