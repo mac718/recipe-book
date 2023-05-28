@@ -6,7 +6,7 @@ import styles from "../styles/RecipesPage.module.css";
 import axios from "axios";
 import { GetServerSideProps } from "next";
 
-type Recipe = {
+export type Recipe = {
   _id: string;
   name: string;
   prepTime: string;
@@ -15,6 +15,7 @@ type Recipe = {
   directions: string;
   cuisine: string;
   image: string;
+  user_email: string;
 };
 
 type RecipesPageProps = {
@@ -26,16 +27,18 @@ const RecipesPage = ({ user_email }: RecipesPageProps) => {
   const [searchTerms, setSearchTerms] = useState("");
   const [allRecipes, setAllRecipes] = useState<Recipe[] | undefined>();
   const [recipes, setRecipes] = useState<Recipe[] | undefined>();
+  const [editMode, setEditMode] = useState(false);
+  const [recipeToEdit, setRecipeToEdit] = useState<string | null>(null);
 
   const searchBarRef = useRef<HTMLInputElement>(null); //null eliminates type error
-
-  console.log("recs", recipes);
 
   const onClose = () => {
     setOpenRecipeForm(false);
   };
 
-  const onOpenEditForm = () => {
+  const onOpenEditForm = (rec: string) => {
+    setEditMode(true);
+    setRecipeToEdit(rec);
     setOpenRecipeForm(true);
   };
 
@@ -60,7 +63,6 @@ const RecipesPage = ({ user_email }: RecipesPageProps) => {
             .includes(searchBarRef.current!.value.toLowerCase())
       );
     } else {
-      //console.log(allRecipes);
       filteredRecipes = allRecipes;
     }
     setRecipes(filteredRecipes);
@@ -86,23 +88,51 @@ const RecipesPage = ({ user_email }: RecipesPageProps) => {
   }, []);
 
   recipeCards = recipes
-    ? recipes.map((recipe) => (
-        <RecipeGridCard
-          name={recipe.name}
-          imageUrl={recipe.image}
-          getRecipes={getRecipes}
-          onOpenEditForm={onOpenEditForm}
-          onClose={onClose}
-          key={recipe._id}
-        />
-      ))
+    ? recipes.map((recipe) => {
+        const recipeInfo = {
+          id: recipe._id,
+          name: recipe.name,
+          prepTime: recipe.prepTime,
+          cookTime: recipe.cookTime,
+          directions: recipe.directions,
+          ingredients: recipe.ingredients,
+          imageUrl: recipe.image,
+          user: user_email,
+        };
+
+        return (
+          <RecipeGridCard
+            // recipeInfo={{ name: recipe.name }}
+            // name={recipe.name}
+            // imageUrl={recipe.image}
+            {...recipeInfo}
+            getRecipes={getRecipes}
+            onOpenEditForm={onOpenEditForm}
+            onClose={onClose}
+            key={recipe._id}
+          />
+        );
+      })
     : [];
+
+  let recipeToEditInfo = null;
+  if (recipeToEdit) {
+    recipeToEditInfo = recipes?.filter(
+      (recipe) => recipe._id === recipeToEdit
+    )[0];
+  }
 
   return (
     <div className={styles.recipes}>
       {openRecipeForm && (
         <Modal onClose={onClose}>
-          <AddRecipe onClose={onClose} getRecipes={getRecipes} />
+          <AddRecipe
+            onClose={onClose}
+            getRecipes={getRecipes}
+            editMode={editMode}
+            recipeToEdit={recipeToEdit}
+            recipeToEditInfo={recipeToEditInfo}
+          />
         </Modal>
       )}
       <h1 className={styles.heading}>Your Recipes</h1>
@@ -130,16 +160,13 @@ const RecipesPage = ({ user_email }: RecipesPageProps) => {
         className={styles["add-button"]}
         onClick={(event) => {
           event.preventDefault();
+          setRecipeToEdit(null);
           setOpenRecipeForm(true);
         }}
       >
         Add Recipe
       </button>
-      <section className={styles["recipe-grid"]}>
-        {recipeCards}
-        {/* <RecipeGridCard name="Meatloaf" imageUrl="" />
-        <RecipeGridCard name="Chicken Parm" imageUrl="" /> */}
-      </section>
+      <section className={styles["recipe-grid"]}>{recipeCards}</section>
     </div>
   );
 };

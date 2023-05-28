@@ -25,10 +25,6 @@ export const addRecipe = async (req: Request, res: Response) => {
     httpAgent: new http.Agent({ keepAlive: true }),
   });
 
-  const uploadImage = async () => {};
-
-  const fetchImage = async () => {};
-
   if (image) {
     try {
       const res = await axiosInstance.post("images", {
@@ -86,5 +82,36 @@ export const deleteRecipe = async (req: Request, res: Response) => {
     res.sendStatus(200);
   } catch (err) {
     res.json(err);
+  }
+};
+
+export const editRecipe = async (req: Request, res: Response) => {
+  const {
+    id,
+    name,
+    cookTime,
+    prepTime,
+    ingredients,
+    directions,
+    cuisine,
+    image,
+  } = req.body;
+
+  const existingRecipe = await Recipe.findById(id);
+
+  if (!existingRecipe) {
+    res.json({ err: "recipe no longer exists" });
+  } else {
+    await existingRecipe?.updateOne({
+      name,
+      cookTime,
+      prepTime,
+      ingredients,
+      directions,
+      cuisine,
+      image,
+    });
+
+    res.sendStatus(200);
   }
 };

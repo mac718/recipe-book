@@ -2,13 +2,23 @@ import axios from "axios";
 import { ChangeEvent, FormEvent, useState } from "react";
 import styles from "../styles/AddRecipe.module.css";
 import Spinner from "./Spinner";
+import { Recipe } from "@component/pages/recipes";
 
 type AddRecipeProps = {
   onClose: () => void;
   getRecipes: () => void;
+  editMode: boolean;
+  recipeToEditInfo: Recipe | null | undefined;
+  recipeToEdit: string | null;
 };
 
-const AddRecipe = ({ onClose, getRecipes }: AddRecipeProps) => {
+const AddRecipe = ({
+  onClose,
+  getRecipes,
+  editMode,
+  recipeToEditInfo,
+  recipeToEdit,
+}: AddRecipeProps) => {
   const [name, setName] = useState("");
   const [cuisine, setCuisine] = useState("");
   const [prepTime, setPrepTime] = useState("");
@@ -40,27 +50,53 @@ const AddRecipe = ({ onClose, getRecipes }: AddRecipeProps) => {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    try {
-      setShowSpinner(true);
-      await axios.post(
-        "http://localhost:8000/addRecipe",
-        {
-          name,
-          cuisine,
-          prepTime,
-          cookTime,
-          ingredients,
-          directions,
-          image,
-          imageName,
-        },
-        { withCredentials: true }
-      );
-      setShowSpinner(false);
-      getRecipes();
-      onClose();
-    } catch (err) {
-      console.log(err);
+    console.log("recipeToEdit", recipeToEdit);
+    if (editMode) {
+      try {
+        setShowSpinner(true);
+        await axios.put(
+          "http://localhost:8000/editRecipe",
+          {
+            id: recipeToEdit,
+            name,
+            cuisine,
+            prepTime,
+            cookTime,
+            ingredients,
+            directions,
+            image,
+          },
+          { withCredentials: true }
+        );
+        setShowSpinner(false);
+        getRecipes();
+        onClose();
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      try {
+        setShowSpinner(true);
+        await axios.post(
+          "http://localhost:8000/addRecipe",
+          {
+            name,
+            cuisine,
+            prepTime,
+            cookTime,
+            ingredients,
+            directions,
+            image,
+            imageName,
+          },
+          { withCredentials: true }
+        );
+        setShowSpinner(false);
+        getRecipes();
+        onClose();
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
@@ -77,6 +113,7 @@ const AddRecipe = ({ onClose, getRecipes }: AddRecipeProps) => {
             onChange={(event: ChangeEvent<HTMLInputElement>) =>
               setName(event.target.value)
             }
+            defaultValue={recipeToEditInfo?.name}
           />
         </div>
         <div className={styles["label-input"]}>
@@ -87,6 +124,7 @@ const AddRecipe = ({ onClose, getRecipes }: AddRecipeProps) => {
             onChange={(event: ChangeEvent<HTMLInputElement>) =>
               setCuisine(event.target.value)
             }
+            defaultValue={recipeToEditInfo?.cuisine}
           />
         </div>
         <div className={styles["label-input"]}>
@@ -97,6 +135,7 @@ const AddRecipe = ({ onClose, getRecipes }: AddRecipeProps) => {
             onChange={(event: ChangeEvent<HTMLInputElement>) =>
               setPrepTime(event.target.value)
             }
+            defaultValue={recipeToEditInfo?.prepTime}
           />
         </div>
         <div className={styles["label-input"]}>
@@ -107,6 +146,7 @@ const AddRecipe = ({ onClose, getRecipes }: AddRecipeProps) => {
             onChange={(event: ChangeEvent<HTMLInputElement>) =>
               setCookTime(event.target.value)
             }
+            defaultValue={recipeToEditInfo?.cookTime}
           />
         </div>
         <div className={styles["image"]}>
@@ -128,6 +168,7 @@ const AddRecipe = ({ onClose, getRecipes }: AddRecipeProps) => {
             onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
               setIngredients(event.target.value)
             }
+            defaultValue={recipeToEditInfo?.ingredients}
           />
         </div>
         <div className={styles["label-textarea"]}>
@@ -140,6 +181,7 @@ const AddRecipe = ({ onClose, getRecipes }: AddRecipeProps) => {
             onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
               setDirections(event.target.value)
             }
+            defaultValue={recipeToEditInfo?.directions}
           />
         </div>
 

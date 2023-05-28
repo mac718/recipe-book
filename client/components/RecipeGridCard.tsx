@@ -8,21 +8,42 @@ import Image from "next/image";
 import AddRecipe from "./AddRecipe";
 
 type RecipeGridCardProps = {
+  id: string;
   name: string;
   imageUrl: string;
-  onOpenEditForm: () => void;
+  prepTime: string;
+  cookTime: string;
+  directions: string;
+  ingredients: string;
+  user: string;
+  onOpenEditForm: (rec: string) => void;
   getRecipes: () => void;
   onClose: () => void;
 };
 
 const RecipeGridCard = ({
+  id,
   name,
   imageUrl,
+  prepTime,
+  cookTime,
+  directions,
+  ingredients,
+  user,
   onOpenEditForm,
   onClose,
   getRecipes,
 }: RecipeGridCardProps) => {
   const [openDeleteWarning, setOpenDeleteWarning] = useState(false);
+  const updateInfo = {
+    name,
+    imageUrl,
+    prepTime,
+    cookTime,
+    directions,
+    ingredients,
+    user,
+  };
 
   const handleModalClose = () => {
     setOpenDeleteWarning(false);
@@ -49,7 +70,7 @@ const RecipeGridCard = ({
           <div className={styles["icon-container"]}>
             <div className={styles.tooltip}>
               <span className={styles.tooltiptext}>Edit Recipe</span>
-              <GrEdit onClick={onOpenEditForm} />
+              <GrEdit onClick={() => onOpenEditForm(id)} />
             </div>
           </div>
           <div
