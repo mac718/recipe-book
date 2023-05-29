@@ -6,44 +6,35 @@ import DeleteWarning from "./DeleteWarning";
 import { useState } from "react";
 import Image from "next/image";
 import AddRecipe from "./AddRecipe";
+import { Recipe } from "@component/pages/recipes";
+import Link from "next/link";
+import { query } from "express";
 
 type RecipeGridCardProps = {
-  id: string;
-  name: string;
-  imageUrl: string;
-  prepTime: string;
-  cookTime: string;
-  directions: string;
-  ingredients: string;
-  user: string;
+  recipe: Recipe;
   onOpenEditForm: (rec: string) => void;
   getRecipes: () => void;
   onClose: () => void;
 };
 
 const RecipeGridCard = ({
-  id,
-  name,
-  imageUrl,
-  prepTime,
-  cookTime,
-  directions,
-  ingredients,
-  user,
+  recipe,
   onOpenEditForm,
   onClose,
   getRecipes,
 }: RecipeGridCardProps) => {
   const [openDeleteWarning, setOpenDeleteWarning] = useState(false);
-  const updateInfo = {
+
+  const {
+    _id,
     name,
-    imageUrl,
-    prepTime,
     cookTime,
-    directions,
+    prepTime,
+    cuisine,
     ingredients,
-    user,
-  };
+    directions,
+    image,
+  } = recipe;
 
   const handleModalClose = () => {
     setOpenDeleteWarning(false);
@@ -62,15 +53,17 @@ const RecipeGridCard = ({
       )}
 
       <div className={styles.box}>
-        <div className={styles.pic}>
-          <Image loader={() => imageUrl} alt="" src={imageUrl} fill={true} />
-        </div>
-        <div className={styles.name}>{name}</div>
+        <Link href={`/recipe/${recipe._id}`}>
+          <div className={styles.pic}>
+            <Image loader={() => image} alt="" src={image} fill={true} />
+          </div>
+          <div className={styles.name}>{name}</div>
+        </Link>
         <div className={styles.options}>
           <div className={styles["icon-container"]}>
             <div className={styles.tooltip}>
               <span className={styles.tooltiptext}>Edit Recipe</span>
-              <GrEdit onClick={() => onOpenEditForm(id)} />
+              <GrEdit onClick={() => onOpenEditForm(_id)} />
             </div>
           </div>
           <div

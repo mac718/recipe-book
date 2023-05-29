@@ -2,7 +2,7 @@ import { Router } from "express";
 import passport from "passport";
 import { zeroMQ } from "../controllers/auth";
 
-export const auth = Router();
+export const auth = Router({ strict: true });
 
 auth
   .route("/google")

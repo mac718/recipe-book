@@ -5,6 +5,7 @@ import { ChangeEvent, ReactElement, useEffect, useRef, useState } from "react";
 import styles from "../styles/RecipesPage.module.css";
 import axios from "axios";
 import { GetServerSideProps } from "next";
+import { useRouter } from "next/router";
 
 export type Recipe = {
   _id: string;
@@ -29,6 +30,8 @@ const RecipesPage = ({ user_email }: RecipesPageProps) => {
   const [recipes, setRecipes] = useState<Recipe[] | undefined>();
   const [editMode, setEditMode] = useState(false);
   const [recipeToEdit, setRecipeToEdit] = useState<string | null>(null);
+
+  const router = useRouter();
 
   const searchBarRef = useRef<HTMLInputElement>(null); //null eliminates type error
 
@@ -77,6 +80,7 @@ const RecipesPage = ({ user_email }: RecipesPageProps) => {
         withCredentials: true,
       });
     } catch (err) {
+      router.push("/");
       console.log(err);
     }
     setAllRecipes(recipes ? recipes.data : []);
@@ -89,23 +93,9 @@ const RecipesPage = ({ user_email }: RecipesPageProps) => {
 
   recipeCards = recipes
     ? recipes.map((recipe) => {
-        const recipeInfo = {
-          id: recipe._id,
-          name: recipe.name,
-          prepTime: recipe.prepTime,
-          cookTime: recipe.cookTime,
-          directions: recipe.directions,
-          ingredients: recipe.ingredients,
-          imageUrl: recipe.image,
-          user: user_email,
-        };
-
         return (
           <RecipeGridCard
-            // recipeInfo={{ name: recipe.name }}
-            // name={recipe.name}
-            // imageUrl={recipe.image}
-            {...recipeInfo}
+            recipe={recipe}
             getRecipes={getRecipes}
             onOpenEditForm={onOpenEditForm}
             onClose={onClose}

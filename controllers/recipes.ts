@@ -4,6 +4,12 @@ import { User, IUser } from "../models/user";
 import axios from "axios";
 import http from "http";
 
+const axiosInstance = axios.create({
+  baseURL: "http://localhost:8080/",
+  timeout: 3000,
+  httpAgent: new http.Agent({ keepAlive: true }),
+});
+
 export const addRecipe = async (req: Request, res: Response) => {
   const {
     name,
@@ -18,12 +24,6 @@ export const addRecipe = async (req: Request, res: Response) => {
 
   const user_email = req.user?.google.email;
   let image_url = "";
-
-  const axiosInstance = axios.create({
-    baseURL: "http://localhost:8080/",
-    timeout: 3000,
-    httpAgent: new http.Agent({ keepAlive: true }),
-  });
 
   if (image) {
     try {
@@ -73,6 +73,20 @@ export const getRecipes = async (req: Request, res: Response) => {
   }
 };
 
+export const getRecipe = async (req: Request, res: Response) => {
+  const id = req.params.id;
+
+  const recipe = await Recipe.findById(id);
+
+  if (!recipe) {
+    res.json({ err: "Recipe does not exist" });
+  }
+
+  console.log("recipe", recipe);
+
+  res.json({ recipe });
+};
+
 export const deleteRecipe = async (req: Request, res: Response) => {
   const recipeName = req.params.name;
   console.log("snarf", recipeName);
@@ -95,6 +109,7 @@ export const editRecipe = async (req: Request, res: Response) => {
     directions,
     cuisine,
     image,
+    imageName,
   } = req.body;
 
   const existingRecipe = await Recipe.findById(id);
@@ -102,6 +117,30 @@ export const editRecipe = async (req: Request, res: Response) => {
   if (!existingRecipe) {
     res.json({ err: "recipe no longer exists" });
   } else {
+    let image_url;
+    if (image) {
+      try {
+        const res = await axiosInstance.post("images", {
+          image,
+          filename: imageName,
+          objectname: imageName,
+        });
+        console.log(res);
+      } catch (err) {
+        console.log(err);
+      }
+
+      try {
+        const res = await axiosInstance.get(
+          `images?filename=${imageName}&objectname=${imageName}`,
+          { proxy: false }
+        );
+        image_url = res.data.split("?")[0];
+        console.log(image_url);
+      } catch (err) {
+        console.log(err);
+      }
+    }
     await existingRecipe?.updateOne({
       name,
       cookTime,

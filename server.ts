@@ -18,6 +18,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:3000",
+      "http://localhost:3000/",
       "http://localhost:8000/google",
       "https://accounts.google.com/o/oauth2/v2/auth*",
     ],

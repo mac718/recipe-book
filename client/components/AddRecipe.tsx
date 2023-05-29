@@ -50,7 +50,6 @@ const AddRecipe = ({
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("recipeToEdit", recipeToEdit);
     if (editMode) {
       try {
         setShowSpinner(true);
@@ -65,6 +64,7 @@ const AddRecipe = ({
             ingredients,
             directions,
             image,
+            imageName,
           },
           { withCredentials: true }
         );
