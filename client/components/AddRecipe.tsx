@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import styles from "../styles/AddRecipe.module.css";
 import Spinner from "./Spinner";
 import { Recipe } from "@component/pages/recipes";
@@ -19,15 +19,22 @@ const AddRecipe = ({
   recipeToEditInfo,
   recipeToEdit,
 }: AddRecipeProps) => {
-  const [name, setName] = useState("");
-  const [cuisine, setCuisine] = useState("");
-  const [prepTime, setPrepTime] = useState("");
-  const [cookTime, setCookTime] = useState("");
-  const [ingredients, setIngredients] = useState("");
-  const [directions, setDirections] = useState("");
+  // const [name, setName] = useState("");
+  // const [cuisine, setCuisine] = useState("");
+  // const [prepTime, setPrepTime] = useState("");
+  // const [cookTime, setCookTime] = useState("");
+  // const [ingredients, setIngredients] = useState("");
+  // const [directions, setDirections] = useState("");
   const [image, setImage] = useState<any>();
   const [imageName, setImageName] = useState("");
   const [showSpinner, setShowSpinner] = useState(false);
+
+  const nameRef = useRef<HTMLInputElement>(null);
+  const cuisineRef = useRef<HTMLInputElement>(null);
+  const prepTimeRef = useRef<HTMLInputElement>(null);
+  const cookTimeRef = useRef<HTMLInputElement>(null);
+  const ingredientsRef = useRef<HTMLTextAreaElement>(null);
+  const directionsRef = useRef<HTMLTextAreaElement>(null);
 
   const ingredientsPlaceholder =
     "Enter ingredients separated by '/'. For example: eggs/butter/salt...";
@@ -54,15 +61,15 @@ const AddRecipe = ({
       try {
         setShowSpinner(true);
         await axios.put(
-          "http://localhost:8000/editRecipe",
+          "http://localhost:8000/recipes/editRecipe",
           {
             id: recipeToEdit,
-            name,
-            cuisine,
-            prepTime,
-            cookTime,
-            ingredients,
-            directions,
+            name: nameRef.current?.value,
+            cuisine: cuisineRef.current?.value,
+            prepTime: prepTimeRef.current?.value,
+            cookTime: cookTimeRef.current?.value,
+            ingredients: ingredientsRef.current?.value,
+            directions: directionsRef.current?.value,
             image,
             imageName,
           },
@@ -78,14 +85,14 @@ const AddRecipe = ({
       try {
         setShowSpinner(true);
         await axios.post(
-          "http://localhost:8000/addRecipe",
+          "http://localhost:8000/recipes/addRecipe",
           {
-            name,
-            cuisine,
-            prepTime,
-            cookTime,
-            ingredients,
-            directions,
+            name: nameRef.current?.value,
+            cuisine: cuisineRef.current?.value,
+            prepTime: prepTimeRef.current?.value,
+            cookTime: cookTimeRef.current?.value,
+            ingredients: ingredientsRef.current?.value,
+            directions: directionsRef.current?.value,
             image,
             imageName,
           },
@@ -110,9 +117,10 @@ const AddRecipe = ({
           <input
             type="text"
             id="name"
-            onChange={(event: ChangeEvent<HTMLInputElement>) =>
-              setName(event.target.value)
-            }
+            // onChange={(event: ChangeEvent<HTMLInputElement>) =>
+            //   setName(event.target.value)
+            // }
+            ref={nameRef}
             defaultValue={recipeToEditInfo?.name}
           />
         </div>
@@ -121,9 +129,10 @@ const AddRecipe = ({
           <input
             type="text"
             id="cuisine"
-            onChange={(event: ChangeEvent<HTMLInputElement>) =>
-              setCuisine(event.target.value)
-            }
+            // onChange={(event: ChangeEvent<HTMLInputElement>) =>
+            //   setCuisine(event.target.value)
+            // }
+            ref={cuisineRef}
             defaultValue={recipeToEditInfo?.cuisine}
           />
         </div>
@@ -132,9 +141,10 @@ const AddRecipe = ({
           <input
             type="text"
             id="prep-time"
-            onChange={(event: ChangeEvent<HTMLInputElement>) =>
-              setPrepTime(event.target.value)
-            }
+            // onChange={(event: ChangeEvent<HTMLInputElement>) =>
+            //   setPrepTime(event.target.value)
+            // }
+            ref={prepTimeRef}
             defaultValue={recipeToEditInfo?.prepTime}
           />
         </div>
@@ -143,9 +153,10 @@ const AddRecipe = ({
           <input
             type="text"
             id="cook-time"
-            onChange={(event: ChangeEvent<HTMLInputElement>) =>
-              setCookTime(event.target.value)
-            }
+            // onChange={(event: ChangeEvent<HTMLInputElement>) =>
+            //   setCookTime(event.target.value)
+            // }
+            ref={cookTimeRef}
             defaultValue={recipeToEditInfo?.cookTime}
           />
         </div>
@@ -165,9 +176,10 @@ const AddRecipe = ({
             cols={30}
             id="ingredients"
             placeholder={ingredientsPlaceholder}
-            onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
-              setIngredients(event.target.value)
-            }
+            // onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
+            //   setIngredients(event.target.value)
+            // }
+            ref={ingredientsRef}
             defaultValue={recipeToEditInfo?.ingredients}
           />
         </div>
@@ -178,9 +190,10 @@ const AddRecipe = ({
             cols={30}
             id="directions"
             placeholder={directionPlaceholder}
-            onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
-              setDirections(event.target.value)
-            }
+            // onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
+            //   setDirections(event.target.value)
+            // }
+            ref={directionsRef}
             defaultValue={recipeToEditInfo?.directions}
           />
         </div>

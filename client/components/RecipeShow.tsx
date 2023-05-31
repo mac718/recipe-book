@@ -26,10 +26,47 @@ const RecipeShow = ({
   user_email,
   image,
 }: RecipeShowProps) => {
-  console.log(name);
+  let splitDirections;
+  let splitIngredients;
+  let directionListItems: JSX.Element[] = [];
+  let ingredientsListItems: JSX.Element[] = [];
+  if (directions) {
+    splitDirections = directions.split("/");
+    directionListItems = splitDirections.map((item) => (
+      <li key={item}>{item.trim()}</li>
+    ));
+  }
+
+  if (ingredients) {
+    splitIngredients = ingredients.split("/");
+    ingredientsListItems = splitIngredients.map((item) => (
+      <li key={item}>{item.trim()}</li>
+    ));
+  }
   return (
-    <div>
-      <Image loader={() => image} alt="" src={image} fill={true} />
+    <div className={styles.main}>
+      <div className={styles.search}></div>
+      <div className={styles.recipe}>
+        <h1 className={styles["recipe-name"]}>{name}</h1>
+        <div className={styles["recipe-image"]}>
+          <Image loader={() => image} alt="" src={image} fill={true} />
+        </div>
+        <div className={styles.info}>
+          <div>Cuisine: {cuisine}</div>
+          <div>Prep Time: {prepTime}</div>
+          <div>Cook Time: {cookTime}</div>
+        </div>
+        <div className={styles.ingredients}>
+          <div>Ingredients</div>
+          <ol>{ingredientsListItems}</ol>
+        </div>
+        <div>
+          <div className={styles.directions}>
+            <div>Directions</div>
+            <ol>{directionListItems}</ol>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

@@ -21,6 +21,7 @@ export type Recipe = {
 
 type RecipesPageProps = {
   user_email: string;
+  recipes: Recipe[];
 };
 
 const RecipesPage = ({ user_email }: RecipesPageProps) => {
@@ -132,7 +133,6 @@ const RecipesPage = ({ user_email }: RecipesPageProps) => {
           id="search-receipes"
           className={styles.search}
           placeholder="Find a receipe! Search recipes by name, cuisine, or ingredients..."
-          //value={searchTerms}
           onChange={handleSearchTermChange}
           ref={searchBarRef}
         />
@@ -175,6 +175,22 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     };
   }
+
+  // let allRecipes: any;
+
+  // try {
+  //   allRecipes = await axios.get(
+  //     `http://localhost:8000/recipes/getAllRecipes`,
+  //     {
+  //       headers: {
+  //         Cookie: context.req.cookies.user,
+  //       },
+  //     } //${currentRecipeId}
+  //   );
+  // } catch (err) {
+  //   console.log(err);
+  // }
+
   return {
     props: {
       user_email,

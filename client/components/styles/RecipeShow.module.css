@@ -1,0 +1,46 @@
+.main {
+  display: flex;
+  justify-content: center;
+}
+
+.recipe {
+  width: 50%;
+  height: 100vh;
+}
+
+.recipe-name {
+  text-align: center;
+  color: #3b707d;
+}
+
+.recipe-image {
+  position: relative;
+  height: 50vh;
+  margin: auto;
+  border-radius: 10px;
+}
+
+.info,
+.ingredients,
+.directions {
+  border-radius: 10px;
+  padding: 10px;
+  margin: 5px;
+}
+
+.info {
+  background: lightgray;
+}
+
+.ingredients {
+  background: lightblue;
+}
+
+.directions {
+  background: lightgoldenrodyellow;
+}
+
+.search {
+  width: 20%;
+  height: 100vh;
+}

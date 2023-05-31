@@ -64,9 +64,13 @@ export const addRecipe = async (req: Request, res: Response) => {
 };
 
 export const getRecipes = async (req: Request, res: Response) => {
+  console.log("lkjlkjlkj", req.headers);
+  //const user = req.headers.cookie;
   const user = req.user;
+  console.log("lkjlkjlkj", user);
   try {
-    const recipes = await Recipe.find({ user_email: user!.google.email });
+    const recipes = await Recipe.find({ user_email: user?.google.email });
+    console.log("momomom", recipes);
     res.json(recipes);
   } catch (err) {
     res.json(err);
@@ -111,6 +115,8 @@ export const editRecipe = async (req: Request, res: Response) => {
     image,
     imageName,
   } = req.body;
+
+  console.log("body", req.body);
 
   const existingRecipe = await Recipe.findById(id);
 
