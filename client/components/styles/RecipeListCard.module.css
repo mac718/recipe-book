@@ -1,0 +1,11 @@
+.card {
+  display: flex;
+  width: 95%;
+  height: 2rem;
+  padding: 5px;
+}
+
+.image {
+  width: 20%;
+  position: relative;
+}

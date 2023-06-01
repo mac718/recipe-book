@@ -4,8 +4,9 @@
 }
 
 .recipe {
-  width: 50%;
   height: 100vh;
+  width: 90%;
+  margin: auto;
 }
 
 .recipe-name {
@@ -18,6 +19,7 @@
   height: 50vh;
   width: 50%;
   margin: auto;
+  overflow: hidden;
   border-radius: 10px;
 }
 

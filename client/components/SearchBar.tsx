@@ -4,11 +4,13 @@ import styles from "./styles/SearchBar.module.css";
 type SearchBarProps = {
   handleSearchTermChange: (event: ChangeEvent<HTMLInputElement>) => void;
   searchBarRef: RefObject<HTMLInputElement>;
+  handleClear: () => void;
 };
 
 const SearchBar = ({
   handleSearchTermChange,
   searchBarRef,
+  handleClear,
 }: SearchBarProps) => {
   //const searchBarRef = useRef<HTMLInputElement>(null); //null eliminates type error
   return (
@@ -23,10 +25,11 @@ const SearchBar = ({
       />
       <button
         className={styles.clear}
-        onClick={() => {
-          if (searchBarRef.current) searchBarRef.current.value = "";
-          //setRecipes(allRecipes);
-        }}
+        // onClick={() => {
+        //   if (searchBarRef.current) searchBarRef.current.value = "";
+        //   //setRecipes(allRecipes);
+        // }}
+        onClick={handleClear}
       >
         x
       </button>

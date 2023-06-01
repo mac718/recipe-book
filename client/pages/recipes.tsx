@@ -114,6 +114,10 @@ const RecipesPage = ({ user_email }: RecipesPageProps) => {
     )[0];
   }
 
+  const handleClearSearchBar = () => {
+    setRecipes(allRecipes);
+  };
+
   return (
     <div className={styles.recipes}>
       {openRecipeForm && (
@@ -131,6 +135,7 @@ const RecipesPage = ({ user_email }: RecipesPageProps) => {
       <SearchBar
         handleSearchTermChange={handleSearchTermChange}
         searchBarRef={searchBarRef}
+        handleClear={handleClearSearchBar}
       />
       {/* <div className={styles["search-container"]}>
         <input
