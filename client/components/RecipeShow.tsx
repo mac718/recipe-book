@@ -49,7 +49,13 @@ const RecipeShow = ({
       <div className={styles.recipe}>
         <h1 className={styles["recipe-name"]}>{name}</h1>
         <div className={styles["recipe-image"]}>
-          <Image loader={() => image} alt="" src={image} fill={true} />
+          <Image
+            loader={() => image}
+            alt=""
+            src={image}
+            fill={true}
+            priority={true}
+          />
         </div>
         <div className={styles.info}>
           <div>Cuisine: {cuisine}</div>

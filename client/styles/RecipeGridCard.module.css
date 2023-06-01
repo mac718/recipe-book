@@ -3,11 +3,18 @@
   width: 10rem;
 }
 
+.box a {
+  text-decoration: none;
+  color: #333;
+}
+
 .pic {
   background-color: lightgray;
   height: 80%;
   width: 100%;
   position: relative;
+  overflow: hidden;
+  border-radius: 5px;
 }
 
 .name {

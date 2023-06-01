@@ -132,11 +132,14 @@ const RecipesPage = ({ user_email }: RecipesPageProps) => {
         </Modal>
       )}
       <h1 className={styles.heading}>Your Recipes</h1>
-      <SearchBar
-        handleSearchTermChange={handleSearchTermChange}
-        searchBarRef={searchBarRef}
-        handleClear={handleClearSearchBar}
-      />
+      <div className={styles["search-container"]}>
+        <SearchBar
+          handleSearchTermChange={handleSearchTermChange}
+          searchBarRef={searchBarRef}
+          handleClear={handleClearSearchBar}
+          placeholder="Find a receipe! Search recipes by name, cuisine, or ingredients..."
+        />
+      </div>
       {/* <div className={styles["search-container"]}>
         <input
           type="text"

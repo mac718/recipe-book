@@ -5,12 +5,14 @@ type SearchBarProps = {
   handleSearchTermChange: (event: ChangeEvent<HTMLInputElement>) => void;
   searchBarRef: RefObject<HTMLInputElement>;
   handleClear: () => void;
+  placeholder: string;
 };
 
 const SearchBar = ({
   handleSearchTermChange,
   searchBarRef,
   handleClear,
+  placeholder,
 }: SearchBarProps) => {
   //const searchBarRef = useRef<HTMLInputElement>(null); //null eliminates type error
   return (
@@ -19,18 +21,11 @@ const SearchBar = ({
         type="text"
         id="search-receipes"
         className={styles.search}
-        placeholder="Find a receipe! Search recipes by name, cuisine, or ingredients..."
+        placeholder={placeholder}
         onChange={handleSearchTermChange}
         ref={searchBarRef}
       />
-      <button
-        className={styles.clear}
-        // onClick={() => {
-        //   if (searchBarRef.current) searchBarRef.current.value = "";
-        //   //setRecipes(allRecipes);
-        // }}
-        onClick={handleClear}
-      >
+      <button className={styles.clear} onClick={handleClear}>
         x
       </button>
     </div>

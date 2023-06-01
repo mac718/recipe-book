@@ -7,6 +7,8 @@ import SearchBar from "@component/components/SearchBar";
 import styles from "../../styles/RecipeViewPage.module.css";
 import RecipeListCard from "@component/components/RecipeListCard";
 import { useRouter } from "next/router";
+import Modal from "@component/components/Modal";
+import AddRecipe from "@component/components/AddRecipe";
 
 type RecipePageProps = {
   //recipes: Recipe[];
@@ -27,6 +29,9 @@ const RecipePage = ({ currentRecipeId }: RecipePageProps) => {
     user_email: "",
     image: "",
   });
+  const [openRecipeForm, setOpenRecipeForm] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  const [recipeToEdit, setRecipeToEdit] = useState<string | null>(null);
 
   const getRecipes = async () => {
     let allRecipes: any;
@@ -37,13 +42,12 @@ const RecipePage = ({ currentRecipeId }: RecipePageProps) => {
           withCredentials: true,
         }
       );
-
-      console.log("uhhh", allRecipes);
     } catch (err) {
       console.log(err);
     }
     console.log("allrecipes", currentRecipeId);
     setAllRecipes(allRecipes.data);
+    setFilteredRecipes(allRecipes.data);
 
     setCurrentRecipe(
       allRecipes.data.filter((rec: Recipe) => rec._id === currentRecipeId)[0]
@@ -55,7 +59,6 @@ const RecipePage = ({ currentRecipeId }: RecipePageProps) => {
   }, [currentRecipeId]);
 
   const handleSearchTermChange = (event: ChangeEvent<HTMLInputElement>) => {
-    console.log(searchBarRef.current);
     let filteredRecipes;
     if (
       searchBarRef &&
@@ -83,21 +86,57 @@ const RecipePage = ({ currentRecipeId }: RecipePageProps) => {
   const handleClearSearch = () => {
     setFilteredRecipes(allRecipes);
   };
-
+  console.log("filtered", filteredRecipes);
   const searchBarRef = useRef<HTMLInputElement>(null); //null eliminates type error
 
+  const onOpenEditForm = (rec: string) => {
+    setEditMode(true);
+    setRecipeToEdit(rec);
+    setOpenRecipeForm(true);
+  };
+
+  const onClose = () => {
+    setOpenRecipeForm(false);
+  };
+
   const recipeListCards = filteredRecipes.map((recipe) => (
-    <RecipeListCard recipe={recipe} />
+    <RecipeListCard
+      recipe={recipe}
+      onOpenEditForm={onOpenEditForm}
+      getRecipes={getRecipes}
+    />
   ));
+
+  let recipeToEditInfo = null;
+  if (recipeToEdit) {
+    recipeToEditInfo = allRecipes?.filter(
+      (recipe) => recipe._id === recipeToEdit
+    )[0];
+  }
 
   return (
     <div className={styles.main}>
+      {openRecipeForm && (
+        <Modal onClose={onClose}>
+          <AddRecipe
+            onClose={onClose}
+            getRecipes={getRecipes}
+            editMode={editMode}
+            recipeToEdit={recipeToEdit}
+            recipeToEditInfo={recipeToEditInfo}
+          />
+        </Modal>
+      )}
       <div className={styles.search}>
-        <SearchBar
-          handleSearchTermChange={handleSearchTermChange}
-          searchBarRef={searchBarRef}
-          handleClear={handleClearSearch}
-        />
+        <div className={styles["search-container"]}>
+          <h2>Your Recipes</h2>
+          <SearchBar
+            handleSearchTermChange={handleSearchTermChange}
+            searchBarRef={searchBarRef}
+            handleClear={handleClearSearch}
+            placeholder="Search recipes..."
+          />
+        </div>
         {recipeListCards}
       </div>
       <div className={styles.recipe}>

@@ -55,7 +55,13 @@ const RecipeGridCard = ({
       <div className={styles.box}>
         <Link href={`/recipe/${recipe._id}`}>
           <div className={styles.pic}>
-            <Image loader={() => image} alt="" src={image} fill={true} />
+            <Image
+              loader={() => image}
+              alt=""
+              src={image}
+              fill={true}
+              priority={true}
+            />
           </div>
           <div className={styles.name}>{name}</div>
         </Link>

@@ -9,8 +9,14 @@
 
 .search {
   margin-top: 50px;
-  width: 20%;
+  padding: 5px;
+  width: 25%;
   height: 100vh;
   border: 0.5px solid;
+  margin: auto;
+}
+
+.search-container {
+  width: 90%;
   margin: auto;
 }
