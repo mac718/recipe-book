@@ -57,12 +57,12 @@ const RecipeShow = ({
           <div>Cook Time: {cookTime}</div>
         </div>
         <div className={styles.ingredients}>
-          <div>Ingredients</div>
+          <div className={styles["section-heading"]}>Ingredients</div>
           <ol>{ingredientsListItems}</ol>
         </div>
         <div>
           <div className={styles.directions}>
-            <div>Directions</div>
+            <div className={styles["section-heading"]}>Directions</div>
             <ol>{directionListItems}</ol>
           </div>
         </div>

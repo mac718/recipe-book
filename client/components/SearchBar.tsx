@@ -1,7 +1,16 @@
-import { useRef } from "react";
+import { ChangeEvent, Ref, RefObject, useRef } from "react";
+import styles from "./styles/SearchBar.module.css";
 
-const SearchBar = ({ handleSearchTermChange, setRecipes }) => {
-  const searchBarRef = useRef<HTMLInputElement>(null); //null eliminates type error
+type SearchBarProps = {
+  handleSearchTermChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  searchBarRef: RefObject<HTMLInputElement>;
+};
+
+const SearchBar = ({
+  handleSearchTermChange,
+  searchBarRef,
+}: SearchBarProps) => {
+  //const searchBarRef = useRef<HTMLInputElement>(null); //null eliminates type error
   return (
     <div className={styles["search-container"]}>
       <input
@@ -16,7 +25,7 @@ const SearchBar = ({ handleSearchTermChange, setRecipes }) => {
         className={styles.clear}
         onClick={() => {
           if (searchBarRef.current) searchBarRef.current.value = "";
-          setRecipes(allRecipes);
+          //setRecipes(allRecipes);
         }}
       >
         x

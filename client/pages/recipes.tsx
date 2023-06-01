@@ -6,6 +6,7 @@ import styles from "../styles/RecipesPage.module.css";
 import axios from "axios";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
+import SearchBar from "@component/components/SearchBar";
 
 export type Recipe = {
   _id: string;
@@ -127,7 +128,11 @@ const RecipesPage = ({ user_email }: RecipesPageProps) => {
         </Modal>
       )}
       <h1 className={styles.heading}>Your Recipes</h1>
-      <div className={styles["search-container"]}>
+      <SearchBar
+        handleSearchTermChange={handleSearchTermChange}
+        searchBarRef={searchBarRef}
+      />
+      {/* <div className={styles["search-container"]}>
         <input
           type="text"
           id="search-receipes"
@@ -145,7 +150,7 @@ const RecipesPage = ({ user_email }: RecipesPageProps) => {
         >
           x
         </button>
-      </div>
+      </div> */}
 
       <button
         className={styles["add-button"]}

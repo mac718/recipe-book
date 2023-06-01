@@ -1,0 +1,28 @@
+.search-container {
+  position: relative;
+  width: 50%;
+  margin: 0 auto 20px auto;
+}
+
+.search {
+  display: block;
+  width: 100%;
+  line-height: 200%;
+  border: 0.5px solid darkgray;
+  border-radius: 15px;
+  padding: 5px;
+}
+
+.clear {
+  position: absolute;
+  border: none;
+  display: block;
+  height: 90%;
+  width: 15px;
+  right: 5px;
+  top: 1px;
+  bottom: 0;
+  background-color: white;
+  outline: none;
+  cursor: pointer;
+}

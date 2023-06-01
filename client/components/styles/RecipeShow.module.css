@@ -16,6 +16,7 @@
 .recipe-image {
   position: relative;
   height: 50vh;
+  width: 50%;
   margin: auto;
   border-radius: 10px;
 }
@@ -43,4 +44,8 @@
 .search {
   width: 20%;
   height: 100vh;
+}
+
+.section-heading {
+  font-weight: bold;
 }

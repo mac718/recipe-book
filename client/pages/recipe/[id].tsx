@@ -2,7 +2,8 @@ import RecipeShow from "@component/components/RecipeShow";
 import { Recipe } from "../recipes";
 import { GetServerSideProps } from "next";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
+import SearchBar from "@component/components/SearchBar";
 type RecipePageProps = {
   //recipes: Recipe[];
   currentRecipe: Recipe;
@@ -48,10 +49,42 @@ const RecipePage = ({ currentRecipeId }: RecipePageProps) => {
     getRecipes();
   }, []);
 
+  const handleSearchTermChange = (event: ChangeEvent<HTMLInputElement>) => {
+    console.log(searchBarRef.current);
+    let filteredRecipes;
+    if (
+      searchBarRef &&
+      searchBarRef.current &&
+      searchBarRef.current.value !== ""
+    ) {
+      filteredRecipes = recipes?.filter(
+        (recipe) =>
+          recipe.name
+            .toLowerCase()
+            .includes(searchBarRef.current!.value.toLowerCase()) ||
+          recipe.ingredients
+            .toLowerCase()
+            .includes(searchBarRef.current!.value.toLowerCase()) ||
+          recipe.cuisine
+            .toLowerCase()
+            .includes(searchBarRef.current!.value.toLowerCase())
+      );
+    } else {
+      filteredRecipes = recipes;
+    }
+    setRecipes(filteredRecipes);
+  };
+
+  const searchBarRef = useRef<HTMLInputElement>(null); //null eliminates type error
+
   return (
-    <>
+    <div>
+      <SearchBar
+        handleSearchTermChange={handleSearchTermChange}
+        searchBarRef={searchBarRef}
+      />
       <RecipeShow {...currentRecipe} />
-    </>
+    </div>
   );
 };
 
