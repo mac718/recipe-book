@@ -92,11 +92,10 @@ export const getRecipe = async (req: Request, res: Response) => {
 };
 
 export const deleteRecipe = async (req: Request, res: Response) => {
-  const recipeName = req.params.name;
-  console.log("snarf", recipeName);
+  const recipeId = req.params.id;
 
   try {
-    await Recipe.deleteOne({ name: recipeName });
+    await Recipe.deleteOne({ _id: recipeId });
     res.sendStatus(200);
   } catch (err) {
     res.json(err);

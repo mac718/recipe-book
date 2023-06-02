@@ -44,11 +44,7 @@ const RecipeGridCard = ({
     <>
       {openDeleteWarning && (
         <Modal onClose={handleModalClose}>
-          <DeleteWarning
-            name={name}
-            onClose={onClose}
-            getRecipes={getRecipes}
-          />
+          <DeleteWarning id={_id} onClose={onClose} getRecipes={getRecipes} />
         </Modal>
       )}
 

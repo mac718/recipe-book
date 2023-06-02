@@ -12,7 +12,7 @@ export interface IRecipe {
 }
 
 const RecipeSchema = new mongoose.Schema<IRecipe>({
-  name: String,
+  name: { type: String, required: true },
   prepTime: String,
   cookTime: String,
   ingredients: String,

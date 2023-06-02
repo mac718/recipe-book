@@ -29,7 +29,7 @@ const RecipeListCard = ({
       {openDeleteWarning && (
         <Modal onClose={handleModalClose}>
           <DeleteWarning
-            name={recipe.name}
+            id={recipe._id}
             onClose={handleModalClose}
             getRecipes={getRecipes}
           />

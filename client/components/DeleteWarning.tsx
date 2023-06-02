@@ -2,15 +2,15 @@ import axios from "axios";
 import styles from "./styles/DeleteWarning.module.css";
 
 type DeleteWarningProps = {
-  name: string;
+  id: string;
   getRecipes: () => void;
   onClose: () => void;
 };
 
-const DeleteWarning = ({ name, getRecipes, onClose }: DeleteWarningProps) => {
+const DeleteWarning = ({ id, getRecipes, onClose }: DeleteWarningProps) => {
   const handleDeleteRecipe = async () => {
     try {
-      await axios.delete(`http://localhost:8000/${name}`);
+      await axios.delete(`http://localhost:8000/recipes/${id}`);
       onClose();
       getRecipes();
     } catch (err) {
@@ -25,7 +25,9 @@ const DeleteWarning = ({ name, getRecipes, onClose }: DeleteWarningProps) => {
         <button className={styles.yes} onClick={handleDeleteRecipe}>
           yes
         </button>
-        <button className={styles.cancel}>cancel</button>
+        <button className={styles.cancel} onClick={onClose}>
+          cancel
+        </button>
       </div>
     </div>
   );
