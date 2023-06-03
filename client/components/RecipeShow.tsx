@@ -3,6 +3,9 @@ import styles from "./styles/RecipeShow.module.css";
 import { useEffect, useState } from "react";
 import { GetServerSideProps } from "next";
 import Image from "next/image";
+import { GrEdit } from "react-icons/gr";
+import { RiDeleteBin2Line } from "react-icons/ri";
+import EditDelete from "./EditDelete";
 
 type RecipeShowProps = {
   _id: string;
@@ -14,6 +17,8 @@ type RecipeShowProps = {
   cuisine: string;
   user_email: string;
   image: string;
+  onOpenEditForm: (rec: string) => void;
+  onOpenDeleteWarning: () => void;
 };
 const RecipeShow = ({
   _id,
@@ -25,6 +30,8 @@ const RecipeShow = ({
   cuisine,
   user_email,
   image,
+  onOpenDeleteWarning,
+  onOpenEditForm,
 }: RecipeShowProps) => {
   let splitDirections;
   let splitIngredients;
@@ -43,38 +50,66 @@ const RecipeShow = ({
       <li key={item}>{item.trim()}</li>
     ));
   }
-  return (
-    <div className={styles.main}>
-      <div className={styles.search}></div>
-      <div className={styles.recipe}>
-        <h1 className={styles["recipe-name"]}>{name}</h1>
-        <div className={styles["recipe-image"]}>
-          <Image
-            loader={() => image}
-            alt=""
-            src={image}
-            fill={true}
-            priority={true}
-          />
-        </div>
-        <div className={styles.info}>
-          <div>Cuisine: {cuisine}</div>
-          <div>Prep Time: {prepTime}</div>
-          <div>Cook Time: {cookTime}</div>
-        </div>
-        <div className={styles.ingredients}>
-          <div className={styles["section-heading"]}>Ingredients</div>
-          <ol>{ingredientsListItems}</ol>
-        </div>
-        <div>
-          <div className={styles.directions}>
-            <div className={styles["section-heading"]}>Directions</div>
-            <ol>{directionListItems}</ol>
+  if (_id) {
+    return (
+      <div className={styles.main}>
+        <div className={styles.recipe}>
+          <div className={styles["recipe-image"]}>
+            <Image
+              loader={() => image}
+              alt=""
+              src={image}
+              fill={true}
+              priority={true}
+            />
+          </div>
+          {/* <div className={styles.info}>
+            <h1 className={styles["recipe-name"]}>{name}</h1>
+            <div className={styles.options}>
+              <div className={styles["icon-container"]}>
+                <div className={styles.tooltip}>
+                  <span className={styles.tooltiptext}>Edit Recipe</span>
+                  <GrEdit onClick={() => onOpenEditForm(_id)} />
+                </div>
+              </div>
+              <div
+                className={styles["icon-container"]}
+                onClick={() => setOpenDeleteWarning(true)}
+              >
+                <div className={styles.tooltip}>
+                  <span className={styles.tooltiptext}>Delete Recipe</span>
+                  <RiDeleteBin2Line />
+                </div>
+              </div>
+            </div> */}
+          <div className={styles.info}>
+            <EditDelete
+              recipe={_id}
+              onOpenEditForm={onOpenEditForm}
+              onOpenDeleteForm={onOpenDeleteWarning}
+            />
+            <div className={styles.stats}>
+              <div>Cuisine: {cuisine}</div>
+              <div>Prep Time: {prepTime}</div>
+              <div>Cook Time: {cookTime}</div>
+            </div>
+          </div>
+          <div className={styles.ingredients}>
+            <div className={styles["section-heading"]}>Ingredients</div>
+            <ol>{ingredientsListItems}</ol>
+          </div>
+          <div>
+            <div className={styles.directions}>
+              <div className={styles["section-heading"]}>Directions</div>
+              <ol>{directionListItems}</ol>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    return <div className={styles["no-recipe"]}>Recipe no longer exists.</div>;
+  }
 };
 
 export default RecipeShow;

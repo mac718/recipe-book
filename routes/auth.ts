@@ -18,5 +18,3 @@ auth
       res.redirect("http://localhost:3000/recipes");
     }
   );
-
-auth.route("/zeroMQ").post(zeroMQ);

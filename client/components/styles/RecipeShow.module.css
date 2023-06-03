@@ -32,7 +32,12 @@
 }
 
 .info {
-  background: lightgray;
+  /* background: lightgray; */
+}
+
+.stats {
+  display: flex;
+  justify-content: space-between;
 }
 
 .ingredients {
@@ -53,4 +58,58 @@
   font-size: 2rem;
   text-align: center;
   color: #333;
+}
+
+.no-recipe {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+}
+
+.options {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.icon-container {
+  margin: 5px;
+  border-radius: 50%;
+  background-color: lightgray;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  transition: visibility 0s linear 1s;
+  visibility: visible;
 }

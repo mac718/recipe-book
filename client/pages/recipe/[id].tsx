@@ -9,6 +9,8 @@ import RecipeListCard from "@component/components/RecipeListCard";
 import { useRouter } from "next/router";
 import Modal from "@component/components/Modal";
 import AddRecipe from "@component/components/AddRecipe";
+import DeleteWarning from "@component/components/DeleteWarning";
+import { on } from "events";
 
 type RecipePageProps = {
   //recipes: Recipe[];
@@ -30,6 +32,7 @@ const RecipePage = ({ currentRecipeId }: RecipePageProps) => {
     image: "",
   });
   const [openRecipeForm, setOpenRecipeForm] = useState(false);
+  const [openDeleteWarning, setOpenDeleteWarning] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [recipeToEdit, setRecipeToEdit] = useState<string | null>(null);
 
@@ -99,6 +102,14 @@ const RecipePage = ({ currentRecipeId }: RecipePageProps) => {
     setOpenRecipeForm(false);
   };
 
+  const onOpenDeleteWarning = () => {
+    setOpenDeleteWarning(true);
+  };
+
+  const onCloseDeleteWarning = () => {
+    setOpenDeleteWarning(false);
+  };
+
   const recipeListCards = filteredRecipes.map((recipe) => (
     <RecipeListCard
       recipe={recipe}
@@ -127,6 +138,16 @@ const RecipePage = ({ currentRecipeId }: RecipePageProps) => {
           />
         </Modal>
       )}
+
+      {openDeleteWarning && (
+        <Modal onClose={onCloseDeleteWarning}>
+          <DeleteWarning
+            id={currentRecipeId}
+            onClose={onCloseDeleteWarning}
+            getRecipes={getRecipes}
+          />
+        </Modal>
+      )}
       <div className={styles.search}>
         <div className={styles["search-container"]}>
           <h2>Your Recipes</h2>
@@ -140,7 +161,11 @@ const RecipePage = ({ currentRecipeId }: RecipePageProps) => {
         {recipeListCards}
       </div>
       <div className={styles.recipe}>
-        <RecipeShow {...currentRecipe} />
+        <RecipeShow
+          {...currentRecipe}
+          onOpenEditForm={onOpenEditForm}
+          onOpenDeleteWarning={onOpenDeleteWarning}
+        />
       </div>
     </div>
   );

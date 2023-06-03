@@ -7,6 +7,7 @@ import { RiDeleteBin2Line } from "react-icons/ri";
 import { useState } from "react";
 import DeleteWarning from "./DeleteWarning";
 import Modal from "./Modal";
+import EditDelete from "./EditDelete";
 
 type RecipeListCardProps = {
   recipe: Recipe;
@@ -23,6 +24,10 @@ const RecipeListCard = ({
 
   const handleModalClose = () => {
     setOpenDeleteWarning(false);
+  };
+
+  const handleOpenDeletWarning = () => {
+    setOpenDeleteWarning(true);
   };
   return (
     <>
@@ -51,7 +56,12 @@ const RecipeListCard = ({
 
         <div className={styles.name}>
           <Link href={`/recipe/${recipe._id}`}>{recipe.name}</Link>
-          <div className={styles.options}>
+          <EditDelete
+            recipe={recipe._id}
+            onOpenEditForm={onOpenEditForm}
+            onOpenDeleteForm={handleOpenDeletWarning}
+          />
+          {/* <div className={styles.options}>
             <div className={styles["icon-container"]}>
               <div className={styles.tooltip}>
                 <span className={styles.tooltiptext}>Edit Recipe</span>
@@ -67,7 +77,7 @@ const RecipeListCard = ({
                 <RiDeleteBin2Line />
               </div>
             </div>
-          </div>
+          </div>*/}
         </div>
       </div>
     </>
