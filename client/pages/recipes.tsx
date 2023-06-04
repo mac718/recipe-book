@@ -87,7 +87,6 @@ const RecipesPage = ({ user_email }: RecipesPageProps) => {
         withCredentials: true,
       });
     } catch (err) {
-      router.push("/");
       console.log(err);
     }
     setAllRecipes(recipes ? recipes.data : []);
@@ -105,7 +104,6 @@ const RecipesPage = ({ user_email }: RecipesPageProps) => {
             recipe={recipe}
             getRecipes={getRecipes}
             onOpenEditForm={onOpenEditForm}
-            onClose={onClose}
             key={recipe._id}
             onShowSpinner={onShowSpinner}
           />
@@ -176,21 +174,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     };
   }
-
-  // let allRecipes: any;
-
-  // try {
-  //   allRecipes = await axios.get(
-  //     `http://localhost:8000/recipes/getAllRecipes`,
-  //     {
-  //       headers: {
-  //         Cookie: context.req.cookies.user,
-  //       },
-  //     } //${currentRecipeId}
-  //   );
-  // } catch (err) {
-  //   console.log(err);
-  // }
 
   return {
     props: {

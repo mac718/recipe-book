@@ -2,8 +2,6 @@ import { Recipe } from "@component/pages/recipes";
 import styles from "./styles/RecipeListCard.module.css";
 import Image from "next/image";
 import Link from "next/link";
-import { GrEdit } from "react-icons/gr";
-import { RiDeleteBin2Line } from "react-icons/ri";
 import { useState } from "react";
 import DeleteWarning from "./DeleteWarning";
 import Modal from "./Modal";
@@ -61,23 +59,6 @@ const RecipeListCard = ({
             onOpenEditForm={onOpenEditForm}
             onOpenDeleteForm={handleOpenDeletWarning}
           />
-          {/* <div className={styles.options}>
-            <div className={styles["icon-container"]}>
-              <div className={styles.tooltip}>
-                <span className={styles.tooltiptext}>Edit Recipe</span>
-                <GrEdit onClick={() => onOpenEditForm(recipe._id)} />
-              </div>
-            </div>
-            <div
-              className={styles["icon-container"]}
-              onClick={() => setOpenDeleteWarning(true)}
-            >
-              <div className={styles.tooltip}>
-                <span className={styles.tooltiptext}>Delete Recipe</span>
-                <RiDeleteBin2Line />
-              </div>
-            </div>
-          </div>*/}
         </div>
       </div>
     </>

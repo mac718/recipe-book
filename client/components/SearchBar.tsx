@@ -14,7 +14,6 @@ const SearchBar = ({
   handleClear,
   placeholder,
 }: SearchBarProps) => {
-  //const searchBarRef = useRef<HTMLInputElement>(null); //null eliminates type error
   return (
     <div className={styles["search-container"]}>
       <input

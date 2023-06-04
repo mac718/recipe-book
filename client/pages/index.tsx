@@ -38,11 +38,6 @@ export default function Home() {
               Continue with Google
             </button>
           </a>
-          {/* <span className={styles.query}>Already have an account?</span>
-          <button className={styles["login-button"]}>
-            <FcGoogle />
-            Log in with Google
-          </button> */}
         </div>
       </main>
     </>

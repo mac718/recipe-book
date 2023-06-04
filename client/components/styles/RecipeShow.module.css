@@ -36,10 +36,6 @@
   background-color: #eee;
 }
 
-.info {
-  /* background: lightgray; */
-}
-
 .stats {
   display: flex;
   justify-content: space-between;

@@ -63,25 +63,6 @@ const RecipeShow = ({
               priority={true}
             />
           </div>
-          {/* <div className={styles.info}>
-            <h1 className={styles["recipe-name"]}>{name}</h1>
-            <div className={styles.options}>
-              <div className={styles["icon-container"]}>
-                <div className={styles.tooltip}>
-                  <span className={styles.tooltiptext}>Edit Recipe</span>
-                  <GrEdit onClick={() => onOpenEditForm(_id)} />
-                </div>
-              </div>
-              <div
-                className={styles["icon-container"]}
-                onClick={() => setOpenDeleteWarning(true)}
-              >
-                <div className={styles.tooltip}>
-                  <span className={styles.tooltiptext}>Delete Recipe</span>
-                  <RiDeleteBin2Line />
-                </div>
-              </div>
-            </div> */}
 
           <div className={styles.info}>
             <div className={styles["recipe-name"]}>{name}</div>

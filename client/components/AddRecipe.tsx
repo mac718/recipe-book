@@ -19,12 +19,6 @@ const AddRecipe = ({
   recipeToEditInfo,
   recipeToEdit,
 }: AddRecipeProps) => {
-  // const [name, setName] = useState("");
-  // const [cuisine, setCuisine] = useState("");
-  // const [prepTime, setPrepTime] = useState("");
-  // const [cookTime, setCookTime] = useState("");
-  // const [ingredients, setIngredients] = useState("");
-  // const [directions, setDirections] = useState("");
   const [image, setImage] = useState<any>();
   const [imageName, setImageName] = useState("");
   const [showSpinner, setShowSpinner] = useState(false);
@@ -117,9 +111,6 @@ const AddRecipe = ({
           <input
             type="text"
             id="name"
-            // onChange={(event: ChangeEvent<HTMLInputElement>) =>
-            //   setName(event.target.value)
-            // }
             ref={nameRef}
             defaultValue={recipeToEditInfo?.name}
           />
@@ -129,9 +120,6 @@ const AddRecipe = ({
           <input
             type="text"
             id="cuisine"
-            // onChange={(event: ChangeEvent<HTMLInputElement>) =>
-            //   setCuisine(event.target.value)
-            // }
             ref={cuisineRef}
             defaultValue={recipeToEditInfo?.cuisine}
           />
@@ -141,9 +129,6 @@ const AddRecipe = ({
           <input
             type="text"
             id="prep-time"
-            // onChange={(event: ChangeEvent<HTMLInputElement>) =>
-            //   setPrepTime(event.target.value)
-            // }
             ref={prepTimeRef}
             defaultValue={recipeToEditInfo?.prepTime}
           />
@@ -153,9 +138,6 @@ const AddRecipe = ({
           <input
             type="text"
             id="cook-time"
-            // onChange={(event: ChangeEvent<HTMLInputElement>) =>
-            //   setCookTime(event.target.value)
-            // }
             ref={cookTimeRef}
             defaultValue={recipeToEditInfo?.cookTime}
           />
@@ -176,9 +158,6 @@ const AddRecipe = ({
             cols={30}
             id="ingredients"
             placeholder={ingredientsPlaceholder}
-            // onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
-            //   setIngredients(event.target.value)
-            // }
             ref={ingredientsRef}
             defaultValue={recipeToEditInfo?.ingredients}
           />
@@ -190,9 +169,6 @@ const AddRecipe = ({
             cols={30}
             id="directions"
             placeholder={directionPlaceholder}
-            // onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
-            //   setDirections(event.target.value)
-            // }
             ref={directionsRef}
             defaultValue={recipeToEditInfo?.directions}
           />

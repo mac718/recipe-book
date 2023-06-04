@@ -6,18 +6,14 @@ import { ChangeEvent, useEffect, useRef, useState } from "react";
 import SearchBar from "@component/components/SearchBar";
 import styles from "../../styles/RecipeViewPage.module.css";
 import RecipeListCard from "@component/components/RecipeListCard";
-import { useRouter } from "next/router";
 import Modal from "@component/components/Modal";
 import AddRecipe from "@component/components/AddRecipe";
 import DeleteWarning from "@component/components/DeleteWarning";
-import { on } from "events";
 import Link from "next/link";
 import { GiNotebook } from "react-icons/gi";
 import Spinner from "@component/components/Spinner";
 
 type RecipePageProps = {
-  //recipes: Recipe[];
-  currentRecipe: Recipe;
   currentRecipeId: string;
 };
 const RecipePage = ({ currentRecipeId }: RecipePageProps) => {
