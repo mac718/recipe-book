@@ -91,9 +91,17 @@ const RecipeShow = ({
               onOpenDeleteForm={onOpenDeleteWarning}
             />
             <div className={styles.stats}>
-              <div>Cuisine: {cuisine}</div>
-              <div>Prep Time: {prepTime}</div>
-              <div>Cook Time: {cookTime}</div>
+              <div>
+                Cuisine: <span className={styles["info-prop"]}>{cuisine}</span>
+              </div>
+              <div>
+                Prep Time:{" "}
+                <span className={styles["info-prop"]}>{prepTime}</span>
+              </div>
+              <div>
+                Cook Time:{" "}
+                <span className={styles["info-prop"]}>{cookTime}</span>
+              </div>
             </div>
           </div>
           <div className={styles.ingredients}>

@@ -4,7 +4,6 @@
 }
 
 .recipe {
-  height: 100vh;
   width: 90%;
   margin: auto;
   background-color: #f9f1f0;
@@ -57,6 +56,10 @@
   font-size: 1.5rem;
   text-align: center;
   color: #333;
+}
+
+.info-prop {
+  font-weight: 600;
 }
 
 .no-recipe {

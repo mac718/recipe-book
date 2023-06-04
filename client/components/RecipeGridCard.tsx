@@ -9,6 +9,7 @@ import AddRecipe from "./AddRecipe";
 import { Recipe } from "@component/pages/recipes";
 import Link from "next/link";
 import { query } from "express";
+import EditDelete from "./EditDelete";
 
 type RecipeGridCardProps = {
   recipe: Recipe;
@@ -42,6 +43,10 @@ const RecipeGridCard = ({
     setOpenDeleteWarning(false);
   };
 
+  const onOpenDeleteWarning = () => {
+    setOpenDeleteWarning(true);
+  };
+
   return (
     <>
       {openDeleteWarning && (
@@ -67,7 +72,12 @@ const RecipeGridCard = ({
           </div>
           <div className={styles.name}>{name}</div>
         </Link>
-        <div className={styles.options}>
+        <EditDelete
+          recipe={_id}
+          onOpenEditForm={onOpenEditForm}
+          onOpenDeleteForm={onOpenDeleteWarning}
+        />
+        {/* <div className={styles.options}>
           <div className={styles["icon-container"]}>
             <div className={styles.tooltip}>
               <span className={styles.tooltiptext}>Edit Recipe</span>
@@ -83,7 +93,7 @@ const RecipeGridCard = ({
               <RiDeleteBin2Line />
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );

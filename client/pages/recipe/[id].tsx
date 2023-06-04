@@ -97,7 +97,6 @@ const RecipePage = ({ currentRecipeId }: RecipePageProps) => {
     setFilteredRecipes(allRecipes);
     searchBarRef.current!.value = "";
   };
-  console.log("filtered", filteredRecipes);
   const searchBarRef = useRef<HTMLInputElement>(null); //null eliminates type error
 
   const onOpenEditForm = (rec: string) => {

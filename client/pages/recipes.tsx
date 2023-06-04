@@ -28,7 +28,6 @@ type RecipesPageProps = {
 
 const RecipesPage = ({ user_email }: RecipesPageProps) => {
   const [openRecipeForm, setOpenRecipeForm] = useState(false);
-  const [searchTerms, setSearchTerms] = useState("");
   const [allRecipes, setAllRecipes] = useState<Recipe[] | undefined>();
   const [recipes, setRecipes] = useState<Recipe[] | undefined>();
   const [editMode, setEditMode] = useState(false);
@@ -148,25 +147,6 @@ const RecipesPage = ({ user_email }: RecipesPageProps) => {
           placeholder="Find a receipe! Search recipes by name, cuisine, or ingredients..."
         />
       </div>
-      {/* <div className={styles["search-container"]}>
-        <input
-          type="text"
-          id="search-receipes"
-          className={styles.search}
-          placeholder="Find a receipe! Search recipes by name, cuisine, or ingredients..."
-          onChange={handleSearchTermChange}
-          ref={searchBarRef}
-        />
-        <button
-          className={styles.clear}
-          onClick={() => {
-            if (searchBarRef.current) searchBarRef.current.value = "";
-            setRecipes(allRecipes);
-          }}
-        >
-          x
-        </button>
-      </div> */}
 
       <button
         className={styles["add-button"]}
