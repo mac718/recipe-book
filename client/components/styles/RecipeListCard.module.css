@@ -1,7 +1,7 @@
 .card {
   display: flex;
   width: 95%;
-  height: 5rem;
+  height: 6rem;
   padding: 5px;
   border-radius: 5px;
   background: #eee;
@@ -9,13 +9,13 @@
 }
 
 .card:hover {
-  width: 100%;
-  height: 3.5rem;
+  background-color: lightgray;
+  color: white;
   box-shadow: 1px, 1px, 1px, 1px #eee, 3px;
 }
 
 .image {
-  width: 30%;
+  width: 35%;
   position: relative;
   margin-right: 10px;
   overflow: hidden;
@@ -26,6 +26,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.name a {
+  text-decoration: none;
+  color: #333;
 }
 
 .options {

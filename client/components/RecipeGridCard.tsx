@@ -15,6 +15,7 @@ type RecipeGridCardProps = {
   onOpenEditForm: (rec: string) => void;
   getRecipes: () => void;
   onClose: () => void;
+  onShowSpinner: () => void;
 };
 
 const RecipeGridCard = ({
@@ -22,6 +23,7 @@ const RecipeGridCard = ({
   onOpenEditForm,
   onClose,
   getRecipes,
+  onShowSpinner,
 }: RecipeGridCardProps) => {
   const [openDeleteWarning, setOpenDeleteWarning] = useState(false);
 
@@ -54,7 +56,7 @@ const RecipeGridCard = ({
 
       <div className={styles.box}>
         <Link href={`/recipe/${recipe._id}`}>
-          <div className={styles.pic}>
+          <div className={styles.pic} onClick={onShowSpinner}>
             <Image
               loader={() => image}
               alt=""

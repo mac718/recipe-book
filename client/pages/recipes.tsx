@@ -7,6 +7,7 @@ import axios from "axios";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import SearchBar from "@component/components/SearchBar";
+import Spinner from "@component/components/Spinner";
 
 export type Recipe = {
   _id: string;
@@ -32,6 +33,7 @@ const RecipesPage = ({ user_email }: RecipesPageProps) => {
   const [recipes, setRecipes] = useState<Recipe[] | undefined>();
   const [editMode, setEditMode] = useState(false);
   const [recipeToEdit, setRecipeToEdit] = useState<string | null>(null);
+  const [showSpinner, setShowSpinner] = useState(false);
 
   const router = useRouter();
 
@@ -45,6 +47,10 @@ const RecipesPage = ({ user_email }: RecipesPageProps) => {
     setEditMode(true);
     setRecipeToEdit(rec);
     setOpenRecipeForm(true);
+  };
+
+  const onShowSpinner = () => {
+    setShowSpinner(true);
   };
 
   const handleSearchTermChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -102,6 +108,7 @@ const RecipesPage = ({ user_email }: RecipesPageProps) => {
             onOpenEditForm={onOpenEditForm}
             onClose={onClose}
             key={recipe._id}
+            onShowSpinner={onShowSpinner}
           />
         );
       })
@@ -120,6 +127,7 @@ const RecipesPage = ({ user_email }: RecipesPageProps) => {
 
   return (
     <div className={styles.recipes}>
+      {showSpinner && <Spinner />}
       {openRecipeForm && (
         <Modal onClose={onClose}>
           <AddRecipe

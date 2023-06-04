@@ -7,18 +7,21 @@
   height: 100vh;
   width: 90%;
   margin: auto;
+  background-color: #f9f1f0;
 }
 
 .recipe-name {
   text-align: center;
-  color: #3b707d;
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #c85250;
 }
 
 .recipe-image {
   position: relative;
   height: 50vh;
   width: 50%;
-  margin: auto;
+  margin: 10px auto 0 auto;
   overflow: hidden;
   border-radius: 10px;
 }
@@ -28,7 +31,10 @@
 .directions {
   border-radius: 10px;
   padding: 10px;
-  margin: 5px;
+  margin: 5px auto 0 auto;
+  width: 60%;
+  border: 0.5px solid #333;
+  background-color: #eee;
 }
 
 .info {
@@ -40,22 +46,15 @@
   justify-content: space-between;
 }
 
-.ingredients {
-  background: lightblue;
-}
-
-.directions {
-  background: lightgoldenrodyellow;
-}
-
 .search {
   width: 20%;
   height: 100vh;
+  background-color: #faf7f4;
 }
 
 .section-heading {
   font-weight: 500;
-  font-size: 2rem;
+  font-size: 1.5rem;
   text-align: center;
   color: #333;
 }

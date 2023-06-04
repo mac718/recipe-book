@@ -82,7 +82,9 @@ const RecipeShow = ({
                 </div>
               </div>
             </div> */}
+
           <div className={styles.info}>
+            <div className={styles["recipe-name"]}>{name}</div>
             <EditDelete
               recipe={_id}
               onOpenEditForm={onOpenEditForm}

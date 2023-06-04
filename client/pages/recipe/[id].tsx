@@ -11,6 +11,9 @@ import Modal from "@component/components/Modal";
 import AddRecipe from "@component/components/AddRecipe";
 import DeleteWarning from "@component/components/DeleteWarning";
 import { on } from "events";
+import Link from "next/link";
+import { GiNotebook } from "react-icons/gi";
+import Spinner from "@component/components/Spinner";
 
 type RecipePageProps = {
   //recipes: Recipe[];
@@ -35,9 +38,11 @@ const RecipePage = ({ currentRecipeId }: RecipePageProps) => {
   const [openDeleteWarning, setOpenDeleteWarning] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [recipeToEdit, setRecipeToEdit] = useState<string | null>(null);
+  const [showSpinner, setShowSpinner] = useState(false);
 
   const getRecipes = async () => {
     let allRecipes: any;
+    setShowSpinner(true);
     try {
       allRecipes = await axios.get(
         "http://localhost:8000/recipes/getAllRecipes",
@@ -45,8 +50,10 @@ const RecipePage = ({ currentRecipeId }: RecipePageProps) => {
           withCredentials: true,
         }
       );
+      setShowSpinner(false);
     } catch (err) {
       console.log(err);
+      setShowSpinner(false);
     }
     console.log("allrecipes", currentRecipeId);
     setAllRecipes(allRecipes.data);
@@ -88,6 +95,7 @@ const RecipePage = ({ currentRecipeId }: RecipePageProps) => {
 
   const handleClearSearch = () => {
     setFilteredRecipes(allRecipes);
+    searchBarRef.current!.value = "";
   };
   console.log("filtered", filteredRecipes);
   const searchBarRef = useRef<HTMLInputElement>(null); //null eliminates type error
@@ -127,6 +135,7 @@ const RecipePage = ({ currentRecipeId }: RecipePageProps) => {
 
   return (
     <div className={styles.main}>
+      {showSpinner && <Spinner />}
       {openRecipeForm && (
         <Modal onClose={onClose}>
           <AddRecipe
@@ -148,17 +157,24 @@ const RecipePage = ({ currentRecipeId }: RecipePageProps) => {
           />
         </Modal>
       )}
-      <div className={styles.search}>
-        <div className={styles["search-container"]}>
-          <h2>Your Recipes</h2>
-          <SearchBar
-            handleSearchTermChange={handleSearchTermChange}
-            searchBarRef={searchBarRef}
-            handleClear={handleClearSearch}
-            placeholder="Search recipes..."
-          />
+      <div className={styles.left}>
+        <Link href="/recipes">
+          <div className={styles.title}>
+            Home Cook Recipe Book <GiNotebook />
+          </div>
+        </Link>
+        <div className={styles.search}>
+          <div className={styles["search-container"]}>
+            <h2>Your Recipes</h2>
+            <SearchBar
+              handleSearchTermChange={handleSearchTermChange}
+              searchBarRef={searchBarRef}
+              handleClear={handleClearSearch}
+              placeholder="Search recipes..."
+            />
+          </div>
+          {recipeListCards}
         </div>
-        {recipeListCards}
       </div>
       <div className={styles.recipe}>
         <RecipeShow
