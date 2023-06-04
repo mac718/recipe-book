@@ -3,6 +3,7 @@ import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import styles from "../styles/AddRecipe.module.css";
 import Spinner from "./Spinner";
 import { Recipe } from "@component/pages/recipes";
+import { useRouter } from "next/router";
 
 type AddRecipeProps = {
   onClose: () => void;
@@ -30,6 +31,8 @@ const AddRecipe = ({
   const ingredientsRef = useRef<HTMLTextAreaElement>(null);
   const directionsRef = useRef<HTMLTextAreaElement>(null);
 
+  const router = useRouter();
+
   const ingredientsPlaceholder =
     "Enter ingredients separated by '/'. For example: eggs/butter/salt...";
   const directionPlaceholder =
@@ -37,7 +40,6 @@ const AddRecipe = ({
 
   const handleAttachImage = (event: ChangeEvent<HTMLInputElement>) => {
     const name = event.target.value.split("\\");
-    console.log(name);
     const reader = new FileReader();
     reader.readAsDataURL(event.target.files![0]);
 
@@ -54,7 +56,7 @@ const AddRecipe = ({
     if (editMode) {
       try {
         setShowSpinner(true);
-        await axios.put(
+        const res = await axios.put(
           "http://localhost:8000/recipes/editRecipe",
           {
             id: recipeToEdit,
@@ -69,6 +71,9 @@ const AddRecipe = ({
           },
           { withCredentials: true }
         );
+        if (res.status === 401) {
+          router.push("/");
+        }
         setShowSpinner(false);
         getRecipes();
         onClose();
@@ -78,7 +83,7 @@ const AddRecipe = ({
     } else {
       try {
         setShowSpinner(true);
-        await axios.post(
+        const res = await axios.post(
           "http://localhost:8000/recipes/addRecipe",
           {
             name: nameRef.current?.value,
@@ -92,6 +97,9 @@ const AddRecipe = ({
           },
           { withCredentials: true }
         );
+        if (res.status === 401) {
+          router.push("/");
+        }
         setShowSpinner(false);
         getRecipes();
         onClose();

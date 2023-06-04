@@ -8,8 +8,8 @@ export const isLoggedIn: any = (
   if (req.user) {
     next();
   } else {
-    console.log("?????");
-    res.redirect("http://localhost:3000");
-    //res.sendStatus(401);
+    //console.log("?????");
+    //res.redirect("http://localhost:3000");
+    res.sendStatus(401);
   }
 };
