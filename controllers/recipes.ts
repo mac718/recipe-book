@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { Recipe } from "../models/recipe";
 import axios from "axios";
 import http from "http";
+import { validationResult } from "express-validator";
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:8080/",
@@ -20,6 +21,13 @@ export const addRecipe = async (req: Request, res: Response) => {
     image,
     imageName,
   } = req.body;
+
+  const result = validationResult(req);
+  console.log("Result", result);
+  if (!result.isEmpty()) {
+    console.log("what?????");
+    return res.json({ errors: result.array() });
+  }
 
   const user_email = req.user?.google.email;
   let image_url = "";

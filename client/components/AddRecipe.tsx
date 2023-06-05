@@ -4,6 +4,7 @@ import styles from "../styles/AddRecipe.module.css";
 import Spinner from "./Spinner";
 import { Recipe } from "@component/pages/recipes";
 import { useRouter } from "next/router";
+import ErrorDiv from "./ErrorDiv";
 
 type AddRecipeProps = {
   onClose: () => void;
@@ -23,6 +24,7 @@ const AddRecipe = ({
   const [image, setImage] = useState<any>();
   const [imageName, setImageName] = useState("");
   const [showSpinner, setShowSpinner] = useState(false);
+  const [errors, setErrors] = useState([]);
 
   const nameRef = useRef<HTMLInputElement>(null);
   const cuisineRef = useRef<HTMLInputElement>(null);
@@ -74,9 +76,15 @@ const AddRecipe = ({
         if (res.status === 401) {
           router.push("/");
         }
-        setShowSpinner(false);
-        getRecipes();
-        onClose();
+        console.log("status", res);
+        if (res.status === 400) {
+          setShowSpinner(false);
+          setErrors(res.data.errors!);
+        } else {
+          setShowSpinner(false);
+          getRecipes();
+          onClose();
+        }
       } catch (err) {
         console.log(err);
       }
@@ -97,23 +105,37 @@ const AddRecipe = ({
           },
           { withCredentials: true }
         );
+        console.log("status", res.status);
         if (res.status === 401) {
           router.push("/");
         }
-        setShowSpinner(false);
-        getRecipes();
-        onClose();
+
+        if (res.data.errors.length) {
+          setShowSpinner(false);
+          setErrors(res.data.errors!);
+        } else {
+          setShowSpinner(false);
+          getRecipes();
+          onClose();
+        }
       } catch (err) {
+        setShowSpinner(false);
+        //setErrors(err);
         console.log(err);
       }
     }
   };
+
+  const errorDivs = errors.map((err: { msg: string }) => (
+    <ErrorDiv msg={err.msg} />
+  ));
 
   return (
     <div>
       {showSpinner && <Spinner />}
       <form className={styles.form} onSubmit={handleSubmit}>
         <h1>Add A New Recipe</h1>
+        {errors.length ? errorDivs : null}
         <div className={styles["label-input"]}>
           <label htmlFor="name">Name</label>
           <input
