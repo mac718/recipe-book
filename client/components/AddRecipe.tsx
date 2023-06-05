@@ -24,7 +24,7 @@ const AddRecipe = ({
   const [image, setImage] = useState<any>();
   const [imageName, setImageName] = useState("");
   const [showSpinner, setShowSpinner] = useState(false);
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState<{ message: string }[]>([]);
 
   const nameRef = useRef<HTMLInputElement>(null);
   const cuisineRef = useRef<HTMLInputElement>(null);
@@ -53,6 +53,7 @@ const AddRecipe = ({
     };
   };
 
+  // for use in handleSubmit
   const _updateState = (res: AxiosResponse) => {
     if (res.data.errors) {
       setShowSpinner(false);
@@ -111,21 +112,22 @@ const AddRecipe = ({
           },
           { withCredentials: true }
         );
-
-        if (res.status === 401) {
-          router.push("/");
-        }
+        console.log("status", res.status);
 
         _updateState(res);
-      } catch (err) {
+      } catch (err: any) {
         setShowSpinner(false);
+        setErrors([err]);
         console.log(err);
+        if (err.response.status === 401) {
+          router.push("/");
+        }
       }
     }
   };
 
-  const errorDivs = errors.map((err: { msg: string }) => (
-    <ErrorDiv msg={err.msg} />
+  const errorDivs = errors.map((err: { message: string }) => (
+    <ErrorDiv msg={err.message} />
   ));
 
   return (
