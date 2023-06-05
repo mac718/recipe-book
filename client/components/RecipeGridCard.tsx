@@ -1,4 +1,4 @@
-import styles from "../styles/RecipeGridCard.module.css";
+import styles from "./styles/RecipeGridCard.module.css";
 import Modal from "./Modal";
 import DeleteWarning from "./DeleteWarning";
 import { useState } from "react";

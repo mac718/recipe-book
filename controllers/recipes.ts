@@ -102,7 +102,6 @@ export const getRecipe = async (req: Request, res: Response) => {
 
 export const deleteRecipe = async (req: Request, res: Response) => {
   const recipeId = req.params.id;
-  console.log("id", recipeId);
   try {
     await Recipe.deleteOne({ _id: recipeId });
     res.sendStatus(200);
