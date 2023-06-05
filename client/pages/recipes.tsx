@@ -60,7 +60,7 @@ const RecipesPage = ({ user_email }: RecipesPageProps) => {
       searchBarRef.current &&
       searchBarRef.current.value !== ""
     ) {
-      filteredRecipes = recipes?.filter(
+      filteredRecipes = allRecipes?.filter(
         (recipe) =>
           recipe.name
             .toLowerCase()
