@@ -6,7 +6,7 @@ import styles from "./styles/EditDelete.module.css";
 type EditDeleteProps = {
   recipe: string;
   onOpenEditForm: (rec: string) => void;
-  onOpenDeleteForm: () => void;
+  onOpenDeleteForm: (id: string) => void;
 };
 
 const EditDelete = ({
@@ -24,7 +24,7 @@ const EditDelete = ({
       </div>
       <div
         className={styles["icon-container-delete"]}
-        onClick={onOpenDeleteForm}
+        onClick={() => onOpenDeleteForm(recipe)}
       >
         <div className={styles.tooltip}>
           <span className={styles.tooltiptext}>Delete Recipe</span>

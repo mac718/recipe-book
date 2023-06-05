@@ -19,6 +19,8 @@ type RecipePageProps = {
 const RecipePage = ({ currentRecipeId }: RecipePageProps) => {
   const [allRecipes, setAllRecipes] = useState<Recipe[]>([]);
   const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>([]);
+  const [currentRecipeIdState, setCurrentRecipeIdState] =
+    useState(currentRecipeId);
   const [currentRecipe, setCurrentRecipe] = useState<Recipe>({
     _id: "",
     name: "",
@@ -105,8 +107,11 @@ const RecipePage = ({ currentRecipeId }: RecipePageProps) => {
     setOpenRecipeForm(false);
   };
 
-  const onOpenDeleteWarning = () => {
+  const onOpenDeleteWarning = (id: string) => {
     setOpenDeleteWarning(true);
+    if (currentRecipeId !== currentRecipeIdState) {
+      setCurrentRecipeIdState(id);
+    }
   };
 
   const onCloseDeleteWarning = () => {
@@ -122,8 +127,8 @@ const RecipePage = ({ currentRecipeId }: RecipePageProps) => {
   const recipeListCards = filteredRecipes.map((recipe) => (
     <RecipeListCard
       recipe={recipe}
+      onOpenDeleteWarning={onOpenDeleteWarning}
       onOpenEditForm={onOpenEditForm}
-      getRecipes={getRecipes}
       key={recipe._id}
     />
   ));
@@ -153,7 +158,7 @@ const RecipePage = ({ currentRecipeId }: RecipePageProps) => {
       {openDeleteWarning && (
         <Modal onClose={onCloseDeleteWarning}>
           <DeleteWarning
-            id={currentRecipeId}
+            id={currentRecipeIdState}
             onClose={onCloseDeleteWarning}
             getRecipes={getRecipes}
           />
@@ -188,7 +193,7 @@ const RecipePage = ({ currentRecipeId }: RecipePageProps) => {
         <RecipeShow
           {...currentRecipe}
           onOpenEditForm={onOpenEditForm}
-          onOpenDeleteWarning={onOpenDeleteWarning}
+          onOpenDeleteWarning={() => onOpenDeleteWarning(currentRecipeId)}
         />
       </div>
     </div>

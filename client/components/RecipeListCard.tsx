@@ -9,36 +9,17 @@ import EditDelete from "./EditDelete";
 
 type RecipeListCardProps = {
   recipe: Recipe;
+  onOpenDeleteWarning: (id: string) => void;
   onOpenEditForm: (rec: string) => void;
-  getRecipes: () => void;
 };
 
 const RecipeListCard = ({
   recipe,
+  onOpenDeleteWarning,
   onOpenEditForm,
-  getRecipes,
 }: RecipeListCardProps) => {
-  const [openDeleteWarning, setOpenDeleteWarning] = useState(false);
-
-  const handleModalClose = () => {
-    setOpenDeleteWarning(false);
-  };
-
-  const handleOpenDeletWarning = () => {
-    setOpenDeleteWarning(true);
-  };
   return (
     <>
-      {openDeleteWarning && (
-        <Modal onClose={handleModalClose}>
-          <DeleteWarning
-            id={recipe._id}
-            onClose={handleModalClose}
-            getRecipes={getRecipes}
-          />
-        </Modal>
-      )}
-
       <div className={styles.card}>
         <div className={styles.image}>
           <Link href={`/recipe/${recipe._id}`}>
@@ -57,7 +38,7 @@ const RecipeListCard = ({
           <EditDelete
             recipe={recipe._id}
             onOpenEditForm={onOpenEditForm}
-            onOpenDeleteForm={handleOpenDeletWarning}
+            onOpenDeleteForm={onOpenDeleteWarning}
           />
         </div>
       </div>
