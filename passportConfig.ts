@@ -8,14 +8,11 @@ dotenv.config();
 const GoogleStrategy = passportGoogleOauth2.Strategy;
 
 passport.serializeUser((user, done) => {
-  console.log("thinger");
   done(null, user);
 });
 
 passport.deserializeUser(async (google_user: any, done) => {
-  console.log("googleUser", google_user);
   const user = await User.findById(google_user._id);
-  console.log("somethingsomething", user);
   done(null, user);
 });
 
@@ -27,10 +24,8 @@ passport.use(
       callbackURL: "http://localhost:8000/auth/google/callback",
     },
     async (accessToken, refreshToken, profile, done) => {
-      console.log("hello from auth");
       try {
         const user = await User.findOne({ "google.id": profile.id });
-        console.log("userpass", user);
         if (!user) {
           const newUser = await User.create({
             google: {

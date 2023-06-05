@@ -51,7 +51,7 @@ const RecipePage = ({ currentRecipeId }: RecipePageProps) => {
       console.log(err);
       setShowSpinner(false);
     }
-    console.log("allrecipes", currentRecipeId);
+
     setAllRecipes(allRecipes.data);
     setFilteredRecipes(allRecipes.data);
 
@@ -118,6 +118,7 @@ const RecipePage = ({ currentRecipeId }: RecipePageProps) => {
       recipe={recipe}
       onOpenEditForm={onOpenEditForm}
       getRecipes={getRecipes}
+      key={recipe._id}
     />
   ));
 
@@ -195,25 +196,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
   let currentRecipeId = context.params!.id;
-  console.log("refreshed", currentRecipeId);
-  //let allRecipes: any;
-
-  // try {
-  //   allRecipes = await axios.get(
-  //     `http://localhost:8000/recipes/getAllRecipes`,
-  //     {
-  //       headers: {
-  //         Cookie: context.req.cookies.user,
-  //       },
-  //     } //${currentRecipeId}
-  //   );
-  // } catch (err) {
-  //   console.log(err);
-  // }
-
-  // const currentRecipe = allRecipes.data.filter(
-  //   (recipe: Recipe) => recipe._id === currentRecipeId
-  // )[0];
 
   return {
     props: {

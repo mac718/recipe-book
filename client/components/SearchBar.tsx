@@ -1,4 +1,4 @@
-import { ChangeEvent, Ref, RefObject, useRef } from "react";
+import { ChangeEvent, RefObject } from "react";
 import styles from "./styles/SearchBar.module.css";
 
 type SearchBarProps = {

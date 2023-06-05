@@ -1,6 +1,6 @@
 import axios from "axios";
 import { ChangeEvent, FormEvent, useRef, useState } from "react";
-import styles from "../styles/AddRecipe.module.css";
+import styles from "./styles/AddRecipe.module.css";
 import Spinner from "./Spinner";
 import { Recipe } from "@component/pages/recipes";
 import { useRouter } from "next/router";

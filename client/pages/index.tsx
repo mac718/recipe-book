@@ -2,8 +2,6 @@ import Head from "next/head";
 import styles from "@component/styles/Home.module.css";
 import { FcGoogle } from "react-icons/fc";
 import { GiNotebook } from "react-icons/gi";
-import axios from "axios";
-import { redirect } from "next/navigation";
 
 export default function Home() {
   return (
