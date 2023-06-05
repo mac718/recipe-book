@@ -6,14 +6,6 @@ import axios from "axios";
 import { redirect } from "next/navigation";
 
 export default function Home() {
-  const handleAuth = async () => {
-    try {
-      await axios.get("http://localhost:8000/google");
-    } catch (err) {
-      console.log(err);
-      //redirect("/");
-    }
-  };
   return (
     <>
       <Head>

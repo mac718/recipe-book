@@ -61,27 +61,7 @@ export const addRecipe = async (req: Request, res: Response) => {
   let image_url = "";
 
   if (image) {
-    // try {
-    //   const res = await axiosInstance.post("images", {
-    //     image,
-    //     filename: imageName,
-    //     objectname: imageName,
-    //   });
-    // } catch (err) {
-    //   console.log(err);
-    // }
-
-    // try {
-    //   const res = await axiosInstance.get(
-    //     `images?filename=${imageName}&objectname=${imageName}`,
-    //     { proxy: false }
-    //   );
-    //   image_url = res.data.split("?")[0];
-    // } catch (err) {
-    //   console.log(err);
-    // }
     image_url = await _uploadImage(axiosInstance, image, imageName);
-    console.log("image", image_url);
   }
 
   const newRecipe = new Recipe({
@@ -151,27 +131,6 @@ export const editRecipe = async (req: Request, res: Response) => {
   } else {
     let image_url;
     if (image) {
-      // try {
-      //   const res = await axiosInstance.post("images", {
-      //     image,
-      //     filename: imageName,
-      //     objectname: imageName,
-      //   });
-      //   console.log(res);
-      // } catch (err) {
-      //   console.log(err);
-      // }
-
-      // try {
-      //   const res = await axiosInstance.get(
-      //     `images?filename=${imageName}&objectname=${imageName}`,
-      //     { proxy: false }
-      //   );
-      //   image_url = res.data.split("?")[0];
-      //   console.log(image_url);
-      // } catch (err) {
-      //   console.log(err);
-      // }
       image_url = await _uploadImage(axiosInstance, image, imageName);
     }
     await existingRecipe?.updateOne({
