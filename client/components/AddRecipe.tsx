@@ -73,11 +73,12 @@ const AddRecipe = ({
           },
           { withCredentials: true }
         );
+
         if (res.status === 401) {
           router.push("/");
         }
-        console.log("status", res);
-        if (res.status === 400) {
+
+        if (res.data.errors) {
           setShowSpinner(false);
           setErrors(res.data.errors!);
         } else {
@@ -86,6 +87,7 @@ const AddRecipe = ({
           onClose();
         }
       } catch (err) {
+        setShowSpinner(false);
         console.log(err);
       }
     } else {
@@ -105,12 +107,12 @@ const AddRecipe = ({
           },
           { withCredentials: true }
         );
-        console.log("status", res.status);
+
         if (res.status === 401) {
           router.push("/");
         }
 
-        if (res.data.errors.length) {
+        if (res.data.errors) {
           setShowSpinner(false);
           setErrors(res.data.errors!);
         } else {
@@ -120,7 +122,6 @@ const AddRecipe = ({
         }
       } catch (err) {
         setShowSpinner(false);
-        //setErrors(err);
         console.log(err);
       }
     }
