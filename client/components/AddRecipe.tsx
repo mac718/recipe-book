@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import styles from "./styles/AddRecipe.module.css";
 import Spinner from "./Spinner";
@@ -53,6 +53,17 @@ const AddRecipe = ({
     };
   };
 
+  const _updateState = (res: AxiosResponse) => {
+    if (res.data.errors) {
+      setShowSpinner(false);
+      setErrors(res.data.errors!);
+    } else {
+      setShowSpinner(false);
+      getRecipes();
+      onClose();
+    }
+  };
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (editMode) {
@@ -78,14 +89,7 @@ const AddRecipe = ({
           router.push("/");
         }
 
-        if (res.data.errors) {
-          setShowSpinner(false);
-          setErrors(res.data.errors!);
-        } else {
-          setShowSpinner(false);
-          getRecipes();
-          onClose();
-        }
+        _updateState(res);
       } catch (err) {
         setShowSpinner(false);
         console.log(err);
@@ -112,14 +116,7 @@ const AddRecipe = ({
           router.push("/");
         }
 
-        if (res.data.errors) {
-          setShowSpinner(false);
-          setErrors(res.data.errors!);
-        } else {
-          setShowSpinner(false);
-          getRecipes();
-          onClose();
-        }
+        _updateState(res);
       } catch (err) {
         setShowSpinner(false);
         console.log(err);
