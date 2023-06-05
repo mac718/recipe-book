@@ -5,8 +5,8 @@
 
 .recipe {
   width: 90%;
-  height: 100vh;
   margin: auto;
+  padding: 10px;
   background-color: #f9f1f0;
 }
 

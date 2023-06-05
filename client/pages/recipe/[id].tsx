@@ -113,6 +113,12 @@ const RecipePage = ({ currentRecipeId }: RecipePageProps) => {
     setOpenDeleteWarning(false);
   };
 
+  const onOpenAddRecipeForm = () => {
+    setOpenRecipeForm(true);
+    setEditMode(false);
+    setRecipeToEdit(null);
+  };
+
   const recipeListCards = filteredRecipes.map((recipe) => (
     <RecipeListCard
       recipe={recipe}
@@ -168,6 +174,12 @@ const RecipePage = ({ currentRecipeId }: RecipePageProps) => {
               handleClear={handleClearSearch}
               placeholder="Search recipes..."
             />
+            <button
+              className={styles["add-recipe-button"]}
+              onClick={onOpenAddRecipeForm}
+            >
+              Add Recipe
+            </button>
           </div>
           {recipeListCards}
         </div>

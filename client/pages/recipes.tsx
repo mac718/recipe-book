@@ -53,7 +53,6 @@ const RecipesPage = ({ user_email }: RecipesPageProps) => {
   };
 
   const handleSearchTermChange = (event: ChangeEvent<HTMLInputElement>) => {
-    console.log(searchBarRef.current!.value);
     let filteredRecipes;
     if (
       searchBarRef &&

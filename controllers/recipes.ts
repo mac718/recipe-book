@@ -15,7 +15,6 @@ const _uploadImage = async (
   image: BinaryData,
   imageName: string
 ) => {
-  console.log(imageName);
   try {
     const res = await axiosInstance.post("images", {
       image,

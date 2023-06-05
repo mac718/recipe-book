@@ -12,7 +12,6 @@ auth
   .get(
     passport.authenticate("google", { failureRedirect: "/" }),
     (req, res) => {
-      console.log("user", req.user);
       res.cookie("user", req.user?.google.email, {
         httpOnly: true,
         maxAge: 6000000,

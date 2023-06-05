@@ -5,7 +5,6 @@ type ErrorDivProps = {
 };
 
 const ErrorDiv = ({ msg }: ErrorDivProps) => {
-  console.log("msg", msg);
   return <div className={styles.err}>{msg}</div>;
 };
 
