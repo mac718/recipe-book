@@ -14,6 +14,11 @@ type AddRecipeProps = {
   recipeToEdit: string | null;
 };
 
+type ErrorType = {
+  message?: string;
+  msg?: string;
+};
+
 const AddRecipe = ({
   onClose,
   getRecipes,
@@ -24,7 +29,7 @@ const AddRecipe = ({
   const [image, setImage] = useState<any>();
   const [imageName, setImageName] = useState("");
   const [showSpinner, setShowSpinner] = useState(false);
-  const [errors, setErrors] = useState<{ message: string }[]>([]);
+  const [errors, setErrors] = useState<ErrorType[]>([]);
 
   const nameRef = useRef<HTMLInputElement>(null);
   const cuisineRef = useRef<HTMLInputElement>(null);
@@ -91,9 +96,11 @@ const AddRecipe = ({
         }
 
         _updateState(res);
-      } catch (err) {
+      } catch (err: any) {
         setShowSpinner(false);
+
         console.log(err);
+        setErrors([err]);
       }
     } else {
       try {
@@ -112,7 +119,6 @@ const AddRecipe = ({
           },
           { withCredentials: true }
         );
-        console.log("status", res.status);
 
         _updateState(res);
       } catch (err: any) {
@@ -126,9 +132,13 @@ const AddRecipe = ({
     }
   };
 
-  const errorDivs = errors.map((err: { message: string }) => (
-    <ErrorDiv msg={err.message} />
-  ));
+  const errorDivs = errors.map((err: ErrorType) => {
+    if (err.msg) {
+      return <ErrorDiv key={err.msg} msg={err.msg} />;
+    } else if (err.message) {
+      return <ErrorDiv key={err.message} msg={err.message} />;
+    }
+  });
 
   return (
     <div>
