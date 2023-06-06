@@ -42,12 +42,9 @@ const RecipePage = ({ currentRecipeId }: RecipePageProps) => {
     let allRecipes: any;
     setShowSpinner(true);
     try {
-      allRecipes = await axios.get(
-        "http://localhost:8000/recipes/getAllRecipes",
-        {
-          withCredentials: true,
-        }
-      );
+      allRecipes = await axios.get("/recipes/getAllRecipes", {
+        withCredentials: true,
+      });
       setShowSpinner(false);
     } catch (err) {
       console.log(err);

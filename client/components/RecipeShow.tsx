@@ -1,10 +1,5 @@
-import { Recipe } from "@component/pages/recipes";
 import styles from "./styles/RecipeShow.module.css";
-import { useEffect, useState } from "react";
-import { GetServerSideProps } from "next";
 import Image from "next/image";
-import { GrEdit } from "react-icons/gr";
-import { RiDeleteBin2Line } from "react-icons/ri";
 import EditDelete from "./EditDelete";
 
 type RecipeShowProps = {
@@ -28,7 +23,6 @@ const RecipeShow = ({
   ingredients,
   directions,
   cuisine,
-  user_email,
   image,
   onOpenDeleteWarning,
   onOpenEditForm,
@@ -37,6 +31,7 @@ const RecipeShow = ({
   let splitIngredients;
   let directionListItems: JSX.Element[] = [];
   let ingredientsListItems: JSX.Element[] = [];
+
   if (directions) {
     splitDirections = directions.split("/");
     directionListItems = splitDirections.map((item) => (

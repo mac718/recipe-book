@@ -82,7 +82,7 @@ const RecipesPage = ({ user_email }: RecipesPageProps) => {
   const getRecipes = async () => {
     let recipes: any;
     try {
-      recipes = await axios.get("http://localhost:8000/recipes/getAllRecipes", {
+      recipes = await axios.get("/recipes/getAllRecipes", {
         withCredentials: true,
       });
     } catch (err) {

@@ -76,7 +76,7 @@ const AddRecipe = ({
       try {
         setShowSpinner(true);
         const res = await axios.put(
-          "http://localhost:8000/recipes/editRecipe",
+          "/recipes/editRecipe",
           {
             id: recipeToEdit,
             name: nameRef.current?.value,
@@ -106,7 +106,7 @@ const AddRecipe = ({
       try {
         setShowSpinner(true);
         const res = await axios.post(
-          "http://localhost:8000/recipes/addRecipe",
+          "/recipes/addRecipe",
           {
             name: nameRef.current?.value,
             cuisine: cuisineRef.current?.value,

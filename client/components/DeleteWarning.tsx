@@ -10,7 +10,7 @@ type DeleteWarningProps = {
 const DeleteWarning = ({ id, getRecipes, onClose }: DeleteWarningProps) => {
   const handleDeleteRecipe = async () => {
     try {
-      await axios.delete(`http://localhost:8000/recipes/${id}`);
+      await axios.delete(`/recipes/${id}`);
       onClose();
       getRecipes();
     } catch (err) {

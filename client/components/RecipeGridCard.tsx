@@ -22,16 +22,7 @@ const RecipeGridCard = ({
 }: RecipeGridCardProps) => {
   const [openDeleteWarning, setOpenDeleteWarning] = useState(false);
 
-  const {
-    _id,
-    name,
-    cookTime,
-    prepTime,
-    cuisine,
-    ingredients,
-    directions,
-    image,
-  } = recipe;
+  const { _id, name, image } = recipe;
 
   const handleModalClose = () => {
     setOpenDeleteWarning(false);
