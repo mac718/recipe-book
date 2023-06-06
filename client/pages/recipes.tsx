@@ -114,6 +114,7 @@ const RecipesPage = () => {
 
   const handleClearSearchBar = () => {
     setRecipes(allRecipes);
+    searchBarRef.current!.value = "";
   };
 
   return (

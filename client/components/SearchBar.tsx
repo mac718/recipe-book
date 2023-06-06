@@ -24,8 +24,11 @@ const SearchBar = ({
         onChange={handleSearchTermChange}
         ref={searchBarRef}
       />
+
       <button className={styles.clear} onClick={handleClear}>
-        x
+        <div className={styles.tooltip}>
+          <span className={styles.tooltiptext}>Clear</span>x
+        </div>
       </button>
     </div>
   );
