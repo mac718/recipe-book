@@ -16,6 +16,7 @@ import Spinner from "@component/components/Spinner";
 type RecipePageProps = {
   currentRecipeId: string;
 };
+
 const RecipePage = ({ currentRecipeId }: RecipePageProps) => {
   const [allRecipes, setAllRecipes] = useState<Recipe[]>([]);
   const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>([]);

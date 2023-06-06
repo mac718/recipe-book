@@ -21,12 +21,7 @@ export type Recipe = {
   user_email: string;
 };
 
-type RecipesPageProps = {
-  user_email: string;
-  recipes: Recipe[];
-};
-
-const RecipesPage = ({ user_email }: RecipesPageProps) => {
+const RecipesPage = () => {
   const [openRecipeForm, setOpenRecipeForm] = useState(false);
   const [allRecipes, setAllRecipes] = useState<Recipe[] | undefined>();
   const [recipes, setRecipes] = useState<Recipe[] | undefined>();
@@ -175,8 +170,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 
   return {
-    props: {
-      user_email,
-    },
+    props: {},
   };
 };
