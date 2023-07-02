@@ -6,8 +6,9 @@ import { validationResult } from "express-validator";
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:8080/",
-  timeout: 3000,
+  timeout: 6000,
   httpAgent: new http.Agent({ keepAlive: true }),
+  proxy: false,
 });
 
 const _uploadImage = async (
@@ -35,6 +36,16 @@ const _uploadImage = async (
   } catch (err) {
     console.log(err);
     return "";
+  }
+};
+
+const _delete_image = async (axiosInstance: any, objectname: string) => {
+  try {
+    await axiosInstance.delete(`images/delete?objectname=${objectname}`);
+    return true;
+  } catch (err) {
+    console.log(err);
+    return err;
   }
 };
 
@@ -100,9 +111,15 @@ export const getRecipe = async (req: Request, res: Response) => {
 };
 
 export const deleteRecipe = async (req: Request, res: Response) => {
+  console.log("hello from delete");
   const recipeId = req.params.id;
+  const recipe = await Recipe.findById(recipeId);
+  const imageNameSplit = recipe!.image.split("/");
+  const objectName = imageNameSplit[imageNameSplit.length - 1];
+  console.log(objectName);
   try {
     await Recipe.deleteOne({ _id: recipeId });
+    await _delete_image(axiosInstance, objectName);
     res.sendStatus(200);
   } catch (err) {
     res.json(err);
