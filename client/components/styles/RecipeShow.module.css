@@ -1,11 +1,11 @@
 .main {
   display: flex;
   justify-content: center;
+  height: fit-content;
 }
 
 .recipe {
   width: 90%;
-  margin: auto;
   padding: 10px;
   background-color: #f9f1f0;
 }

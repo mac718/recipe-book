@@ -38,6 +38,16 @@ const RecipePage = ({ currentRecipeId }: RecipePageProps) => {
   const [editMode, setEditMode] = useState(false);
   const [recipeToEdit, setRecipeToEdit] = useState<string | null>(null);
   const [showSpinner, setShowSpinner] = useState(false);
+  const [mobile, setMobile] = useState(false);
+  const [slide, setSlide] = useState(false);
+  const [retract, setRetract] = useState(false);
+
+  useEffect(() => {
+    console.log(window.innerWidth);
+    if (window.innerWidth < 1000) {
+      setMobile(true);
+    }
+  }, []);
 
   const getRecipes = async () => {
     let allRecipes: any;
@@ -122,6 +132,18 @@ const RecipePage = ({ currentRecipeId }: RecipePageProps) => {
     setRecipeToEdit(null);
   };
 
+  const onSlide = () => {
+    setSlide((prev) => !prev);
+  };
+
+  let leftClasses = slide
+    ? `${styles.left} + ${styles["search-slide"]}`
+    : `${styles["search-retract"]}`;
+
+  let tabClasses = slide
+    ? `${styles.tab} + ${styles["search-slide"]}`
+    : `${styles.tab}`;
+
   const recipeListCards = filteredRecipes.map((recipe) => (
     <RecipeListCard
       recipe={recipe}
@@ -139,7 +161,10 @@ const RecipePage = ({ currentRecipeId }: RecipePageProps) => {
   }
 
   return (
-    <div className={styles.main}>
+    <div
+      className={styles.main}
+      onClick={() => (slide ? setSlide(false) : null)}
+    >
       {showSpinner && <Spinner />}
       {openRecipeForm && (
         <Modal onClose={onClose}>
@@ -162,7 +187,7 @@ const RecipePage = ({ currentRecipeId }: RecipePageProps) => {
           />
         </Modal>
       )}
-      <div className={styles.left}>
+      <div className={leftClasses}>
         <Link href="/recipes">
           <div className={styles.title}>
             Home Cook Recipe Book <GiNotebook />
@@ -187,6 +212,11 @@ const RecipePage = ({ currentRecipeId }: RecipePageProps) => {
           {recipeListCards}
         </div>
       </div>
+      {mobile && (
+        <div className={styles.tab} onClick={onSlide}>
+          <div className={styles["tab-text"]}>Search Recipes</div>
+        </div>
+      )}
       <div className={styles.recipe}>
         <RecipeShow
           {...currentRecipe}
