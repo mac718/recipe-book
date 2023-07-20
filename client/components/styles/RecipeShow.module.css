@@ -112,3 +112,12 @@
   transition: visibility 0s linear 1s;
   visibility: visible;
 }
+
+@media screen and (max-width: 600px) {
+  .info,
+  .ingredients,
+  .directions,
+  .recipe-image {
+    width: 90%;
+  }
+}

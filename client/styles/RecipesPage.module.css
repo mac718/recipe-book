@@ -48,8 +48,6 @@
 }
 
 .recipes {
-  /* background: #f0f7e0; */
-
   padding-top: 2rem;
   position: relative;
   background-color: #f9f6f0;
@@ -64,4 +62,12 @@
   height: 100vh;
   margin: 5rem auto 0 auto;
   background-color: #f9f6f0;
+}
+
+@media screen and (max-width: 600px) {
+  .recipe-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }
