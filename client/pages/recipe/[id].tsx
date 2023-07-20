@@ -132,17 +132,17 @@ const RecipePage = ({ currentRecipeId }: RecipePageProps) => {
     setRecipeToEdit(null);
   };
 
-  const onSlide = () => {
-    setSlide((prev) => !prev);
+  let leftClasses = `${styles.left}`;
+  const onTabClick = () => {
+    setSlide(true);
+    setRetract(false);
   };
 
-  let leftClasses = slide
-    ? `${styles.left} + ${styles["search-slide"]}`
-    : `${styles["search-retract"]}`;
-
-  let tabClasses = slide
-    ? `${styles.tab} + ${styles["search-slide"]}`
-    : `${styles.tab}`;
+  if (slide) {
+    leftClasses += ` ${styles["search-slide"]}`;
+  } else if (retract) {
+    leftClasses = `${styles["search-retract"]}`;
+  }
 
   const recipeListCards = filteredRecipes.map((recipe) => (
     <RecipeListCard
@@ -163,7 +163,12 @@ const RecipePage = ({ currentRecipeId }: RecipePageProps) => {
   return (
     <div
       className={styles.main}
-      onClick={() => (slide ? setSlide(false) : null)}
+      onClick={() => {
+        if (slide) {
+          setSlide(false);
+          setRetract(true);
+        }
+      }}
     >
       {showSpinner && <Spinner />}
       {openRecipeForm && (
@@ -213,7 +218,7 @@ const RecipePage = ({ currentRecipeId }: RecipePageProps) => {
         </div>
       </div>
       {mobile && (
-        <div className={styles.tab} onClick={onSlide}>
+        <div className={styles.tab} onClick={onTabClick}>
           <div className={styles["tab-text"]}>Search Recipes</div>
         </div>
       )}
