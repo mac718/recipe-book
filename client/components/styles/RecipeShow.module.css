@@ -113,6 +113,18 @@
   visibility: visible;
 }
 
+@media screen and (max-width: 1000px) {
+  .info,
+  .ingredients,
+  .directions,
+  .recipe-image {
+    width: 80%;
+  }
+  .recipe {
+    height: 100vh;
+  }
+}
+
 @media screen and (max-width: 600px) {
   .info,
   .ingredients,

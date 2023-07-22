@@ -152,6 +152,16 @@ const RecipesPage = () => {
       >
         Add Recipe
       </button>
+
+      <div className={styles.or}>
+        <span>Or</span>
+      </div>
+      <div className={styles["link-container"]}>
+        <a href="/search-recipes" className={styles["search-for-new"]}>
+          Search For New Recipes
+        </a>
+      </div>
+
       <section className={styles["recipe-grid"]}>{recipeCards}</section>
     </div>
   );

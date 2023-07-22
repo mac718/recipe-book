@@ -64,6 +64,26 @@
   background-color: #f9f6f0;
 }
 
+.or {
+  display: flex;
+  justify-content: center;
+  font-size: 2.5rem;
+  color: #595e60;
+}
+
+.search-for-new {
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 2rem;
+  color: forestgreen;
+}
+
+.link-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 @media screen and (max-width: 600px) {
   .recipe-grid {
     display: flex;
