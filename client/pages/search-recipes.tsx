@@ -1,7 +1,13 @@
-import { useRef, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 import styles from "../styles/SearchRecipesPage.module.css";
+import axios from "axios";
+import CriteriaSelectorList from "@component/components/CriteriaSelectorList";
 
 const SearchRecipesPage = () => {
+  const [intolerances, setIntolerances] = useState<{ [key: string]: boolean }>(
+    {}
+  );
+  const [cuisines, setCuisines] = useState<{ [key: string]: boolean }>({});
   const [includeIngredients, setIncludeIngredients] = useState<string[]>([]);
   const [excludeIngredients, setExcludeIngredients] = useState<string[]>([]);
   const [query, setQuery] = useState<string[]>([]);
@@ -9,22 +15,49 @@ const SearchRecipesPage = () => {
   const [currentExclude, setCurrentExclude] = useState("");
   const [currentQuery, setCurrentQuery] = useState("");
 
-  const onAddIncludeIngredient = (event: any) => {
+  const onAddIncludeIngredient = (event: FormEvent) => {
     event.preventDefault();
     setIncludeIngredients((prev) => [...prev, `${currentInclude} `]);
     setCurrentInclude("");
   };
 
-  const onAddExcludeIngredient = (event: any) => {
+  const onAddExcludeIngredient = (event: FormEvent) => {
     event.preventDefault();
     setExcludeIngredients((prev) => [...prev, `${currentExclude} `]);
     setCurrentExclude("");
   };
 
-  const onAddKeyTerm = (event: any) => {
+  const onAddKeyTerm = (event: FormEvent) => {
     event.preventDefault();
     setQuery((prev) => [...prev, `${currentQuery} `]);
     setCurrentQuery("");
+  };
+
+  const onSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+    let intolerances;
+    let results;
+    try {
+      results = await axios.get("/spoonacular/search-recipes?");
+    } catch {}
+  };
+
+  const onSelection = (option: string, optionType: string) => {
+    if (optionType === "cuisine") {
+      if (cuisines[option]) {
+        setCuisines({ ...cuisines, [option]: false });
+      } else {
+        setCuisines({ ...cuisines, [option]: true });
+      }
+    }
+
+    if (optionType === "intolerance") {
+      if (intolerances[option]) {
+        setIntolerances({ ...intolerances, [option]: false });
+      } else {
+        setIntolerances({ ...intolerances, [option]: true });
+      }
+    }
   };
 
   const supportedCuisines = [
@@ -80,25 +113,23 @@ const SearchRecipesPage = () => {
     <option value={intolerance}>{intolerance}</option>
   ));
 
+  console.log(cuisines);
+
   return (
     <>
       <h1 className={styles.heading}>Recipe Search</h1>
       <form className={styles["search-form"]}>
         <div className={styles.dropdowns}>
-          <div className={styles["dropdown-grouping"]}>
-            <label htmlFor="cuisine">Select Cuisine</label>
-            <select id="cuisine" name="cuisine">
-              <option value="">-</option>
-              {cuisineOptions}
-            </select>
-          </div>
-          <div className={styles["dropdown-grouping"]}>
-            <label htmlFor="intolerances">Specify Intolerances</label>
-            <select id="intolerances" name="intolerances">
-              <option value="">-</option>
-              {intoleranceOptions}
-            </select>
-          </div>
+          <CriteriaSelectorList
+            options={supportedCuisines}
+            onSelection={onSelection}
+            optionType={"cuisine"}
+          />
+          <CriteriaSelectorList
+            options={supportedIntolerances}
+            onSelection={onSelection}
+            optionType={"intolerance"}
+          />
         </div>
         <div className={styles["input-grouping"]}>
           <label htmlFor="includeIgredients">
