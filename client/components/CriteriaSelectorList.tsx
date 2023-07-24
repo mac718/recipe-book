@@ -18,6 +18,7 @@ const CriteriaSelectorList = ({
       option={option}
       onSelection={onSelection}
       optionType={optionType}
+      key={option}
     />
   ));
 

@@ -1,7 +1,8 @@
-import { FormEvent, useRef, useState } from "react";
+import { FormEvent, useState } from "react";
 import styles from "../styles/SearchRecipesPage.module.css";
 import axios from "axios";
 import CriteriaSelectorList from "@component/components/CriteriaSelectorList";
+import { GetServerSideProps } from "next";
 
 const SearchRecipesPage = () => {
   const [intolerances, setIntolerances] = useState<{ [key: string]: boolean }>(
@@ -35,11 +36,34 @@ const SearchRecipesPage = () => {
 
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    let intolerances;
+    const intoleranceArrString = Object.keys(intolerances)
+      .filter((key) => intolerances[key])
+      .join(",");
+
+    const cuisineArrString = Object.keys(cuisines)
+      .filter((key) => cuisines[key])
+      .join(",");
+    const includeIngredientsString = includeIngredients.join(",");
+    const excludeIngredientsString = excludeIngredients.join(",");
+    const queryString = query.join(",");
+    console.log(
+      intoleranceArrString,
+      cuisineArrString,
+      includeIngredients,
+      excludeIngredients,
+      query
+    );
     let results;
     try {
-      results = await axios.get("/spoonacular/search-recipes?");
-    } catch {}
+      results = await axios.get(
+        `/spoonacular/search-recipes?cuisines=${cuisineArrString}&intolerances=${intoleranceArrString}&` +
+          `includeIngredients=${includeIngredientsString}&` +
+          `excludeIngredients=${excludeIngredientsString}&query=${queryString}`
+      );
+      console.log(results);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const onSelection = (option: string, optionType: string) => {
@@ -90,10 +114,6 @@ const SearchRecipesPage = () => {
     "Vietnamese",
   ];
 
-  const cuisineOptions = supportedCuisines.map((cuisine) => (
-    <option value={cuisine}>{cuisine}</option>
-  ));
-
   const supportedIntolerances = [
     "Dairy",
     "Egg",
@@ -109,16 +129,10 @@ const SearchRecipesPage = () => {
     "Wheat",
   ];
 
-  const intoleranceOptions = supportedIntolerances.map((intolerance) => (
-    <option value={intolerance}>{intolerance}</option>
-  ));
-
-  console.log(cuisines);
-
   return (
     <>
       <h1 className={styles.heading}>Recipe Search</h1>
-      <form className={styles["search-form"]}>
+      <form className={styles["search-form"]} onSubmit={onSubmit}>
         <div className={styles.dropdowns}>
           <CriteriaSelectorList
             options={supportedCuisines}
@@ -211,3 +225,19 @@ const SearchRecipesPage = () => {
 };
 
 export default SearchRecipesPage;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const user_email = context.req.cookies.user;
+  if (!user_email) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/",
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};

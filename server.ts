@@ -7,6 +7,7 @@ import cors from "cors";
 import cookieSession from "cookie-session";
 import { auth } from "./routes/auth";
 import { recipes } from "./routes/recipes";
+import { spoonacular } from "./routes/spoonacular";
 
 const app: Express = express();
 
@@ -39,6 +40,7 @@ app.use(passport.session());
 
 app.use(auth);
 app.use("/recipes", recipes);
+app.use("/spoonacular", spoonacular);
 
 mongoose
   .connect(process.env.MONGODB_URI!, {} as mongoose.ConnectOptions)
