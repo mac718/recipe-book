@@ -3,7 +3,14 @@ import styles from "../styles/SearchRecipesPage.module.css";
 import axios from "axios";
 import CriteriaSelectorList from "@component/components/CriteriaSelectorList";
 import { GetServerSideProps } from "next";
+import RecipeSearchResultsList from "@component/components/RecipeSearchResultsList";
 
+export type SearchResult = {
+  id: number;
+  title: string;
+  image: string;
+  imageType: string;
+};
 const SearchRecipesPage = () => {
   const [intolerances, setIntolerances] = useState<{ [key: string]: boolean }>(
     {}
@@ -15,6 +22,7 @@ const SearchRecipesPage = () => {
   const [currentInclude, setCurrentInclude] = useState("");
   const [currentExclude, setCurrentExclude] = useState("");
   const [currentQuery, setCurrentQuery] = useState("");
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
 
   const onAddIncludeIngredient = (event: FormEvent) => {
     event.preventDefault();
@@ -60,7 +68,8 @@ const SearchRecipesPage = () => {
           `includeIngredients=${includeIngredientsString}&` +
           `excludeIngredients=${excludeIngredientsString}&query=${queryString}`
       );
-      console.log(results);
+      console.log(results.data.results);
+      setSearchResults(results.data.results);
     } catch (err) {
       console.log(err);
     }
@@ -134,16 +143,22 @@ const SearchRecipesPage = () => {
       <h1 className={styles.heading}>Recipe Search</h1>
       <form className={styles["search-form"]} onSubmit={onSubmit}>
         <div className={styles.dropdowns}>
-          <CriteriaSelectorList
-            options={supportedCuisines}
-            onSelection={onSelection}
-            optionType={"cuisine"}
-          />
-          <CriteriaSelectorList
-            options={supportedIntolerances}
-            onSelection={onSelection}
-            optionType={"intolerance"}
-          />
+          <div>
+            <div>Select Cuisines</div>
+            <CriteriaSelectorList
+              options={supportedCuisines}
+              onSelection={onSelection}
+              optionType={"cuisine"}
+            />
+          </div>
+          <div>
+            <div>Select Intolerances</div>
+            <CriteriaSelectorList
+              options={supportedIntolerances}
+              onSelection={onSelection}
+              optionType={"intolerance"}
+            />
+          </div>
         </div>
         <div className={styles["input-grouping"]}>
           <label htmlFor="includeIgredients">
@@ -219,7 +234,9 @@ const SearchRecipesPage = () => {
         </div>
       </form>
       <hr className={styles.hr} />
-      <section></section>
+      <section>
+        <RecipeSearchResultsList results={searchResults} />
+      </section>
     </>
   );
 };
