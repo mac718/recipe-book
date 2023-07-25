@@ -1,0 +1,14 @@
+.search-result {
+  display: flex;
+  margin-top: 20px;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+  font-size: 2rem;
+  font-weight: 400;
+  color: #595e60;
+  cursor: pointer;
+}

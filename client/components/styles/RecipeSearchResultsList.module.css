@@ -1,0 +1,13 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  margin: auto;
+  margin-top: 2rem;
+}
+
+.heading {
+  color: #595e60;
+  text-align: center;
+  text-decoration: underline;
+}

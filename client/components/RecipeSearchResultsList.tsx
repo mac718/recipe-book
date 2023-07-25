@@ -1,11 +1,29 @@
+import styles from "./styles/RecipeSearchResultsList.module.css";
 import { SearchResult } from "@component/pages/search-recipes";
 import RecipeSearchResult from "./RecipeSearchResult";
 
-const RecipeSearchResultsList = ({ results }: { results: SearchResult[] }) => {
+type RecipeSearchResultsListProps = {
+  results: SearchResult[];
+  onOpenRecipeInfo: () => void;
+};
+
+const RecipeSearchResultsList = ({
+  results,
+  onOpenRecipeInfo,
+}: RecipeSearchResultsListProps) => {
   const searchResults = results.map((result) => (
-    <RecipeSearchResult result={result} key={result.id} />
+    <RecipeSearchResult
+      result={result}
+      onOpenRecipeInfo={onOpenRecipeInfo}
+      key={result.id}
+    />
   ));
-  return <div>{searchResults}</div>;
+  return (
+    <>
+      <h2 className={styles.heading}>Results</h2>
+      <div className={styles.list}>{searchResults}</div>;
+    </>
+  );
 };
 
 export default RecipeSearchResultsList;

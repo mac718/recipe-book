@@ -4,6 +4,7 @@ import axios from "axios";
 import CriteriaSelectorList from "@component/components/CriteriaSelectorList";
 import { GetServerSideProps } from "next";
 import RecipeSearchResultsList from "@component/components/RecipeSearchResultsList";
+import Modal from "@component/components/Modal";
 
 export type SearchResult = {
   id: number;
@@ -23,6 +24,7 @@ const SearchRecipesPage = () => {
   const [currentExclude, setCurrentExclude] = useState("");
   const [currentQuery, setCurrentQuery] = useState("");
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+  const [openRecipeInfo, setOpenRecipeInfo] = useState(false);
 
   const onAddIncludeIngredient = (event: FormEvent) => {
     event.preventDefault();
@@ -54,13 +56,7 @@ const SearchRecipesPage = () => {
     const includeIngredientsString = includeIngredients.join(",");
     const excludeIngredientsString = excludeIngredients.join(",");
     const queryString = query.join(",");
-    console.log(
-      intoleranceArrString,
-      cuisineArrString,
-      includeIngredients,
-      excludeIngredients,
-      query
-    );
+
     let results;
     try {
       results = await axios.get(
@@ -68,7 +64,6 @@ const SearchRecipesPage = () => {
           `includeIngredients=${includeIngredientsString}&` +
           `excludeIngredients=${excludeIngredientsString}&query=${queryString}`
       );
-      console.log(results.data.results);
       setSearchResults(results.data.results);
     } catch (err) {
       console.log(err);
@@ -91,6 +86,10 @@ const SearchRecipesPage = () => {
         setIntolerances({ ...intolerances, [option]: true });
       }
     }
+  };
+
+  const onOpenRecipeInfo = () => {
+    setOpenRecipeInfo(true);
   };
 
   const supportedCuisines = [
@@ -140,6 +139,11 @@ const SearchRecipesPage = () => {
 
   return (
     <>
+      {openRecipeInfo && (
+        <Modal onClose={() => setOpenRecipeInfo(false)}>
+          <div>hello</div>
+        </Modal>
+      )}
       <h1 className={styles.heading}>Recipe Search</h1>
       <form className={styles["search-form"]} onSubmit={onSubmit}>
         <div className={styles.dropdowns}>
@@ -235,7 +239,10 @@ const SearchRecipesPage = () => {
       </form>
       <hr className={styles.hr} />
       <section>
-        <RecipeSearchResultsList results={searchResults} />
+        <RecipeSearchResultsList
+          results={searchResults}
+          onOpenRecipeInfo={onOpenRecipeInfo}
+        />
       </section>
     </>
   );
