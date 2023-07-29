@@ -5,6 +5,8 @@ import CriteriaSelectorList from "@component/components/CriteriaSelectorList";
 import { GetServerSideProps } from "next";
 import RecipeSearchResultsList from "@component/components/RecipeSearchResultsList";
 import Modal from "@component/components/Modal";
+import Spinner from "@component/components/Spinner";
+import { useRouter } from "next/router";
 
 export type SearchResult = {
   id: number;
@@ -25,6 +27,9 @@ const SearchRecipesPage = () => {
   const [currentQuery, setCurrentQuery] = useState("");
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [openRecipeInfo, setOpenRecipeInfo] = useState(false);
+  const [showSpinner, setShowSpinner] = useState(false);
+
+  const router = useRouter();
 
   const onAddIncludeIngredient = (event: FormEvent) => {
     event.preventDefault();
@@ -46,6 +51,7 @@ const SearchRecipesPage = () => {
 
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault();
+    setShowSpinner(true);
     const intoleranceArrString = Object.keys(intolerances)
       .filter((key) => intolerances[key])
       .join(",");
@@ -65,8 +71,11 @@ const SearchRecipesPage = () => {
           `excludeIngredients=${excludeIngredientsString}&query=${queryString}`
       );
       setSearchResults(results.data.results);
+      setShowSpinner(false);
+      router.push("#results");
     } catch (err) {
       console.log(err);
+      setShowSpinner(false);
     }
   };
 
@@ -144,6 +153,7 @@ const SearchRecipesPage = () => {
           <div>hello</div>
         </Modal>
       )}
+      {showSpinner && <Spinner />}
       <h1 className={styles.heading}>Recipe Search</h1>
       <form className={styles["search-form"]} onSubmit={onSubmit}>
         <div className={styles.dropdowns}>
@@ -238,7 +248,7 @@ const SearchRecipesPage = () => {
         </div>
       </form>
       <hr className={styles.hr} />
-      <section>
+      <section id="results">
         <RecipeSearchResultsList
           results={searchResults}
           onOpenRecipeInfo={onOpenRecipeInfo}
