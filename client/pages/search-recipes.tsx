@@ -133,7 +133,10 @@ const SearchRecipesPage = () => {
           image: recipeInfoData.image,
         };
         setRecipeInfo(recipeToView);
-        localStorage.setItem(`${recipeInfo.data.id}`, recipeInfo.data);
+        localStorage.setItem(
+          `${recipeInfo.data.id}`,
+          JSON.stringify(recipeInfo.data)
+        );
         console.log(recipeInfo.data);
       } catch (err) {
         console.log(err);

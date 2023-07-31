@@ -14,7 +14,7 @@ const RecipeSearchResultsList = ({
   const searchResults = results.map((result) => (
     <RecipeSearchResult
       result={result}
-      onOpenRecipeInfo={() => onOpenRecipeInfo(result.id)}
+      onOpenRecipeInfo={onOpenRecipeInfo}
       key={result.id}
     />
   ));
