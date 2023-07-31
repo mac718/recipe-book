@@ -1,12 +1,14 @@
 import { FormEvent, useState } from "react";
 import styles from "../styles/SearchRecipesPage.module.css";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import CriteriaSelectorList from "@component/components/CriteriaSelectorList";
 import { GetServerSideProps } from "next";
 import RecipeSearchResultsList from "@component/components/RecipeSearchResultsList";
 import Modal from "@component/components/Modal";
 import Spinner from "@component/components/Spinner";
 import { useRouter } from "next/router";
+import { Recipe } from "./recipes";
+import RecipeShow from "@component/components/RecipeShow";
 
 export type SearchResult = {
   id: number;
@@ -14,6 +16,7 @@ export type SearchResult = {
   image: string;
   imageType: string;
 };
+
 const SearchRecipesPage = () => {
   const [intolerances, setIntolerances] = useState<{ [key: string]: boolean }>(
     {}
@@ -27,6 +30,7 @@ const SearchRecipesPage = () => {
   const [currentQuery, setCurrentQuery] = useState("");
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [openRecipeInfo, setOpenRecipeInfo] = useState(false);
+  const [recipeInfo, setRecipeInfo] = useState<Recipe>();
   const [showSpinner, setShowSpinner] = useState(false);
 
   const router = useRouter();
@@ -68,7 +72,7 @@ const SearchRecipesPage = () => {
       results = await axios.get(
         `/spoonacular/search-recipes?cuisines=${cuisineArrString}&intolerances=${intoleranceArrString}&` +
           `includeIngredients=${includeIngredientsString}&` +
-          `excludeIngredients=${excludeIngredientsString}&query=${queryString}`
+          `excludeIngredients=${excludeIngredientsString}&query=${queryString}&instructionsRequired=${true}`
       );
       setSearchResults(results.data.results);
       setShowSpinner(false);
@@ -97,7 +101,45 @@ const SearchRecipesPage = () => {
     }
   };
 
-  const onOpenRecipeInfo = () => {
+  const onOpenRecipeInfo = async (id: number) => {
+    let recipeInfo: AxiosResponse;
+    if (localStorage.getItem(`${id}`)) {
+      const cachedRecipe = JSON.parse(localStorage.getItem(`${id}`) || "");
+      const recipeToView: Recipe = {
+        _id: cachedRecipe.id,
+        name: cachedRecipe.title,
+        prepTime: cachedRecipe.prepTime,
+        cookTime: cachedRecipe.readyInMinutes,
+        cuisine: cachedRecipe.cuisines[0],
+        directions: cachedRecipe.instructions,
+        ingredients: cachedRecipe.extendedIngredients,
+        user_email: cachedRecipe.email,
+        image: cachedRecipe.image,
+      };
+      setRecipeInfo(recipeToView || {});
+    } else {
+      try {
+        recipeInfo = await axios.get(`/spoonacular/get-recipe-info/${id}`);
+        const recipeInfoData = recipeInfo.data;
+        const recipeToView: Recipe = {
+          _id: recipeInfoData.id,
+          name: recipeInfoData.title,
+          prepTime: recipeInfoData.prepTime,
+          cookTime: recipeInfoData.readyInMinutes,
+          cuisine: recipeInfoData.cuisines[0],
+          directions: recipeInfoData.instructions,
+          ingredients: recipeInfoData.extendedIngredients,
+          user_email: recipeInfoData.email,
+          image: recipeInfoData.image,
+        };
+        setRecipeInfo(recipeToView);
+        localStorage.setItem(`${recipeInfo.data.id}`, recipeInfo.data);
+        console.log(recipeInfo.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
     setOpenRecipeInfo(true);
   };
 
@@ -150,7 +192,21 @@ const SearchRecipesPage = () => {
     <>
       {openRecipeInfo && (
         <Modal onClose={() => setOpenRecipeInfo(false)}>
-          <div>hello</div>
+          <div>
+            <RecipeShow
+              _id={recipeInfo?._id}
+              name={recipeInfo?.name}
+              cuisine={recipeInfo?.cuisine}
+              ingredients={recipeInfo?.ingredients}
+              directions={recipeInfo?.directions}
+              prepTime={recipeInfo?.prepTime}
+              cookTime={recipeInfo?.cookTime}
+              image={recipeInfo?.image}
+              user_email={undefined}
+              onOpenDeleteWarning={() => {}}
+              onOpenEditForm={() => {}}
+            />
+          </div>
         </Modal>
       )}
       {showSpinner && <Spinner />}

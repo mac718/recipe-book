@@ -4,7 +4,7 @@ import Image from "next/image";
 
 type RecipeSearchResultProps = {
   result: SearchResult;
-  onOpenRecipeInfo: () => void;
+  onOpenRecipeInfo: (id: number) => void;
 };
 
 const RecipeSearchResult = ({
@@ -14,7 +14,10 @@ const RecipeSearchResult = ({
   return (
     <div className={styles["search-result"]}>
       <Image src={result.image} alt="recipe image" width={150} height={125} />
-      <div className={styles["title"]} onClick={onOpenRecipeInfo}>
+      <div
+        className={styles["title"]}
+        onClick={() => onOpenRecipeInfo(result.id)}
+      >
         {result.title}
       </div>
     </div>

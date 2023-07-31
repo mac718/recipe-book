@@ -36,3 +36,17 @@ export const searchRecipes = async (req: Request, res: Response) => {
     res.json(err);
   }
 };
+
+export const getRecipeInfo = async (req: Request, res: Response) => {
+  const id = req.params.id;
+  let result;
+  try {
+    result = await axiosInstance.get(
+      `${baseApiURL}/${id}/information?apiKey=${process.env.API_KEY}&includeNutrition=false`
+    );
+    res.json(result.data);
+  } catch (err) {
+    console.log(err);
+    res.json(err);
+  }
+};

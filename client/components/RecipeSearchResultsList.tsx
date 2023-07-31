@@ -4,7 +4,7 @@ import RecipeSearchResult from "./RecipeSearchResult";
 
 type RecipeSearchResultsListProps = {
   results: SearchResult[];
-  onOpenRecipeInfo: () => void;
+  onOpenRecipeInfo: (id: number) => void;
 };
 
 const RecipeSearchResultsList = ({
@@ -14,7 +14,7 @@ const RecipeSearchResultsList = ({
   const searchResults = results.map((result) => (
     <RecipeSearchResult
       result={result}
-      onOpenRecipeInfo={onOpenRecipeInfo}
+      onOpenRecipeInfo={() => onOpenRecipeInfo(result.id)}
       key={result.id}
     />
   ));

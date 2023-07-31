@@ -3,17 +3,26 @@ import Image from "next/image";
 import EditDelete from "./EditDelete";
 
 type RecipeShowProps = {
-  _id: string;
-  name: string;
-  prepTime: string;
-  cookTime: string;
-  ingredients: string;
-  directions: string;
-  cuisine: string;
-  user_email: string;
-  image: string;
-  onOpenEditForm: (rec: string) => void;
-  onOpenDeleteWarning: () => void;
+  _id: string | undefined;
+  name: string | undefined;
+  prepTime: string | undefined;
+  cookTime: string | undefined;
+  ingredients:
+    | string
+    | {
+        id: number;
+        aisle: string;
+        image: string;
+        consistency: string;
+        name: string;
+      }[]
+    | undefined;
+  directions: string | undefined;
+  cuisine: string | undefined;
+  user_email: string | undefined;
+  image: string | undefined;
+  onOpenEditForm: (rec: string) => void | undefined;
+  onOpenDeleteWarning: () => void | undefined;
 };
 const RecipeShow = ({
   _id,
@@ -40,8 +49,17 @@ const RecipeShow = ({
   }
 
   if (ingredients) {
-    splitIngredients = ingredients.split("/");
-    ingredientsListItems = splitIngredients.map((item) => (
+    console.log("ingredients", ingredients);
+    let splitIngredients: string[] = [];
+    if (typeof ingredients === "string") {
+      splitIngredients = ingredients.split("/");
+    } else {
+      for (const ingredient of ingredients) {
+        splitIngredients.push(ingredient.name);
+      }
+    }
+
+    ingredientsListItems = splitIngredients!.map((item) => (
       <li key={item}>{item.trim()}</li>
     ));
   }
@@ -51,9 +69,9 @@ const RecipeShow = ({
         <div className={styles.recipe}>
           <div className={styles["recipe-image"]}>
             <Image
-              loader={() => image}
+              loader={() => image!}
               alt=""
-              src={image}
+              src={image!}
               fill={true}
               priority={true}
             />
