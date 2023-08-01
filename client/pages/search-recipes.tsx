@@ -9,6 +9,7 @@ import Spinner from "@component/components/Spinner";
 import { useRouter } from "next/router";
 import { Recipe } from "./recipes";
 import RecipeShow from "@component/components/RecipeShow";
+import APIRecipeSearchTerm from "@component/components/APIRecipeSearchTerm";
 
 export type SearchResult = {
   id: number;
@@ -191,6 +192,10 @@ const SearchRecipesPage = () => {
     "Wheat",
   ];
 
+  const includeIngredientsDivs = includeIngredients.map((ingredient) => (
+    <APIRecipeSearchTerm term={ingredient} onDelete={() => {}} />
+  ));
+
   return (
     <>
       {openRecipeInfo && (
@@ -209,6 +214,7 @@ const SearchRecipesPage = () => {
               onOpenDeleteWarning={() => {}}
               onOpenEditForm={() => {}}
             />
+            <button>save</button>
           </div>
         </Modal>
       )}
@@ -254,7 +260,7 @@ const SearchRecipesPage = () => {
             </button>
           </div>
           <div className={`${styles["specified-criteria"]} ${styles.include}`}>
-            {includeIngredients}
+            {includeIngredientsDivs}
           </div>
         </div>
         <div className={styles["input-grouping"]}>

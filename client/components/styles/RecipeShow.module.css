@@ -8,6 +8,8 @@
   width: 90%;
   padding: 10px;
   background-color: #f9f1f0;
+  overflow: scroll;
+  height: 90vh;
 }
 
 .recipe-name {

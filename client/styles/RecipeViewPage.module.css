@@ -13,7 +13,6 @@
 
 .recipe {
   width: 80%;
-  overflow: scroll;
   height: 100vh;
 }
 
@@ -46,6 +45,8 @@
 .title {
   font-size: 2.5rem;
   color: #104210;
+  margin-left: 20px;
+  transform: skew(-5deg);
 }
 
 .left a {

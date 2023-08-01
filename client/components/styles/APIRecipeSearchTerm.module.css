@@ -1,0 +1,13 @@
+.wrapper {
+  display: inline-block;
+  position: relative;
+  margin-right: 25px;
+}
+
+.icon {
+  position: absolute;
+  top: -5px;
+  right: -15px;
+  color: #595e60;
+  cursor: pointer;
+}

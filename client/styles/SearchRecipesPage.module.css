@@ -59,6 +59,11 @@
   box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
 }
 
+.exclude,
+.include,
+.query {
+  font-weight: 600;
+}
 .exclude {
   color: red;
 }
@@ -82,7 +87,7 @@
   height: 3rem;
   width: 6rem;
   background-color: #018749;
-  color: white;
+  color: #fdfefe;
   border: none;
   border-radius: 5px;
   box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
