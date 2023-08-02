@@ -17,7 +17,7 @@ type RecipeShowProps = {
         name: string;
       }[]
     | undefined;
-  directions: string | undefined;
+  directions: string | undefined | [];
   cuisine: string | undefined;
   user_email: string | undefined;
   image: string | undefined;
@@ -36,20 +36,28 @@ const RecipeShow = ({
   onOpenDeleteWarning,
   onOpenEditForm,
 }: RecipeShowProps) => {
-  let splitDirections;
-  let splitIngredients;
   let directionListItems: JSX.Element[] = [];
   let ingredientsListItems: JSX.Element[] = [];
 
   if (directions) {
-    splitDirections = directions.split("/");
+    let splitDirections: string[] = [];
+    if (typeof directions === "object") {
+      for (const direction of directions[0]["steps"]) {
+        console.log(direction.step.split("."));
+        const directionText = direction.step;
+        splitDirections = splitDirections.concat(
+          directionText.split(".").slice(0, -1)
+        );
+      }
+    } else {
+      splitDirections = directions.split("/");
+    }
     directionListItems = splitDirections.map((item) => (
       <li key={item}>{item.trim()}</li>
     ));
   }
 
   if (ingredients) {
-    console.log("ingredients", ingredients);
     let splitIngredients: string[] = [];
     if (typeof ingredients === "string") {
       splitIngredients = ingredients.split("/");

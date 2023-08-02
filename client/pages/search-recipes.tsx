@@ -128,7 +128,7 @@ const SearchRecipesPage = () => {
           prepTime: recipeInfoData.prepTime,
           cookTime: recipeInfoData.readyInMinutes,
           cuisine: recipeInfoData.cuisines[0],
-          directions: recipeInfoData.instructions,
+          directions: recipeInfoData.analyzedInstructions,
           ingredients: recipeInfoData.extendedIngredients,
           user_email: recipeInfoData.email,
           image: recipeInfoData.image,
