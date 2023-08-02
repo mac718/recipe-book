@@ -192,8 +192,44 @@ const SearchRecipesPage = () => {
     "Wheat",
   ];
 
+  const onDeleteSearchTerm = (term: string, type: string) => {
+    let termsCopy;
+    let stateFunc;
+    if (type === "include") {
+      termsCopy = includeIngredients.slice();
+      stateFunc = setIncludeIngredients;
+    } else if (type === "exclude") {
+      termsCopy = excludeIngredients.slice();
+      stateFunc = setExcludeIngredients;
+    } else {
+      termsCopy = query.slice();
+      stateFunc = setQuery;
+    }
+
+    let spliceIdex = termsCopy.findIndex((el) => el === term);
+    termsCopy.splice(spliceIdex, 1);
+    stateFunc(termsCopy);
+  };
+
   const includeIngredientsDivs = includeIngredients.map((ingredient) => (
-    <APIRecipeSearchTerm term={ingredient} onDelete={() => {}} />
+    <APIRecipeSearchTerm
+      term={ingredient}
+      onDelete={() => onDeleteSearchTerm(ingredient, "include")}
+    />
+  ));
+
+  const excludeIngredientsDivs = excludeIngredients.map((ingredient) => (
+    <APIRecipeSearchTerm
+      term={ingredient}
+      onDelete={() => onDeleteSearchTerm(ingredient, "exclude")}
+    />
+  ));
+
+  const queryDivs = query.map((term) => (
+    <APIRecipeSearchTerm
+      term={term}
+      onDelete={() => onDeleteSearchTerm(term, "query")}
+    />
   ));
 
   return (
@@ -284,7 +320,7 @@ const SearchRecipesPage = () => {
             </button>
           </div>
           <div className={`${styles["specified-criteria"]} ${styles.exclude}`}>
-            {excludeIngredients}
+            {excludeIngredientsDivs}
           </div>
         </div>
         <div className={styles["input-grouping"]}>
@@ -303,7 +339,7 @@ const SearchRecipesPage = () => {
             </button>
           </div>
           <div className={`${styles["specified-criteria"]} ${styles.query}`}>
-            {query}
+            {queryDivs}
           </div>
         </div>
         <div className={styles["search-button-container"]}>
