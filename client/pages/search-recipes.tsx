@@ -57,6 +57,7 @@ const SearchRecipesPage = () => {
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault();
     setShowSpinner(true);
+    localStorage.clear();
     const intoleranceArrString = Object.keys(intolerances)
       .filter((key) => intolerances[key])
       .join(",");

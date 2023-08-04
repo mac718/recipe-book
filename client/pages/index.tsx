@@ -21,12 +21,10 @@ export default function Home() {
             className={styles["google-link"]}
             href="http://localhost:8000/google"
           >
-            <button className={styles["register-button"]}>
-              <div>
-                <FcGoogle />
-              </div>
-              Continue with Google
-            </button>
+            <div>
+              <FcGoogle />
+            </div>
+            Continue with Google
           </a>
         </div>
       </main>

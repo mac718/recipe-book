@@ -5,11 +5,11 @@
 }
 
 .recipe {
-  width: 90%;
+  width: 100%;
   padding: 10px;
-  background-color: #f9f1f0;
+  background-color: #fdfefe;
   overflow: scroll;
-  height: 90vh;
+  height: 100dvh;
 }
 
 .recipe-name {

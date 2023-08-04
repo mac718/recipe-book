@@ -1,5 +1,8 @@
 .heading {
   text-align: center;
+  background: -webkit-linear-gradient(#eee, #3b5998);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .text-input {
@@ -85,13 +88,20 @@
 }
 .search-button {
   height: 3rem;
-  width: 6rem;
-  background-color: #018749;
+  width: 35%;
+  background-color: #00ab66;
   color: #fdfefe;
+  font-size: 24px;
   border: none;
   border-radius: 5px;
   box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
   cursor: pointer;
+}
+
+.search-button:hover {
+  border: 1px solid #018749;
+  background-color: #afe1af;
+  color: #018749;
 }
 
 .hr {

@@ -43,7 +43,6 @@ const RecipeShow = ({
     let splitDirections: string[] = [];
     if (typeof directions === "object") {
       for (const direction of directions[0]["steps"]) {
-        console.log(direction.step.split("."));
         const directionText = direction.step;
         splitDirections = splitDirections.concat(
           directionText.split(".").slice(0, -1)

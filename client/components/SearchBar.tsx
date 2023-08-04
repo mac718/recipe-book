@@ -1,5 +1,6 @@
 import { ChangeEvent, RefObject } from "react";
 import styles from "./styles/SearchBar.module.css";
+import { FaSearch } from "react-icons/fa";
 
 type SearchBarProps = {
   handleSearchTermChange: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -16,6 +17,9 @@ const SearchBar = ({
 }: SearchBarProps) => {
   return (
     <div className={styles["search-container"]}>
+      <span className={styles["search-icon"]}>
+        <FaSearch />
+      </span>
       <input
         type="text"
         id="search-receipes"

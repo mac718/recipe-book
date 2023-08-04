@@ -11,35 +11,7 @@
 
 .main h1 {
   color: #104210;
-  font-family: Arial, Helvetica, sans-serif;
   font-size: 4em;
-}
-
-.description {
-  display: inherit;
-  justify-content: inherit;
-  align-items: inherit;
-  font-size: 0.85rem;
-  max-width: var(--max-width);
-  width: 100%;
-  z-index: 2;
-  font-family: var(--font-mono);
-}
-
-.description a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.description p {
-  position: relative;
-  margin: 0;
-  padding: 1rem;
-  background-color: rgba(var(--callout-rgb), 0.5);
-  border: 1px solid rgba(var(--callout-border-rgb), 0.3);
-  border-radius: var(--border-radius);
 }
 
 .register-login {
@@ -49,7 +21,9 @@
   opacity: 0.9;
 }
 
-.register-button {
+.google-link {
+  display: inline-block;
+  text-decoration: none;
   width: 16em;
   height: 3.5em;
   border: 2px solid #ff5c4d;
@@ -60,32 +34,10 @@
   padding: 10px;
   background: #ffed86;
   color: #ff7636;
-  font-family: Arial, Helvetica, sans-serif;
   font-size: 2em;
   font-weight: 600;
   margin: 15px;
   cursor: pointer;
-}
-
-.login-button {
-  width: 15em;
-  height: 3.5em;
-  border: 2px solid #7a871e;
-  border-radius: 30px;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 10px;
-  background: #dad870;
-  color: #104210;
-  font-size: 1em;
-  font-weight: 500;
-  margin: 15px;
-  cursor: pointer;
-}
-
-.google-link {
-  text-decoration: none;
 }
 
 .img {

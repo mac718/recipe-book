@@ -150,11 +150,11 @@ const RecipesPage = () => {
           setOpenRecipeForm(true);
         }}
       >
-        Add Recipe
+        Add Your Own Recipe
       </button>
 
       <div className={styles.or}>
-        <span>Or</span>
+        <span>or</span>
       </div>
       <div className={styles["link-container"]}>
         <a href="/search-recipes" className={styles["search-for-new"]}>
