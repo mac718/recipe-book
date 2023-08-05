@@ -8,6 +8,8 @@ import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import SearchBar from "@component/components/SearchBar";
 import Spinner from "@component/components/Spinner";
+import Layout from "../components/Layout";
+import { NextPageWithLayout } from "./_app";
 
 export type Recipe = {
   _id: string;
@@ -21,7 +23,7 @@ export type Recipe = {
   user_email: string;
 };
 
-const RecipesPage = () => {
+const RecipesPage: NextPageWithLayout = () => {
   const [openRecipeForm, setOpenRecipeForm] = useState(false);
   const [allRecipes, setAllRecipes] = useState<Recipe[] | undefined>();
   const [recipes, setRecipes] = useState<Recipe[] | undefined>();
@@ -165,6 +167,10 @@ const RecipesPage = () => {
       <section className={styles["recipe-grid"]}>{recipeCards}</section>
     </div>
   );
+};
+
+RecipesPage.getLayout = function getLayout(page: ReactElement) {
+  return <Layout>{page}</Layout>;
 };
 
 export default RecipesPage;

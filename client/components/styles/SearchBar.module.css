@@ -16,7 +16,7 @@
 
 .search:focus {
   border: none;
-  box-shadow: 15px 5px 15px 4px rgba(0, 0, 0, 0.06);
+  box-shadow: 15px 8px 15px 8px rgba(0, 0, 0, 0.06);
   background-color: #fdfefe;
   outline: none;
 }

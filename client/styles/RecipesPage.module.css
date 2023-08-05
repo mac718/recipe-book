@@ -3,6 +3,7 @@
   text-align: center;
   color: #595e60;
   background: -webkit-linear-gradient(#eee, #3b5998);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -57,7 +58,7 @@
 
 .recipe-grid {
   display: grid;
-  grid-template-columns: repeat(4, 2fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(auto, 1fr);
   width: 80vw;
   overflow: scroll;

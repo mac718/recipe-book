@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, ReactElement, useState } from "react";
 import styles from "../styles/SearchRecipesPage.module.css";
 import axios, { AxiosResponse } from "axios";
 import CriteriaSelectorList from "@component/components/CriteriaSelectorList";
@@ -10,6 +10,8 @@ import { useRouter } from "next/router";
 import { Recipe } from "./recipes";
 import RecipeShow from "@component/components/RecipeShow";
 import APIRecipeSearchTerm from "@component/components/APIRecipeSearchTerm";
+import { NextPageWithLayout } from "./_app";
+import Layout from "@component/components/Layout";
 
 export type SearchResult = {
   id: number;
@@ -18,7 +20,7 @@ export type SearchResult = {
   imageType: string;
 };
 
-const SearchRecipesPage = () => {
+const SearchRecipesPage: NextPageWithLayout = () => {
   const [intolerances, setIntolerances] = useState<{ [key: string]: boolean }>(
     {}
   );
@@ -358,6 +360,10 @@ const SearchRecipesPage = () => {
       </section>
     </>
   );
+};
+
+SearchRecipesPage.getLayout = function getLayout(page: ReactElement) {
+  return <Layout>{page}</Layout>;
 };
 
 export default SearchRecipesPage;

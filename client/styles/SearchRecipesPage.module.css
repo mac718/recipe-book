@@ -1,6 +1,7 @@
 .heading {
   text-align: center;
   background: -webkit-linear-gradient(#eee, #3b5998);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
