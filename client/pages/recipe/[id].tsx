@@ -2,7 +2,7 @@ import RecipeShow from "@component/components/RecipeShow";
 import { Recipe } from "../recipes";
 import { GetServerSideProps } from "next";
 import axios from "axios";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, ReactElement, useEffect, useRef, useState } from "react";
 import SearchBar from "@component/components/SearchBar";
 import styles from "../../styles/RecipeViewPage.module.css";
 import RecipeListCard from "@component/components/RecipeListCard";
@@ -12,12 +12,16 @@ import DeleteWarning from "@component/components/DeleteWarning";
 import Link from "next/link";
 import { GiNotebook } from "react-icons/gi";
 import Spinner from "@component/components/Spinner";
+import { NextPageWithLayout } from "../_app";
+import Layout from "@component/components/Layout";
 
 type RecipePageProps = {
   currentRecipeId: string;
 };
 
-const RecipePage = ({ currentRecipeId }: RecipePageProps) => {
+const RecipePage: NextPageWithLayout<RecipePageProps> = ({
+  currentRecipeId,
+}: RecipePageProps) => {
   const [allRecipes, setAllRecipes] = useState<Recipe[]>([]);
   const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>([]);
   const [currentRecipeIdState, setCurrentRecipeIdState] =
@@ -231,6 +235,10 @@ const RecipePage = ({ currentRecipeId }: RecipePageProps) => {
       </div>
     </div>
   );
+};
+
+RecipePage.getLayout = function getLayout(page: ReactElement) {
+  return <Layout>{page}</Layout>;
 };
 
 export default RecipePage;
