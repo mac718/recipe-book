@@ -20,7 +20,13 @@ export type SearchResult = {
   imageType: string;
 };
 
-const SearchRecipesPage: NextPageWithLayout = () => {
+type SearchRecipesPageProps = {
+  user_email: string;
+};
+
+const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
+  user_email,
+}) => {
   const [intolerances, setIntolerances] = useState<{ [key: string]: boolean }>(
     {}
   );
@@ -363,7 +369,7 @@ const SearchRecipesPage: NextPageWithLayout = () => {
 };
 
 SearchRecipesPage.getLayout = function getLayout(page: ReactElement) {
-  return <Layout>{page}</Layout>;
+  return <Layout user={page.props.user_email}>{page}</Layout>;
 };
 
 export default SearchRecipesPage;
@@ -380,6 +386,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 
   return {
-    props: {},
+    props: { user_email },
   };
 };

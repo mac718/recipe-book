@@ -3,11 +3,12 @@ import NavBar from "./NavBar";
 
 type LayoutProps = {
   children: ReactNode;
+  user: string;
 };
-const Layout = ({ children }: LayoutProps) => {
+const Layout = ({ children, user }: LayoutProps) => {
   return (
     <>
-      <NavBar />
+      <NavBar user={user} />
       <main>{children}</main>
     </>
   );

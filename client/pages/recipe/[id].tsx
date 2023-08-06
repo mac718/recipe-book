@@ -17,10 +17,12 @@ import Layout from "@component/components/Layout";
 
 type RecipePageProps = {
   currentRecipeId: string;
+  user_email: string;
 };
 
 const RecipePage: NextPageWithLayout<RecipePageProps> = ({
   currentRecipeId,
+  user_email,
 }: RecipePageProps) => {
   const [allRecipes, setAllRecipes] = useState<Recipe[]>([]);
   const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>([]);
@@ -238,7 +240,7 @@ const RecipePage: NextPageWithLayout<RecipePageProps> = ({
 };
 
 RecipePage.getLayout = function getLayout(page: ReactElement) {
-  return <Layout>{page}</Layout>;
+  return <Layout user={page.props.user_email}>{page}</Layout>;
 };
 
 export default RecipePage;
@@ -258,6 +260,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       currentRecipeId,
+      user_email: email,
     },
   };
 };

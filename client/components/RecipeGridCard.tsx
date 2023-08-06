@@ -47,6 +47,7 @@ const RecipeGridCard = ({
       <div className={styles.box}>
         <Link href={`/recipe/${recipe._id}`}>
           <div className={styles.pic} onClick={onShowSpinner}>
+            <div className={styles.overlay}>{name}</div>
             <Image
               loader={() => image}
               alt=""

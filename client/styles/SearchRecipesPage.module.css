@@ -1,4 +1,5 @@
 .heading {
+  margin-top: 60px;
   text-align: center;
   background: -webkit-linear-gradient(#eee, #3b5998);
   background-clip: text;
@@ -90,7 +91,7 @@
 .search-button {
   height: 3rem;
   width: 35%;
-  background-color: #00ab66;
+  background-color: #018749;
   color: #fdfefe;
   font-size: 24px;
   border: none;

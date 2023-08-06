@@ -10,6 +10,7 @@ import SearchBar from "@component/components/SearchBar";
 import Spinner from "@component/components/Spinner";
 import Layout from "../components/Layout";
 import { NextPageWithLayout } from "./_app";
+import { FiDatabase } from "react-icons/fi";
 
 export type Recipe = {
   _id: string;
@@ -23,7 +24,11 @@ export type Recipe = {
   user_email: string;
 };
 
-const RecipesPage: NextPageWithLayout = () => {
+type RecipesPageProps = {
+  user_email: string;
+};
+
+const RecipesPage: NextPageWithLayout<RecipesPageProps> = ({ user_email }) => {
   const [openRecipeForm, setOpenRecipeForm] = useState(false);
   const [allRecipes, setAllRecipes] = useState<Recipe[] | undefined>();
   const [recipes, setRecipes] = useState<Recipe[] | undefined>();
@@ -152,7 +157,7 @@ const RecipesPage: NextPageWithLayout = () => {
           setOpenRecipeForm(true);
         }}
       >
-        Add Your Own Recipe
+        + Add Your Own Recipe
       </button>
 
       <div className={styles.or}>
@@ -160,6 +165,7 @@ const RecipesPage: NextPageWithLayout = () => {
       </div>
       <div className={styles["link-container"]}>
         <a href="/search-recipes" className={styles["search-for-new"]}>
+          <FiDatabase />
           Search For New Recipes
         </a>
       </div>
@@ -170,7 +176,7 @@ const RecipesPage: NextPageWithLayout = () => {
 };
 
 RecipesPage.getLayout = function getLayout(page: ReactElement) {
-  return <Layout>{page}</Layout>;
+  return <Layout user={page.props.user_email}>{page}</Layout>;
 };
 
 export default RecipesPage;
@@ -187,6 +193,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 
   return {
-    props: {},
+    props: { user_email },
   };
 };
