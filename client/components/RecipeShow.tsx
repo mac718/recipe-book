@@ -1,6 +1,11 @@
 import styles from "./styles/RecipeShow.module.css";
 import Image from "next/image";
 import EditDelete from "./EditDelete";
+import { FaSave } from "react-icons/fa";
+import { MouseEventHandler, useState } from "react";
+import axios from "axios";
+import Spinner from "./Spinner";
+import { useRouter } from "next/router";
 
 type RecipeShowProps = {
   _id: string | undefined;
@@ -23,6 +28,7 @@ type RecipeShowProps = {
   image: string | undefined;
   onOpenEditForm: (rec: string) => void | undefined;
   onOpenDeleteWarning: () => void | undefined;
+  saved: boolean;
 };
 const RecipeShow = ({
   _id,
@@ -35,7 +41,12 @@ const RecipeShow = ({
   image,
   onOpenDeleteWarning,
   onOpenEditForm,
+  saved,
 }: RecipeShowProps) => {
+  const [showSpinner, setShowSpinner] = useState(false);
+  const [isSaved, setIsSaved] = useState(saved);
+  const router = useRouter();
+
   let directionListItems: JSX.Element[] = [];
   let ingredientsListItems: JSX.Element[] = [];
 
@@ -70,9 +81,39 @@ const RecipeShow = ({
       <li key={item}>{item.trim()}</li>
     ));
   }
+  const handleSaveRecipe = async (event: MouseEvent) => {
+    event.preventDefault();
+    try {
+      setShowSpinner(true);
+      const res = await axios.post(
+        "/recipes/addRecipe",
+        {
+          name,
+          cuisine,
+          prepTime,
+          cookTime,
+          ingredients,
+          directions,
+          image,
+        },
+        { withCredentials: true }
+      );
+
+      if (res.status === 401) {
+        router.push("/");
+      }
+      setShowSpinner(false);
+      setIsSaved(true);
+    } catch (err: any) {
+      setShowSpinner(false);
+      console.log(err);
+    }
+  };
+
   if (_id) {
     return (
       <div className={styles.main}>
+        {showSpinner && <Spinner />}
         <div className={styles.recipe}>
           <div className={styles["recipe-image"]}>
             <Image
@@ -86,11 +127,28 @@ const RecipeShow = ({
 
           <div className={styles.info}>
             <div className={styles["recipe-name"]}>{name}</div>
-            <EditDelete
-              recipe={_id}
-              onOpenEditForm={onOpenEditForm}
-              onOpenDeleteForm={onOpenDeleteWarning}
-            />
+            {isSaved && (
+              <EditDelete
+                recipe={_id}
+                onOpenEditForm={onOpenEditForm}
+                onOpenDeleteForm={onOpenDeleteWarning}
+              />
+            )}
+
+            {!isSaved && (
+              <div className={styles["save-div"]}>
+                <button
+                  className={styles.save}
+                  onClick={(e) => handleSaveRecipe(e)}
+                >
+                  <span className={styles["save-icon"]}>
+                    <FaSave />
+                  </span>
+                  save recipe
+                </button>
+              </div>
+            )}
+
             <div className={styles.stats}>
               <div>
                 Cuisine: <span className={styles["info-prop"]}>{cuisine}</span>

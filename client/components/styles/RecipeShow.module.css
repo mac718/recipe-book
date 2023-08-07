@@ -87,6 +87,29 @@
   cursor: pointer;
 }
 
+.save-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 15px;
+}
+
+.save {
+  width: 8rem;
+  height: 2.5rem;
+  color: #eee;
+  font-size: 15px;
+  background-color: #1cac78;
+  border: none;
+  border-radius: 5px;
+  margin: auto;
+  cursor: pointer;
+}
+
+.save-icon {
+  margin-right: 10px;
+}
+
 .tooltip {
   position: relative;
   display: inline-block;
@@ -97,7 +120,7 @@
   visibility: hidden;
   width: 120px;
   background-color: black;
-  color: #fff;
+  color: #eee;
   text-align: center;
   padding: 5px 0;
   border-radius: 6px;

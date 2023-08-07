@@ -115,14 +115,15 @@ const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
     let recipeInfo: AxiosResponse;
     if (localStorage.getItem(`${id}`)) {
       const cachedRecipe = JSON.parse(localStorage.getItem(`${id}`) || "");
+      console.log("cached", cachedRecipe);
       const recipeToView: Recipe = {
-        _id: cachedRecipe.id,
-        name: cachedRecipe.title,
+        _id: cachedRecipe._id,
+        name: cachedRecipe.name,
         prepTime: cachedRecipe.prepTime,
-        cookTime: cachedRecipe.readyInMinutes,
-        cuisine: cachedRecipe.cuisines[0],
-        directions: cachedRecipe.instructions,
-        ingredients: cachedRecipe.extendedIngredients,
+        cookTime: cachedRecipe.cookTime,
+        cuisine: cachedRecipe.cuisine,
+        directions: cachedRecipe.directions,
+        ingredients: cachedRecipe.ingredients,
         user_email: cachedRecipe.email,
         image: cachedRecipe.image,
       };
@@ -144,8 +145,8 @@ const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
         };
         setRecipeInfo(recipeToView);
         localStorage.setItem(
-          `${recipeInfo.data.id}`,
-          JSON.stringify(recipeInfo.data)
+          `${recipeToView._id}`,
+          JSON.stringify(recipeToView)
         );
         console.log(recipeInfo.data);
       } catch (err) {
@@ -241,6 +242,8 @@ const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
     />
   ));
 
+  console.log("recipeInfo", recipeInfo);
+
   return (
     <>
       {openRecipeInfo && (
@@ -258,6 +261,7 @@ const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
               user_email={undefined}
               onOpenDeleteWarning={() => {}}
               onOpenEditForm={() => {}}
+              saved={false}
             />
             <button>save</button>
           </div>
