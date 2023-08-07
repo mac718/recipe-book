@@ -21,7 +21,7 @@ const NavBar = ({ user }: NavBarProps) => {
             Search Recipes
           </Link>
         </div>
-        <span>Hi, {user}!</span>
+        <span className={styles.greeting}>Hi, {user}!</span>
       </div>
     </nav>
   );

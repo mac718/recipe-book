@@ -50,8 +50,8 @@ const RecipeShow = ({
   let directionListItems: JSX.Element[] = [];
   let ingredientsListItems: JSX.Element[] = [];
 
+  let splitDirections: string[] = [];
   if (directions) {
-    let splitDirections: string[] = [];
     if (typeof directions === "object") {
       for (const direction of directions[0]["steps"]) {
         const directionText = direction.step;
@@ -66,9 +66,8 @@ const RecipeShow = ({
       <li key={item}>{item.trim()}</li>
     ));
   }
-
+  let splitIngredients: string[] = [];
   if (ingredients) {
-    let splitIngredients: string[] = [];
     if (typeof ingredients === "string") {
       splitIngredients = ingredients.split("/");
     } else {
@@ -92,8 +91,8 @@ const RecipeShow = ({
           cuisine,
           prepTime,
           cookTime,
-          ingredients,
-          directions,
+          ingredients: splitIngredients.join("/"),
+          directions: splitDirections.join("/"),
           image,
         },
         { withCredentials: true }

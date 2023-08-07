@@ -39,3 +39,7 @@
   text-decoration: none;
   cursor: pointer;
 }
+
+.greeting {
+  margin-right: 20px;
+}

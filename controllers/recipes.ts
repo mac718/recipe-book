@@ -70,7 +70,7 @@ export const addRecipe = async (req: Request, res: Response) => {
   const user_email = req.user?.google.email;
   let image_url = "";
 
-  if (image) {
+  if (!image.includes("spoonacular") && image) {
     image_url = await _uploadImage(axiosInstance, image, imageName);
   }
 
@@ -82,10 +82,15 @@ export const addRecipe = async (req: Request, res: Response) => {
     directions,
     user_email,
     cuisine,
-    image: image_url,
+    image: image_url ? image_url : image,
   });
-  await newRecipe.save();
-  res.sendStatus(201);
+  try {
+    await newRecipe.save();
+    res.sendStatus(201);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
 };
 
 export const getRecipes = async (req: Request, res: Response) => {
