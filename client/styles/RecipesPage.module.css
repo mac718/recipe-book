@@ -45,13 +45,14 @@
   color: #ff5c4d;
   border: 1px solid #ff5c4d; */
   background-color: #ff5c4d;
+  /* background-color: #05386b; */
   color: white;
-  opacity: 0.9;
+  /* opacity: 0.9; */
   border: none;
   border-radius: 5px;
   font-size: 22px;
   cursor: pointer;
-  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2);
+  /* box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2); */
 }
 
 .recipes {
@@ -59,17 +60,21 @@
   position: relative;
   background-color: #fdfefe;
   /* background-color: #def2f1; */
+  /* background-color: rgba(172, 225, 175, 0.1); */
+  /* background-color: #f9f6ee; */
 }
 
 .recipe-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(auto, 1fr);
+  column-gap: 20px;
   width: 80vw;
   overflow: scroll;
   height: 100vh;
   margin: 5rem auto 0 auto;
   background-color: #fdfefe;
+  /* background-color: #f9f6ee; */
 }
 
 .or {
@@ -90,12 +95,14 @@
   background-color: transparent;
   color: forestgreen; */
   background-color: forestgreen;
+  /* background-color: #edf5e1;
+  color: #05386b; */
   color: white;
   opacity: 0.9;
   text-decoration: none;
   cursor: pointer;
   font-size: 22px;
-  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2);
+  /* box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2); */
 }
 
 .search-for-new:hover,

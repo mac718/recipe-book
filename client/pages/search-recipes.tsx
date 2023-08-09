@@ -1,4 +1,4 @@
-import { FormEvent, ReactElement, useState } from "react";
+import { FormEvent, ReactElement, useEffect, useState } from "react";
 import styles from "../styles/SearchRecipesPage.module.css";
 import axios, { AxiosResponse } from "axios";
 import CriteriaSelectorList from "@component/components/CriteriaSelectorList";
@@ -22,10 +22,12 @@ export type SearchResult = {
 
 type SearchRecipesPageProps = {
   user_email: string;
+  savedRecipes: string[];
 };
 
 const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
   user_email,
+  savedRecipes,
 }) => {
   const [intolerances, setIntolerances] = useState<{ [key: string]: boolean }>(
     {}
@@ -39,8 +41,16 @@ const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
   const [currentQuery, setCurrentQuery] = useState("");
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [openRecipeInfo, setOpenRecipeInfo] = useState(false);
-  const [recipeInfo, setRecipeInfo] = useState<Recipe>();
+  const [recipeInfo, setRecipeInfo] = useState<Recipe & { saved: boolean }>();
   const [showSpinner, setShowSpinner] = useState(false);
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
+
+  const savedRecipeNames = [];
+  for (const recipe of recipes) {
+    savedRecipeNames.push(recipe.name);
+  }
+
+  console.log("Savedrecs", savedRecipeNames);
 
   const router = useRouter();
 
@@ -111,12 +121,13 @@ const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
     }
   };
 
-  const onOpenRecipeInfo = async (id: number) => {
+  const onOpenRecipeInfo = async (id: number, saved: boolean) => {
     let recipeInfo: AxiosResponse;
     if (localStorage.getItem(`${id}`)) {
       const cachedRecipe = JSON.parse(localStorage.getItem(`${id}`) || "");
       console.log("cached", cachedRecipe);
-      const recipeToView: Recipe = {
+      console.log("Savered", saved);
+      const recipeToView: Recipe & { saved: boolean } = {
         _id: cachedRecipe._id,
         name: cachedRecipe.name,
         prepTime: cachedRecipe.prepTime,
@@ -126,13 +137,14 @@ const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
         ingredients: cachedRecipe.ingredients,
         user_email: cachedRecipe.email,
         image: cachedRecipe.image,
+        saved: saved,
       };
       setRecipeInfo(recipeToView || {});
     } else {
       try {
         recipeInfo = await axios.get(`/spoonacular/get-recipe-info/${id}`);
         const recipeInfoData = recipeInfo.data;
-        const recipeToView: Recipe = {
+        const recipeToView: Recipe & { saved: boolean } = {
           _id: recipeInfoData.id,
           name: recipeInfoData.title,
           prepTime: recipeInfoData.prepTime,
@@ -142,6 +154,7 @@ const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
           ingredients: recipeInfoData.extendedIngredients,
           user_email: recipeInfoData.email,
           image: recipeInfoData.image,
+          saved: saved,
         };
         setRecipeInfo(recipeToView);
         localStorage.setItem(
@@ -243,6 +256,21 @@ const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
   ));
 
   console.log("recipeInfo", recipeInfo);
+  const getRecipes = async () => {
+    let recipes: any;
+    try {
+      recipes = await axios.get("/recipes/getAllRecipes", {
+        withCredentials: true,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+    setRecipes(recipes ? recipes.data : []);
+  };
+
+  useEffect(() => {
+    getRecipes();
+  }, []);
 
   return (
     <>
@@ -261,7 +289,7 @@ const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
               user_email={undefined}
               onOpenDeleteWarning={() => {}}
               onOpenEditForm={() => {}}
-              saved={false}
+              saved={recipeInfo!.saved}
             />
             <button>save</button>
           </div>
@@ -365,6 +393,7 @@ const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
       <section id="results">
         <RecipeSearchResultsList
           results={searchResults}
+          savedRecipes={savedRecipeNames}
           onOpenRecipeInfo={onOpenRecipeInfo}
         />
       </section>

@@ -95,6 +95,7 @@ export const addRecipe = async (req: Request, res: Response) => {
 
 export const getRecipes = async (req: Request, res: Response) => {
   const user = req.user;
+  console.log("user", user);
   try {
     const recipes = await Recipe.find({ user_email: user?.google.email });
     res.json(recipes);
