@@ -1,8 +1,9 @@
 .heading {
   font-size: 3rem;
   text-align: center;
-  color: #595e60;
+  /* color: #595e60; */
   background: -webkit-linear-gradient(#eee, #3b5998);
+  background: -webkit-linear-gradient(#e98074, #8e8d8a);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -47,7 +48,7 @@
   background-color: #ff5c4d;
   /* background-color: #05386b; */
   color: white;
-  /* opacity: 0.9; */
+  opacity: 0.9;
   border: none;
   border-radius: 5px;
   font-size: 22px;
@@ -62,6 +63,7 @@
   /* background-color: #def2f1; */
   /* background-color: rgba(172, 225, 175, 0.1); */
   /* background-color: #f9f6ee; */
+  /* background-color: rgba(234, 231, 220, 0.3); */
 }
 
 .recipe-grid {
@@ -114,6 +116,15 @@
   width: 100%;
   display: flex;
   justify-content: center;
+}
+
+.database {
+  margin-right: 10px;
+}
+
+.plus {
+  margin-right: 10px;
+  font-size: 30px;
 }
 
 @media screen and (max-width: 600px) {

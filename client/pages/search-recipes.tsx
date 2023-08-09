@@ -125,8 +125,6 @@ const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
     let recipeInfo: AxiosResponse;
     if (localStorage.getItem(`${id}`)) {
       const cachedRecipe = JSON.parse(localStorage.getItem(`${id}`) || "");
-      console.log("cached", cachedRecipe);
-      console.log("Savered", saved);
       const recipeToView: Recipe & { saved: boolean } = {
         _id: cachedRecipe._id,
         name: cachedRecipe.name,
@@ -268,6 +266,9 @@ const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
     setRecipes(recipes ? recipes.data : []);
   };
 
+  /* fetching recipes with useEffect instead of getServerSideProps
+    since req.user, which recipes controller
+     uses, is not available on backend. */
   useEffect(() => {
     getRecipes();
   }, []);

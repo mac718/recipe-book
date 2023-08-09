@@ -157,7 +157,7 @@ const RecipesPage: NextPageWithLayout<RecipesPageProps> = ({ user_email }) => {
           setOpenRecipeForm(true);
         }}
       >
-        + Add Your Own Recipe
+        <span className={styles.plus}>+</span> Add Your Own Recipe
       </button>
 
       <div className={styles.or}>
@@ -165,7 +165,9 @@ const RecipesPage: NextPageWithLayout<RecipesPageProps> = ({ user_email }) => {
       </div>
       <div className={styles["link-container"]}>
         <a href="/search-recipes" className={styles["search-for-new"]}>
-          <FiDatabase />
+          <span className={styles.database}>
+            <FiDatabase />
+          </span>
           Search For New Recipes
         </a>
       </div>
