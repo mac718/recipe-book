@@ -43,3 +43,28 @@
 .greeting {
   margin-right: 20px;
 }
+
+.mobile-dropdown {
+  position: relative;
+}
+
+.mobile-dropdown-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  position: absolute;
+  background-color: #eee;
+  width: 150px;
+  height: 150px;
+}
+
+.hide {
+  display: none;
+}
+
+@media screen and (max-width: 700px) {
+  .nav-links-and-user {
+    justify-content: space-evenly;
+  }
+}

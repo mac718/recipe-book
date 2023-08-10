@@ -199,11 +199,11 @@ const RecipePage: NextPageWithLayout<RecipePageProps> = ({
         </Modal>
       )}
       <div className={leftClasses}>
-        <Link href="/recipes">
+        {/* <Link href="/recipes">
           <div className={styles.title}>
             Home Cook Recipe Book <GiNotebook />
           </div>
-        </Link>
+        </Link> */}
         <div className={styles.search}>
           <div className={styles["search-container"]}>
             <h2>Your Recipes</h2>
