@@ -44,21 +44,9 @@ const NavBar = ({ user }: NavBarProps) => {
               <GiHamburgerMenu
                 onClick={() => setShowDropdownContent((prev) => !prev)}
               />
-              <div
-                className={dropdownContentClasses}
-                // hidden={showDropdownContent}
-              >
-                <div
-                  className={styles["nav-link"]}
-                  // hidden={showDropdownContent}
-                >
-                  Add Your Own Recipe
-                </div>
-                <Link
-                  href="/search-recipes"
-                  className={styles["nav-link"]}
-                  // hidden={showDropdownContent}
-                >
+              <div className={dropdownContentClasses}>
+                <div className={styles["nav-link"]}>Add Your Own Recipe</div>
+                <Link href="/search-recipes" className={styles["nav-link"]}>
                   Search Recipes
                 </Link>
               </div>

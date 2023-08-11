@@ -10,7 +10,7 @@
   flex-direction: column;
   width: 25%;
   position: relative;
-  z-index: 100;
+  z-index: 40;
   margin-right: 3rem;
   margin-top: 60px;
 }
@@ -72,7 +72,7 @@
   background-color: #ff5c4d;
   color: white;
   visibility: hidden;
-  z-index: 50;
+  z-index: 40;
 }
 
 .tab-text {
@@ -99,6 +99,7 @@
     border-right: 0.5px solid darkgray;
     position: absolute;
     height: 100vh;
+    z-index: 40;
   }
   .recipe {
     width: 100vw;
@@ -116,6 +117,8 @@
     border-right: 0.5px solid darkgray;
     position: absolute;
     height: 100vh;
+    z-index: 40;
+    margin-top: 60px;
   }
   .recipe {
     width: 100vw;
@@ -129,7 +132,7 @@
   to {
     left: 0;
     top: 0;
-    z-index: 100;
+    z-index: 40;
     background-color: white;
   }
 }
@@ -138,20 +141,23 @@
   from {
     left: 0;
     top: 0;
-    width: 40%;
-    z-index: 100;
+    width: 80%;
+    z-index: 40;
     position: absolute;
     background-color: white;
     height: 100vh;
     padding: 10px;
+    margin-top: 60px;
   }
   to {
-    left: -50%;
+    left: -90%;
     top: 0;
-    width: 40%;
+    width: 80%;
     position: absolute;
+    z-index: 40;
     background-color: white;
     height: 100vh;
     padding: 10px;
+    margin-top: 60px;
   }
 }
