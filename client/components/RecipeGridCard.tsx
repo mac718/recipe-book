@@ -59,7 +59,6 @@ const RecipeGridCard = ({
               priority={true}
             />
           </div>
-          <div className={styles.name}>{name}</div>
         </Link>
         <EditDelete
           recipe={_id}

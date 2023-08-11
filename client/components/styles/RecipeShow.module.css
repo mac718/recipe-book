@@ -22,8 +22,8 @@
 
 .recipe-image {
   position: relative;
-  height: 50vh;
-  width: 65%;
+  height: 45dvh;
+  width: 60%;
   margin: 10px auto 0 auto;
   overflow: hidden;
   border-radius: 10px;
@@ -157,5 +157,9 @@
   .directions,
   .recipe-image {
     width: 90%;
+  }
+
+  .recipe-image {
+    height: 25dvh;
   }
 }
