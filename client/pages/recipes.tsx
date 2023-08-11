@@ -26,15 +26,18 @@ export type Recipe = {
 
 type RecipesPageProps = {
   user_email: string;
+  onShowSpinner: () => void;
 };
 
-const RecipesPage: NextPageWithLayout<RecipesPageProps> = ({ user_email }) => {
+const RecipesPage: NextPageWithLayout<RecipesPageProps> = ({
+  user_email,
+  onShowSpinner,
+}) => {
   const [openRecipeForm, setOpenRecipeForm] = useState(false);
   const [allRecipes, setAllRecipes] = useState<Recipe[] | undefined>();
   const [recipes, setRecipes] = useState<Recipe[] | undefined>();
   const [editMode, setEditMode] = useState(false);
   const [recipeToEdit, setRecipeToEdit] = useState<string | null>(null);
-  const [showSpinner, setShowSpinner] = useState(false);
 
   const router = useRouter();
 
@@ -48,10 +51,6 @@ const RecipesPage: NextPageWithLayout<RecipesPageProps> = ({ user_email }) => {
     setEditMode(true);
     setRecipeToEdit(rec);
     setOpenRecipeForm(true);
-  };
-
-  const onShowSpinner = () => {
-    setShowSpinner(true);
   };
 
   const handleSearchTermChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -126,7 +125,6 @@ const RecipesPage: NextPageWithLayout<RecipesPageProps> = ({ user_email }) => {
 
   return (
     <div className={styles.recipes}>
-      {showSpinner && <Spinner />}
       {openRecipeForm && (
         <Modal onClose={onClose}>
           <AddRecipe

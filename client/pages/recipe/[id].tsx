@@ -18,11 +18,13 @@ import Layout from "@component/components/Layout";
 type RecipePageProps = {
   currentRecipeId: string;
   user_email: string;
+  onCloseSpinner: () => void;
 };
 
 const RecipePage: NextPageWithLayout<RecipePageProps> = ({
   currentRecipeId,
   user_email,
+  onCloseSpinner,
 }: RecipePageProps) => {
   const [allRecipes, setAllRecipes] = useState<Recipe[]>([]);
   const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>([]);
@@ -53,6 +55,7 @@ const RecipePage: NextPageWithLayout<RecipePageProps> = ({
     if (window.innerWidth < 1000) {
       setMobile(true);
     }
+    onCloseSpinner();
   }, []);
 
   const getRecipes = async () => {
