@@ -2,7 +2,7 @@ import styles from "./styles/RecipeShow.module.css";
 import Image from "next/image";
 import EditDelete from "./EditDelete";
 import { FaSave } from "react-icons/fa";
-import { MouseEventHandler, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import Spinner from "./Spinner";
 import { useRouter } from "next/router";
