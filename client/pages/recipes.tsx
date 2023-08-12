@@ -70,14 +70,19 @@ const RecipesPage: NextPageWithLayout<RecipesPageProps> = ({
           recipe.ingredients
             .toLowerCase()
             .includes(searchBarRef.current!.value.toLowerCase()) ||
-          recipe.cuisine
-            .toLowerCase()
-            .includes(searchBarRef.current!.value.toLowerCase())
+          (recipe.cuisine &&
+            recipe.cuisine
+              .toLowerCase()
+              .includes(searchBarRef.current!.value.toLowerCase()))
       );
     } else {
       filteredRecipes = allRecipes;
     }
     setRecipes(filteredRecipes);
+  };
+
+  const debouncedHandleSearchTermChange = () => {
+    setTimeout(handleSearchTermChange, 500);
   };
 
   let recipeCards: ReactElement[] = [];
@@ -143,7 +148,7 @@ const RecipesPage: NextPageWithLayout<RecipesPageProps> = ({
       <h1 className={styles.heading}>Your Recipes</h1>
       <div className={styles["search-container"]}>
         <SearchBar
-          handleSearchTermChange={handleSearchTermChange}
+          handleSearchTermChange={debouncedHandleSearchTermChange}
           searchBarRef={searchBarRef}
           handleClear={handleClearSearchBar}
           placeholder="Find a receipe! Search recipes by name, cuisine, or ingredients..."

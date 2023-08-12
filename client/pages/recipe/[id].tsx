@@ -9,8 +9,6 @@ import RecipeListCard from "@component/components/RecipeListCard";
 import Modal from "@component/components/Modal";
 import AddRecipe from "@component/components/AddRecipe";
 import DeleteWarning from "@component/components/DeleteWarning";
-import Link from "next/link";
-import { GiNotebook } from "react-icons/gi";
 import Spinner from "@component/components/Spinner";
 import { NextPageWithLayout } from "../_app";
 import Layout from "@component/components/Layout";
@@ -206,11 +204,6 @@ const RecipePage: NextPageWithLayout<RecipePageProps> = ({
         </Modal>
       )}
       <div className={leftClasses}>
-        {/* <Link href="/recipes">
-          <div className={styles.title}>
-            Home Cook Recipe Book <GiNotebook />
-          </div>
-        </Link> */}
         <div className={styles.search}>
           <div className={styles["search-container"]}>
             <h2>Your Recipes</h2>
