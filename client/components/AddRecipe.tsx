@@ -12,6 +12,8 @@ type AddRecipeProps = {
   editMode: boolean;
   recipeToEditInfo: Recipe | null | undefined;
   recipeToEdit: string | null;
+  onShowSpinner: () => void;
+  onCloseSpinner: () => void;
 };
 
 type ErrorType = {
@@ -25,10 +27,12 @@ const AddRecipe = ({
   editMode,
   recipeToEditInfo,
   recipeToEdit,
+  onShowSpinner,
+  onCloseSpinner,
 }: AddRecipeProps) => {
   const [image, setImage] = useState<any>();
   const [imageName, setImageName] = useState("");
-  const [showSpinner, setShowSpinner] = useState(false);
+  //const [showSpinner, setShowSpinner] = useState(false);
   const [errors, setErrors] = useState<ErrorType[]>([]);
 
   const nameRef = useRef<HTMLInputElement>(null);
@@ -61,10 +65,12 @@ const AddRecipe = ({
   // for use in handleSubmit
   const _updateState = (res: AxiosResponse) => {
     if (res.data.errors) {
-      setShowSpinner(false);
+      onCloseSpinner();
+      //setShowSpinner(false);
       setErrors(res.data.errors!);
     } else {
-      setShowSpinner(false);
+      onCloseSpinner();
+      //setShowSpinner(false);
       getRecipes();
       onClose();
     }
@@ -74,7 +80,8 @@ const AddRecipe = ({
     event.preventDefault();
     if (editMode) {
       try {
-        setShowSpinner(true);
+        onShowSpinner();
+        //setShowSpinner(true);
         const res = await axios.put(
           "/recipes/editRecipe",
           {
@@ -97,14 +104,16 @@ const AddRecipe = ({
 
         _updateState(res);
       } catch (err: any) {
-        setShowSpinner(false);
+        onCloseSpinner();
+        //setShowSpinner(false);
 
         console.log(err);
         setErrors([err]);
       }
     } else {
       try {
-        setShowSpinner(true);
+        onShowSpinner();
+        //setShowSpinner(true);
         const res = await axios.post(
           "/recipes/addRecipe",
           {
@@ -122,7 +131,8 @@ const AddRecipe = ({
 
         _updateState(res);
       } catch (err: any) {
-        setShowSpinner(false);
+        onCloseSpinner();
+        //setShowSpinner(false);
         setErrors([err]);
         console.log(err);
         if (err.response.status === 401) {
@@ -142,7 +152,7 @@ const AddRecipe = ({
 
   return (
     <div>
-      {showSpinner && <Spinner />}
+      {/* {showSpinner && <Spinner />} */}
       <form className={styles.form} onSubmit={handleSubmit}>
         <h1>Add A New Recipe</h1>
         {errors.length ? errorDivs : null}

@@ -70,7 +70,7 @@ export const addRecipe = async (req: Request, res: Response) => {
   const user_email = req.user?.google.email;
   let image_url = "";
 
-  if (!image.includes("spoonacular") && image) {
+  if (image && !image.includes("spoonacular")) {
     image_url = await _uploadImage(axiosInstance, image, imageName);
   }
 
@@ -120,12 +120,14 @@ export const deleteRecipe = async (req: Request, res: Response) => {
   console.log("hello from delete");
   const recipeId = req.params.id;
   const recipe = await Recipe.findById(recipeId);
-  const imageNameSplit = recipe!.image.split("/");
-  const objectName = imageNameSplit[imageNameSplit.length - 1];
+  const imageNameSplit = recipe!.image ? recipe!.image.split("/") : [];
+  const objectName = imageNameSplit.length
+    ? imageNameSplit[imageNameSplit.length - 1]
+    : "";
   console.log(objectName);
   try {
     await Recipe.deleteOne({ _id: recipeId });
-    await _delete_image(axiosInstance, objectName);
+    if (recipe!.image) await _delete_image(axiosInstance, objectName);
     res.sendStatus(200);
   } catch (err) {
     res.json(err);

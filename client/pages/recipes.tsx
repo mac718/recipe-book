@@ -27,11 +27,13 @@ export type Recipe = {
 type RecipesPageProps = {
   user_email: string;
   onShowSpinner: () => void;
+  onCloseSpinner: () => void;
 };
 
 const RecipesPage: NextPageWithLayout<RecipesPageProps> = ({
   user_email,
   onShowSpinner,
+  onCloseSpinner,
 }) => {
   const [openRecipeForm, setOpenRecipeForm] = useState(false);
   const [allRecipes, setAllRecipes] = useState<Recipe[] | undefined>();
@@ -133,6 +135,8 @@ const RecipesPage: NextPageWithLayout<RecipesPageProps> = ({
             editMode={editMode}
             recipeToEdit={recipeToEdit}
             recipeToEditInfo={recipeToEditInfo}
+            onShowSpinner={onShowSpinner}
+            onCloseSpinner={onCloseSpinner}
           />
         </Modal>
       )}

@@ -23,11 +23,14 @@ export type SearchResult = {
 type SearchRecipesPageProps = {
   user_email: string;
   savedRecipes: string[];
+  onShowSpinner: () => void;
+  onCloseSpinner: () => void;
 };
 
 const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
   user_email,
-  savedRecipes,
+  onShowSpinner,
+  onCloseSpinner,
 }) => {
   const [intolerances, setIntolerances] = useState<{ [key: string]: boolean }>(
     {}
@@ -42,15 +45,12 @@ const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [openRecipeInfo, setOpenRecipeInfo] = useState(false);
   const [recipeInfo, setRecipeInfo] = useState<Recipe & { saved: boolean }>();
-  const [showSpinner, setShowSpinner] = useState(false);
   const [recipes, setRecipes] = useState<Recipe[]>([]);
 
   const savedRecipeNames = [];
   for (const recipe of recipes) {
     savedRecipeNames.push(recipe.name);
   }
-
-  console.log("Savedrecs", savedRecipeNames);
 
   const router = useRouter();
 
@@ -74,7 +74,7 @@ const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
 
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    setShowSpinner(true);
+    onShowSpinner();
     localStorage.clear();
     const intoleranceArrString = Object.keys(intolerances)
       .filter((key) => intolerances[key])
@@ -95,11 +95,11 @@ const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
           `excludeIngredients=${excludeIngredientsString}&query=${queryString}&instructionsRequired=${true}`
       );
       setSearchResults(results.data.results);
-      setShowSpinner(false);
+      onCloseSpinner();
       router.push("#results");
     } catch (err) {
       console.log(err);
-      setShowSpinner(false);
+      onCloseSpinner();
     }
   };
 
@@ -296,7 +296,6 @@ const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
           </div>
         </Modal>
       )}
-      {showSpinner && <Spinner />}
       <h1 className={styles.heading}>Recipe Search</h1>
       <form className={styles["search-form"]} onSubmit={onSubmit}>
         <div className={styles.dropdowns}>

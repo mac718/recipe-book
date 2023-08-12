@@ -18,12 +18,14 @@ import Layout from "@component/components/Layout";
 type RecipePageProps = {
   currentRecipeId: string;
   user_email: string;
+  onShowSpinner: () => void;
   onCloseSpinner: () => void;
 };
 
 const RecipePage: NextPageWithLayout<RecipePageProps> = ({
   currentRecipeId,
   user_email,
+  onShowSpinner,
   onCloseSpinner,
 }: RecipePageProps) => {
   const [allRecipes, setAllRecipes] = useState<Recipe[]>([]);
@@ -188,6 +190,8 @@ const RecipePage: NextPageWithLayout<RecipePageProps> = ({
             editMode={editMode}
             recipeToEdit={recipeToEdit}
             recipeToEditInfo={recipeToEditInfo}
+            onShowSpinner={onShowSpinner}
+            onCloseSpinner={onCloseSpinner}
           />
         </Modal>
       )}
