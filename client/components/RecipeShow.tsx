@@ -63,7 +63,9 @@ const RecipeShow = ({
       splitDirections = directions.split("/");
     }
     directionListItems = splitDirections.map((item) => (
-      <li key={item}>{item.trim()}</li>
+      <li className={styles["list-item"]} key={item}>
+        {item.trim()}
+      </li>
     ));
   }
   let splitIngredients: string[] = [];
@@ -77,7 +79,9 @@ const RecipeShow = ({
     }
 
     ingredientsListItems = splitIngredients!.map((item) => (
-      <li key={item}>{item.trim()}</li>
+      <li className={styles["list-item"]} key={item}>
+        {item.trim()}
+      </li>
     ));
   }
   const handleSaveRecipe = async (event: MouseEvent) => {

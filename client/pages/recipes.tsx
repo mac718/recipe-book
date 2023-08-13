@@ -7,7 +7,6 @@ import axios from "axios";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import SearchBar from "@component/components/SearchBar";
-import Spinner from "@component/components/Spinner";
 import Layout from "../components/Layout";
 import { NextPageWithLayout } from "./_app";
 import { FiDatabase } from "react-icons/fi";
@@ -28,6 +27,30 @@ type RecipesPageProps = {
   user_email: string;
   onShowSpinner: () => void;
   onCloseSpinner: () => void;
+};
+
+export const handleSearchTermChange = (
+  recipes: Recipe[] | undefined,
+  ref: React.RefObject<HTMLInputElement>,
+  setFilteredRecipes: React.Dispatch<React.SetStateAction<Recipe[] | undefined>>
+) => {
+  let filteredRecipes;
+  if (ref && ref.current && ref.current.value !== "") {
+    filteredRecipes = recipes?.filter(
+      (recipe) =>
+        recipe.name.toLowerCase().includes(ref.current!.value.toLowerCase()) ||
+        recipe.ingredients
+          .toLowerCase()
+          .includes(ref.current!.value.toLowerCase()) ||
+        (recipe.cuisine &&
+          recipe.cuisine
+            .toLowerCase()
+            .includes(ref.current!.value.toLowerCase()))
+    );
+  } else {
+    filteredRecipes = recipes;
+  }
+  setFilteredRecipes(filteredRecipes);
 };
 
 const RecipesPage: NextPageWithLayout<RecipesPageProps> = ({
@@ -55,34 +78,11 @@ const RecipesPage: NextPageWithLayout<RecipesPageProps> = ({
     setOpenRecipeForm(true);
   };
 
-  const handleSearchTermChange = (event: ChangeEvent<HTMLInputElement>) => {
-    let filteredRecipes;
-    if (
-      searchBarRef &&
-      searchBarRef.current &&
-      searchBarRef.current.value !== ""
-    ) {
-      filteredRecipes = allRecipes?.filter(
-        (recipe) =>
-          recipe.name
-            .toLowerCase()
-            .includes(searchBarRef.current!.value.toLowerCase()) ||
-          recipe.ingredients
-            .toLowerCase()
-            .includes(searchBarRef.current!.value.toLowerCase()) ||
-          (recipe.cuisine &&
-            recipe.cuisine
-              .toLowerCase()
-              .includes(searchBarRef.current!.value.toLowerCase()))
-      );
-    } else {
-      filteredRecipes = allRecipes;
-    }
-    setRecipes(filteredRecipes);
-  };
-
   const debouncedHandleSearchTermChange = () => {
-    setTimeout(handleSearchTermChange, 500);
+    setTimeout(
+      () => handleSearchTermChange(allRecipes, searchBarRef, setRecipes),
+      500
+    );
   };
 
   let recipeCards: ReactElement[] = [];

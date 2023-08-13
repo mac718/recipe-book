@@ -2,7 +2,14 @@ import RecipeShow from "@component/components/RecipeShow";
 import { Recipe } from "../recipes";
 import { GetServerSideProps } from "next";
 import axios from "axios";
-import { ChangeEvent, ReactElement, useEffect, useRef, useState } from "react";
+import {
+  ChangeEvent,
+  ReactElement,
+  RefObject,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import SearchBar from "@component/components/SearchBar";
 import styles from "../../styles/RecipeViewPage.module.css";
 import RecipeListCard from "@component/components/RecipeListCard";
@@ -12,6 +19,7 @@ import DeleteWarning from "@component/components/DeleteWarning";
 import Spinner from "@component/components/Spinner";
 import { NextPageWithLayout } from "../_app";
 import Layout from "@component/components/Layout";
+import { handleSearchTermChange } from "../recipes";
 
 type RecipePageProps = {
   currentRecipeId: string;
@@ -26,8 +34,10 @@ const RecipePage: NextPageWithLayout<RecipePageProps> = ({
   onShowSpinner,
   onCloseSpinner,
 }: RecipePageProps) => {
-  const [allRecipes, setAllRecipes] = useState<Recipe[]>([]);
-  const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>([]);
+  const [allRecipes, setAllRecipes] = useState<Recipe[] | undefined>([]);
+  const [filteredRecipes, setFilteredRecipes] = useState<Recipe[] | undefined>(
+    []
+  );
   const [currentRecipeIdState, setCurrentRecipeIdState] =
     useState(currentRecipeId);
   const [currentRecipe, setCurrentRecipe] = useState<Recipe>({
@@ -51,7 +61,6 @@ const RecipePage: NextPageWithLayout<RecipePageProps> = ({
   const [retract, setRetract] = useState(false);
 
   useEffect(() => {
-    console.log(window.innerWidth);
     if (window.innerWidth < 1000) {
       setMobile(true);
     }
@@ -83,33 +92,16 @@ const RecipePage: NextPageWithLayout<RecipePageProps> = ({
     getRecipes();
   }, [currentRecipeId]);
 
-  const handleSearchTermChange = (event: ChangeEvent<HTMLInputElement>) => {
-    let filteredRecipes;
-    if (
-      searchBarRef &&
-      searchBarRef.current &&
-      searchBarRef.current.value !== ""
-    ) {
-      filteredRecipes = allRecipes?.filter(
-        (recipe) =>
-          recipe.name
-            .toLowerCase()
-            .includes(searchBarRef.current!.value.toLowerCase()) ||
-          recipe.ingredients
-            .toLowerCase()
-            .includes(searchBarRef.current!.value.toLowerCase()) ||
-          recipe.cuisine
-            .toLowerCase()
-            .includes(searchBarRef.current!.value.toLowerCase())
-      );
-    } else {
-      filteredRecipes = allRecipes;
-    }
-    setFilteredRecipes(filteredRecipes);
+  const debouncedHandleSearchTermChange = () => {
+    setTimeout(
+      () =>
+        handleSearchTermChange(allRecipes, searchBarRef, setFilteredRecipes),
+      500
+    );
   };
 
   const handleClearSearch = () => {
-    setFilteredRecipes(allRecipes);
+    setFilteredRecipes(allRecipes!);
     searchBarRef.current!.value = "";
   };
   const searchBarRef = useRef<HTMLInputElement>(null); //null eliminates type error
@@ -153,7 +145,7 @@ const RecipePage: NextPageWithLayout<RecipePageProps> = ({
     leftClasses = `${styles["search-retract"]}`;
   }
 
-  const recipeListCards = filteredRecipes.map((recipe) => (
+  const recipeListCards = filteredRecipes!.map((recipe) => (
     <RecipeListCard
       recipe={recipe}
       onOpenDeleteWarning={onOpenDeleteWarning}
@@ -208,7 +200,7 @@ const RecipePage: NextPageWithLayout<RecipePageProps> = ({
           <div className={styles["search-container"]}>
             <h2>Your Recipes</h2>
             <SearchBar
-              handleSearchTermChange={handleSearchTermChange}
+              handleSearchTermChange={debouncedHandleSearchTermChange}
               searchBarRef={searchBarRef}
               handleClear={handleClearSearch}
               placeholder="Search recipes..."

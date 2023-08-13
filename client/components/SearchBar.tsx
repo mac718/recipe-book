@@ -3,7 +3,7 @@ import styles from "./styles/SearchBar.module.css";
 import { FaSearch } from "react-icons/fa";
 
 type SearchBarProps = {
-  handleSearchTermChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  handleSearchTermChange: () => void;
   searchBarRef: RefObject<HTMLInputElement>;
   handleClear: () => void;
   placeholder: string;
