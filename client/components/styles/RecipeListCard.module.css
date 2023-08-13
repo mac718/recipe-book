@@ -17,7 +17,6 @@
 .image {
   width: 100%;
   position: relative;
-  margin-right: 10px;
   overflow: hidden;
   border-radius: 5px;
 }
