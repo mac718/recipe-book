@@ -19,32 +19,34 @@ const RecipeListCard = ({
     <>
       <div className={styles.card}>
         <div className={styles.image}>
-          <div className={styles.overlay}>
-            <div className={styles["overlay-name"]}>{recipe.name}</div>
-            <div className={styles["overlay-cooktime"]}>{recipe.cookTime}</div>
-          </div>
           <Link href={`/recipe/${recipe._id}`}>
-            <Image
-              loader={() => recipe.image}
-              alt=""
-              src={recipe.image}
-              width={500}
-              height={200}
-              style={{ objectFit: "cover" }}
-              // fill={true}
-              priority={true}
-            />
+            <div className={styles.overlay}>
+              <div className={styles["overlay-name"]}>{recipe.name}</div>
+              <div className={styles["overlay-cooktime"]}>
+                {recipe.cookTime}
+              </div>
+            </div>
           </Link>
+          <Image
+            loader={() => recipe.image}
+            alt=""
+            src={recipe.image}
+            width={500}
+            height={200}
+            style={{ objectFit: "cover" }}
+            // fill={true}
+            priority={true}
+          />
         </div>
 
-        <div className={styles.name}>
+        {/* <div className={styles.name}>
           <Link href={`/recipe/${recipe._id}`}>{recipe.name}</Link>
           <EditDelete
             recipe={recipe._id}
             onOpenEditForm={onOpenEditForm}
             onOpenDeleteForm={onOpenDeleteWarning}
           />
-        </div>
+        </div> */}
       </div>
     </>
   );

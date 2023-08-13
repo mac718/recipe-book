@@ -52,7 +52,7 @@ const RecipeShow = ({
 
   let splitDirections: string[] = [];
   if (directions) {
-    if (typeof directions === "object") {
+    if (Array.isArray(directions)) {
       for (const direction of directions[0]["steps"]) {
         const directionText = direction.step;
         splitDirections = splitDirections.concat(
