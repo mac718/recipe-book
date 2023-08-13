@@ -2,8 +2,15 @@ import Head from "next/head";
 import styles from "@component/styles/Home.module.css";
 import { FcGoogle } from "react-icons/fc";
 import { GiNotebook } from "react-icons/gi";
+import { useEffect } from "react";
 
-export default function Home() {
+type HomeProps = {
+  onCloseSpinner: () => void;
+};
+export default function Home({ onCloseSpinner }: HomeProps) {
+  useEffect(() => {
+    onCloseSpinner();
+  }, []);
   return (
     <>
       <Head>
