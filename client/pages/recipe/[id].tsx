@@ -162,15 +162,7 @@ const RecipePage: NextPageWithLayout<RecipePageProps> = ({
   }
 
   return (
-    <div
-      className={styles.main}
-      onClick={() => {
-        if (slide) {
-          setSlide(false);
-          setRetract(true);
-        }
-      }}
-    >
+    <div className={styles.main}>
       {showSpinner && <Spinner />}
       {openRecipeForm && (
         <Modal onClose={onClose}>
@@ -220,7 +212,15 @@ const RecipePage: NextPageWithLayout<RecipePageProps> = ({
           <div className={styles["tab-text"]}>Search Recipes</div>
         </div>
       )}
-      <div className={styles.recipe}>
+      <div
+        className={styles.recipe}
+        onClick={() => {
+          if (slide) {
+            setSlide(false);
+            setRetract(true);
+          }
+        }}
+      >
         <RecipeShow
           {...currentRecipe}
           onOpenEditForm={onOpenEditForm}

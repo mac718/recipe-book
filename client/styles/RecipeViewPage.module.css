@@ -10,9 +10,9 @@
   flex-direction: column;
   width: 30%;
   position: relative;
-  z-index: 40;
   margin-right: 3rem;
   margin-top: 60px;
+  overflow-y: auto;
 }
 
 .recipe {
