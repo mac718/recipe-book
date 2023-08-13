@@ -17,6 +17,10 @@
   border-radius: 5px;
 }
 
+.pic:hover {
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+}
+
 .name {
   font-family: Arial, Helvetica, sans-serif;
   text-align: center;
@@ -39,6 +43,7 @@
   align-items: center;
   cursor: pointer;
 }
+
 .overlay {
   position: absolute;
   top: 0;
