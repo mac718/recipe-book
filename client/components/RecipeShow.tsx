@@ -60,7 +60,7 @@ const RecipeShow = ({
         );
       }
     } else {
-      splitDirections = directions.split("/");
+      splitDirections = directions.split("\\");
     }
     directionListItems = splitDirections.map((item) => (
       <li className={styles["list-item"]} key={item}>
@@ -71,10 +71,11 @@ const RecipeShow = ({
   let splitIngredients: string[] = [];
   if (ingredients) {
     if (typeof ingredients === "string") {
-      splitIngredients = ingredients.split("/");
+      splitIngredients = ingredients.split("\\");
     } else {
       for (const ingredient of ingredients) {
-        splitIngredients.push(ingredient.name);
+        console.log("ingredient", ingredient);
+        splitIngredients.push(ingredient.original);
       }
     }
 
@@ -95,8 +96,8 @@ const RecipeShow = ({
           cuisine,
           prepTime,
           cookTime,
-          ingredients: splitIngredients.join("/"),
-          directions: splitDirections.join("/"),
+          ingredients: splitIngredients.join("\\"),
+          directions: splitDirections.join("\\"),
           image,
         },
         { withCredentials: true }
@@ -123,6 +124,7 @@ const RecipeShow = ({
               loader={() => image!}
               alt=""
               src={image!}
+              style={{ objectFit: "cover" }}
               fill={true}
               priority={true}
             />
@@ -142,7 +144,7 @@ const RecipeShow = ({
               <div className={styles["save-div"]}>
                 <button
                   className={styles.save}
-                  onClick={(e) => handleSaveRecipe(e)}
+                  onClick={(e: any) => handleSaveRecipe(e)}
                 >
                   <span className={styles["save-icon"]}>
                     <FaSave />
@@ -168,7 +170,7 @@ const RecipeShow = ({
           </div>
           <div className={styles.ingredients}>
             <div className={styles["section-heading"]}>Ingredients</div>
-            <ol>{ingredientsListItems}</ol>
+            <ul>{ingredientsListItems}</ul>
           </div>
           <div>
             <div className={styles.directions}>

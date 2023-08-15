@@ -46,6 +46,7 @@
 .add-button {
   width: 4rem;
   background-color: #3b5998;
+  background-color: #8e8d8a;
   border: none;
   border-radius: 5px;
   color: #fdfefe;
@@ -92,6 +93,7 @@
   height: 3rem;
   width: 35%;
   background-color: #018749;
+  background-color: #e85a4f;
   color: #fdfefe;
   font-size: 24px;
   border: none;
@@ -104,6 +106,9 @@
   border: 1px solid #018749;
   background-color: #afe1af;
   color: #018749;
+  color: white;
+  border: 2px solid #e85a4f;
+  background-color: #e98074;
 }
 
 .hr {

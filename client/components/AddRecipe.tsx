@@ -45,9 +45,9 @@ const AddRecipe = ({
   const router = useRouter();
 
   const ingredientsPlaceholder =
-    "Enter ingredients separated by '/'. For example: eggs/butter/salt...";
+    "Enter ingredients separated by '\\'. For example: eggs\\butter\\salt...";
   const directionPlaceholder =
-    "Enter directions in order separated by '/'. For example: preheat oven/cube chicken/add celery to dutch oven...";
+    "Enter directions in order separated by '\\'. For example: preheat oven\\cube chicken\\add celery to dutch oven...";
 
   const handleAttachImage = (event: ChangeEvent<HTMLInputElement>) => {
     const name = event.target.value.split("\\");

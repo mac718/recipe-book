@@ -3,6 +3,7 @@
   justify-content: center;
   height: 100vh;
   background-color: #fdfefe;
+  padding-top: 60px;
 }
 
 .left {
@@ -11,7 +12,6 @@
   width: 30%;
   position: relative;
   margin-right: 3rem;
-  margin-top: 60px;
   overflow-y: auto;
 }
 
