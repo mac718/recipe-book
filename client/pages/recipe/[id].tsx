@@ -189,6 +189,19 @@ const RecipePage: NextPageWithLayout<RecipePageProps> = ({
       )}
       <div className={leftClasses}>
         <div className={styles.search}>
+          {mobile && (
+            <span
+              className={styles.close}
+              onClick={() => {
+                if (slide) {
+                  setSlide(false);
+                  setRetract(true);
+                }
+              }}
+            >
+              X
+            </span>
+          )}
           <div className={styles["search-container"]}>
             <h2>Your Recipes</h2>
             <SearchBar

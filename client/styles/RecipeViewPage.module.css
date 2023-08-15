@@ -64,8 +64,8 @@
   left: 0;
   top: 50%;
   bottom: 50%;
-  height: 150px;
-  width: 50px;
+  height: 50%;
+  width: 25px;
   border: 0.5px solid darkgray;
   border-radius: 0 5px 5px 0;
   margin: auto;
@@ -76,7 +76,7 @@
 }
 
 .tab-text {
-  transform: rotate(90deg);
+  writing-mode: vertical-rl;
 }
 
 .search-slide {
@@ -89,6 +89,10 @@
   animation-name: retract;
   animation-duration: 0.5s;
   animation-fill-mode: forwards;
+}
+
+.close {
+  float: right;
 }
 
 @media screen and (max-width: 1000px) {
