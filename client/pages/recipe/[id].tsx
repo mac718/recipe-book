@@ -2,14 +2,7 @@ import RecipeShow from "@component/components/RecipeShow";
 import { Recipe } from "../recipes";
 import { GetServerSideProps } from "next";
 import axios from "axios";
-import {
-  ChangeEvent,
-  ReactElement,
-  RefObject,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { ReactElement, useEffect, useRef, useState } from "react";
 import SearchBar from "@component/components/SearchBar";
 import styles from "../../styles/RecipeViewPage.module.css";
 import RecipeListCard from "@component/components/RecipeListCard";

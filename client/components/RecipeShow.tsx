@@ -20,6 +20,7 @@ type RecipeShowProps = {
         image: string;
         consistency: string;
         name: string;
+        original: string;
       }[]
     | undefined;
   directions: string | undefined | [];

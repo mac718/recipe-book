@@ -15,7 +15,7 @@ const RecipeSearchResult = ({
   onOpenRecipeInfo,
 }: RecipeSearchResultProps) => {
   const [saved, setSaved] = useState(savedRecipes.includes(result.title));
-  console.log("saved", savedRecipes, result, saved);
+
   return (
     <div className={styles["search-result"]}>
       <Image src={result.image} alt="recipe image" width={150} height={125} />

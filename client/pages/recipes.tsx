@@ -1,7 +1,7 @@
 import AddRecipe from "@component/components/AddRecipe";
 import Modal from "@component/components/Modal";
 import RecipeGridCard from "@component/components/RecipeGridCard";
-import { ChangeEvent, ReactElement, useEffect, useRef, useState } from "react";
+import { ReactElement, useEffect, useRef, useState } from "react";
 import styles from "../styles/RecipesPage.module.css";
 import axios from "axios";
 import { GetServerSideProps } from "next";
@@ -151,7 +151,7 @@ const RecipesPage: NextPageWithLayout<RecipesPageProps> = ({
           handleSearchTermChange={debouncedHandleSearchTermChange}
           searchBarRef={searchBarRef}
           handleClear={handleClearSearchBar}
-          placeholder="Find a receipe! Search recipes by name, cuisine, or ingredients..."
+          placeholder="Find a recipe! Search recipes by name, cuisine, or ingredients..."
         />
       </div>
 

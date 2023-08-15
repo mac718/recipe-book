@@ -13,6 +13,7 @@
   position: relative;
   margin-right: 3rem;
   overflow-y: auto;
+  z-index: 50;
 }
 
 .recipe {
@@ -69,7 +70,7 @@
   border: 0.5px solid darkgray;
   border-radius: 0 5px 5px 0;
   margin: auto;
-  background-color: #ff5c4d;
+  background-color: #e98074;
   color: white;
   visibility: hidden;
   z-index: 40;
@@ -97,13 +98,14 @@
 
 @media screen and (max-width: 1000px) {
   .left {
+    top: 0;
     left: -85%;
     width: 80%;
     padding: 10px;
     border-right: 0.5px solid darkgray;
     position: absolute;
     height: 100vh;
-    z-index: 40;
+    z-index: 50;
     margin-top: 60px;
   }
   .recipe {
@@ -114,30 +116,11 @@
   }
 }
 
-/* @media screen and (max-width: 600px) {
-  .left {
-    left: -90%;
-    width: 80%;
-    padding: 10px;
-    border-right: 0.5px solid darkgray;
-    position: absolute;
-    height: 100vh;
-    z-index: 40;
-    margin-top: 60px;
-  }
-  .recipe {
-    width: 100vw;
-  }
-  .tab {
-    visibility: visible;
-  }
-} */
-
 @keyframes slideOut {
   to {
     left: 0;
     top: 0;
-    z-index: 40;
+    z-index: 50;
     background-color: white;
   }
 }
@@ -147,21 +130,21 @@
     left: 0;
     top: 0;
     width: 80%;
-    z-index: 40;
+    z-index: 50;
     position: absolute;
     background-color: white;
-    height: 100vh;
+    height: 100dvh;
     padding: 10px;
     margin-top: 60px;
   }
   to {
-    left: -90%;
+    left: -85%;
     top: 0;
     width: 80%;
     position: absolute;
     z-index: 40;
     background-color: white;
-    height: 100vh;
+    height: 100dvh;
     padding: 10px;
     margin-top: 60px;
   }

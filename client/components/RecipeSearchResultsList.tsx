@@ -25,7 +25,7 @@ const RecipeSearchResultsList = ({
   return (
     <>
       <h2 className={styles.heading}>Results</h2>
-      <div className={styles.list}>{searchResults}</div>;
+      <div className={styles.list}>{searchResults}</div>
     </>
   );
 };
