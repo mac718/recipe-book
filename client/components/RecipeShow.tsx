@@ -6,9 +6,11 @@ import { useState } from "react";
 import axios from "axios";
 import Spinner from "./Spinner";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 type RecipeShowProps = {
   _id: string | undefined;
+  db_id: string | null | undefined;
   name: string | undefined;
   prepTime: string | undefined;
   cookTime: string | undefined;
@@ -30,9 +32,11 @@ type RecipeShowProps = {
   onOpenEditForm: (rec: string) => void | undefined;
   onOpenDeleteWarning: () => void | undefined;
   saved: boolean;
+  search: boolean;
 };
 const RecipeShow = ({
   _id,
+  db_id,
   name,
   prepTime,
   cookTime,
@@ -43,6 +47,7 @@ const RecipeShow = ({
   onOpenDeleteWarning,
   onOpenEditForm,
   saved,
+  search,
 }: RecipeShowProps) => {
   const [showSpinner, setShowSpinner] = useState(false);
   const [isSaved, setIsSaved] = useState(saved);
@@ -133,6 +138,17 @@ const RecipeShow = ({
 
           <div className={styles.info}>
             <div className={styles["recipe-name"]}>{name}</div>
+            {isSaved && search && (
+              // <EditDelete
+              //   recipe={_id}
+              //   onOpenEditForm={onOpenEditForm}
+              //   onOpenDeleteForm={onOpenDeleteWarning}
+              // />
+              <Link href={`/recipe/${db_id ? db_id : _id}`}>
+                Go to recipe page
+              </Link>
+            )}
+
             {isSaved && (
               <EditDelete
                 recipe={_id}

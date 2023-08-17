@@ -232,6 +232,8 @@ const RecipePage: NextPageWithLayout<RecipePageProps> = ({
           onOpenEditForm={onOpenEditForm}
           onOpenDeleteWarning={() => onOpenDeleteWarning(currentRecipeId)}
           saved={true}
+          search={false}
+          db_id={null}
         />
       </div>
     </div>

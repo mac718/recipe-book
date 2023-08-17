@@ -104,10 +104,22 @@ export const getRecipes = async (req: Request, res: Response) => {
   }
 };
 
-export const getRecipe = async (req: Request, res: Response) => {
+export const getRecipeById = async (req: Request, res: Response) => {
   const id = req.params.id;
 
   const recipe = await Recipe.findById(id);
+
+  if (!recipe) {
+    res.json({ err: "Recipe does not exist" });
+  }
+
+  res.json({ recipe });
+};
+
+export const getRecipeByName = async (req: Request, res: Response) => {
+  const name = req.params.name;
+
+  const recipe = await Recipe.find({ name });
 
   if (!recipe) {
     res.json({ err: "Recipe does not exist" });

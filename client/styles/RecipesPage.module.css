@@ -44,6 +44,7 @@
   color: #ff5c4d;
   border: 1px solid #ff5c4d; */
   background-color: #e85a4f;
+  background-color: #d8c385;
   /* background-color: #05386b; */
   color: white;
   /* opacity: 0.9; */
@@ -92,6 +93,7 @@
   text-decoration: none;
   cursor: pointer;
   font-size: 22px;
+  background-color: #8a9a5b;
 }
 
 .search-for-new:hover,

@@ -5,7 +5,6 @@ import CriteriaSelectorList from "@component/components/CriteriaSelectorList";
 import { GetServerSideProps } from "next";
 import RecipeSearchResultsList from "@component/components/RecipeSearchResultsList";
 import Modal from "@component/components/Modal";
-import Spinner from "@component/components/Spinner";
 import { useRouter } from "next/router";
 import { Recipe } from "./recipes";
 import RecipeShow from "@component/components/RecipeShow";
@@ -44,7 +43,9 @@ const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
   const [currentQuery, setCurrentQuery] = useState("");
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [openRecipeInfo, setOpenRecipeInfo] = useState(false);
-  const [recipeInfo, setRecipeInfo] = useState<Recipe & { saved: boolean }>();
+  const [recipeInfo, setRecipeInfo] = useState<
+    Recipe & { db_id: string | null | undefined; saved: boolean }
+  >();
   const [recipes, setRecipes] = useState<Recipe[]>([]);
 
   const savedRecipeNames = [];
@@ -121,12 +122,21 @@ const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
     }
   };
 
-  const onOpenRecipeInfo = async (id: number, saved: boolean) => {
+  const onOpenRecipeInfo = async (
+    id: number,
+    savedRecipeId: string | null,
+    name: string,
+    saved: boolean
+  ) => {
     let recipeInfo: AxiosResponse;
     if (localStorage.getItem(`${id}`)) {
       const cachedRecipe = JSON.parse(localStorage.getItem(`${id}`) || "");
-      const recipeToView: Recipe & { saved: boolean } = {
+      const recipeToView: Recipe & {
+        db_id: string | null | undefined;
+        saved: boolean;
+      } = {
         _id: cachedRecipe._id,
+        db_id: savedRecipeId,
         name: cachedRecipe.name,
         prepTime: cachedRecipe.prepTime,
         cookTime: cachedRecipe.cookTime,
@@ -142,18 +152,20 @@ const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
       try {
         recipeInfo = await axios.get(`/spoonacular/get-recipe-info/${id}`);
         const recipeInfoData = recipeInfo.data;
-        const recipeToView: Recipe & { saved: boolean } = {
-          _id: recipeInfoData.id,
-          name: recipeInfoData.title,
-          prepTime: recipeInfoData.prepTime,
-          cookTime: recipeInfoData.readyInMinutes,
-          cuisine: recipeInfoData.cuisines[0],
-          directions: recipeInfoData.analyzedInstructions,
-          ingredients: recipeInfoData.extendedIngredients,
-          user_email: recipeInfoData.email,
-          image: recipeInfoData.image,
-          saved: saved,
-        };
+        const recipeToView: Recipe & { db_id: string | null; saved: boolean } =
+          {
+            _id: recipeInfoData.id,
+            db_id: savedRecipeId,
+            name: recipeInfoData.title,
+            prepTime: recipeInfoData.prepTime,
+            cookTime: recipeInfoData.readyInMinutes,
+            cuisine: recipeInfoData.cuisines[0],
+            directions: recipeInfoData.analyzedInstructions,
+            ingredients: recipeInfoData.extendedIngredients,
+            user_email: recipeInfoData.email,
+            image: recipeInfoData.image,
+            saved: saved,
+          };
         setRecipeInfo(recipeToView);
         localStorage.setItem(
           `${recipeToView._id}`,
@@ -280,6 +292,7 @@ const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
           <div>
             <RecipeShow
               _id={recipeInfo?._id}
+              db_id={recipeInfo?.db_id}
               name={recipeInfo?.name}
               cuisine={recipeInfo?.cuisine}
               ingredients={recipeInfo?.ingredients}
@@ -291,6 +304,7 @@ const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
               onOpenDeleteWarning={() => {}}
               onOpenEditForm={() => {}}
               saved={recipeInfo!.saved}
+              search={true}
             />
             <button>save</button>
           </div>

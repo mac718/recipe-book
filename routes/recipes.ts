@@ -4,7 +4,8 @@ import {
   deleteRecipe,
   getRecipes,
   editRecipe,
-  getRecipe,
+  getRecipeById,
+  getRecipeByName,
 } from "../controllers/recipes";
 import { isLoggedIn } from "../middlewares/isLoggedIn";
 import { body } from "express-validator";
@@ -21,4 +22,5 @@ recipes
 recipes.route("/getAllRecipes").get(getRecipes);
 recipes.route("/:id").delete(deleteRecipe);
 recipes.route("/editRecipe").put(editRecipe);
-recipes.route("/:id").get(getRecipe);
+recipes.route("/id/:id").get(getRecipeById);
+recipes.route("/name/:name").get(getRecipeByName);

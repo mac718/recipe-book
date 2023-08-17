@@ -6,7 +6,12 @@ import { Recipe } from "@component/pages/recipes";
 type RecipeSearchResultsListProps = {
   results: SearchResult[];
   savedRecipes: string[];
-  onOpenRecipeInfo: (id: number, saved: boolean) => void;
+  onOpenRecipeInfo: (
+    id: number,
+    savedRecipeId: string | null,
+    name: string,
+    saved: boolean
+  ) => void;
 };
 
 const RecipeSearchResultsList = ({

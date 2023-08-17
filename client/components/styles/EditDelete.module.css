@@ -18,9 +18,12 @@
 
 .icon-container-delete {
   background-color: #f54d3d;
+  background-color: #e85a4f;
 }
 .icon-container-edit {
   background-color: #4b5a20;
+  background-color: #8a9a5b;
+  background-color: #8e8d8a;
 }
 .tooltip {
   position: relative;
