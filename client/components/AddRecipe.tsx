@@ -152,12 +152,11 @@ const AddRecipe = ({
 
   return (
     <div>
-      {/* {showSpinner && <Spinner />} */}
       <form className={styles.form} onSubmit={handleSubmit}>
         <span className={styles.close} onClick={onClose}>
           X
         </span>
-        <h1>Add A New Recipe</h1>
+        {editMode ? <h1>Edit Recipe</h1> : <h1>Add A New Recipe</h1>}
         {errors.length ? errorDivs : null}
         <div className={styles["label-input"]}>
           <label htmlFor="name">Name</label>
