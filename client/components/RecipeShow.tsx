@@ -144,12 +144,15 @@ const RecipeShow = ({
               //   onOpenEditForm={onOpenEditForm}
               //   onOpenDeleteForm={onOpenDeleteWarning}
               // />
-              <Link href={`/recipe/${db_id ? db_id : _id}`}>
+              <Link
+                href={`/recipe/${db_id ? db_id : _id}`}
+                className={styles["link-to-recipe"]}
+              >
                 Go to recipe page
               </Link>
             )}
 
-            {isSaved && (
+            {isSaved && !search && (
               <EditDelete
                 recipe={_id}
                 onOpenEditForm={onOpenEditForm}
