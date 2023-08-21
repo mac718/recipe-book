@@ -139,11 +139,6 @@ const RecipeShow = ({
           <div className={styles.info}>
             <div className={styles["recipe-name"]}>{name}</div>
             {isSaved && search && (
-              // <EditDelete
-              //   recipe={_id}
-              //   onOpenEditForm={onOpenEditForm}
-              //   onOpenDeleteForm={onOpenDeleteWarning}
-              // />
               <Link
                 href={`/recipe/${db_id ? db_id : _id}`}
                 className={styles["link-to-recipe"]}

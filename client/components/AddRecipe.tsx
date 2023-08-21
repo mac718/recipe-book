@@ -32,7 +32,6 @@ const AddRecipe = ({
 }: AddRecipeProps) => {
   const [image, setImage] = useState<any>();
   const [imageName, setImageName] = useState("");
-  //const [showSpinner, setShowSpinner] = useState(false);
   const [errors, setErrors] = useState<ErrorType[]>([]);
 
   const nameRef = useRef<HTMLInputElement>(null);
@@ -194,7 +193,7 @@ const AddRecipe = ({
             defaultValue={recipeToEditInfo?.cookTime}
           />
         </div>
-        <div className={styles["image"]}>
+        <div>
           <label htmlFor="image">Picture</label>
           <input
             type="file"
