@@ -2,15 +2,40 @@ import Head from "next/head";
 import styles from "@component/styles/Home.module.css";
 import { FcGoogle } from "react-icons/fc";
 import { GiNotebook } from "react-icons/gi";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type HomeProps = {
   onCloseSpinner: () => void;
 };
 export default function Home({ onCloseSpinner }: HomeProps) {
+  const [isIntersecting, setIsIntersecting] = useState(false);
+
+  const ref = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     onCloseSpinner();
-  }, []);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsIntersecting(entry.isIntersecting);
+      },
+      { rootMargin: "-100px" }
+    );
+    console.log(isIntersecting);
+    observer.observe(ref.current!);
+    return () => observer.disconnect();
+  }, [isIntersecting]);
+
+  useEffect(() => {
+    if (isIntersecting) {
+      ref.current!.querySelectorAll("div").forEach((div) => {
+        div.classList.add(`${styles.slideIn}`);
+      });
+    } else {
+      ref.current!.querySelectorAll("div").forEach((div) => {
+        div.classList.remove(`${styles.slideIn}`);
+      });
+    }
+  }, [isIntersecting]);
   return (
     <>
       <Head>
@@ -19,7 +44,7 @@ export default function Home({ onCloseSpinner }: HomeProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
+      <section className={styles.main}>
         <h1>
           Home Cook Recipe Book <GiNotebook />
         </h1>
@@ -34,7 +59,11 @@ export default function Home({ onCloseSpinner }: HomeProps) {
             Continue with Google
           </a>
         </div>
-      </main>
+      </section>
+      <div className={styles.features} ref={ref}>
+        <div className={styles.left}>left</div>
+        <div className={styles.right}>right</div>
+      </div>
     </>
   );
 }

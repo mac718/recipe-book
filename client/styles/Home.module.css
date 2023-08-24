@@ -43,3 +43,31 @@
 .img {
   border-radius: 10px;
 }
+
+.features {
+  position: relative;
+  display: flex;
+  width: 100%;
+}
+
+.left,
+.right {
+  flex: 1;
+  transition: all ease-in 1s;
+  position: relative;
+  overflow: hidden;
+}
+
+.left {
+  height: 100px;
+  transform: translateX(-150%);
+}
+
+.right {
+  height: 100px;
+  transform: translateX(150%);
+}
+
+.slideIn {
+  transform: translateX(0);
+}
