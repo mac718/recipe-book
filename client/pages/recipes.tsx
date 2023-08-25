@@ -14,8 +14,10 @@ import { FiDatabase } from "react-icons/fi";
 export type Recipe = {
   _id: string;
   name: string;
-  prepTime: string;
-  cookTime: string;
+  prepTimeHours: number;
+  prepTimeMinutes: number;
+  cookTimeHours: number;
+  cookTimeMinutes: number;
   ingredients: string;
   directions: string;
   cuisine: string;

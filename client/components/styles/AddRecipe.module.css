@@ -70,8 +70,28 @@
   cursor: pointer;
 }
 
-.cookTime-group {
+.cook-time-group {
   display: flex;
   flex: 1;
-  justify-content: space-evenly;
+}
+
+.hours-minutes {
+  display: flex;
+  width: 50%;
+  margin-left: 68px;
+}
+
+.label-input-time {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.label-input-time input {
+  width: 50px !important;
+  line-height: 150%;
+  margin-right: 10px;
+}
+
+.label-input-time label {
+  margin-right: 10px;
 }

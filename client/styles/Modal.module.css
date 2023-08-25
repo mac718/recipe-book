@@ -35,7 +35,7 @@
   }
 }
 
-@media (min-width: 390px) {
+@media (max-width: 768px) {
   .modal {
     width: 100%;
     left: 0;

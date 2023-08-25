@@ -1,7 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import styles from "./styles/AddRecipe.module.css";
-import Spinner from "./Spinner";
 import { Recipe } from "@component/pages/recipes";
 import { useRouter } from "next/router";
 import ErrorDiv from "./ErrorDiv";
@@ -181,27 +180,69 @@ const AddRecipe = ({
             defaultValue={recipeToEditInfo?.cuisine}
           />
         </div>
-        <div className={styles["label-input"]}>
+
+        <div className={styles["cook-time-group"]}>
           <label htmlFor="prep-time">Prep Time</label>
-          <input
+          {/* <input
             type="text"
             id="prep-time"
             ref={prepTimeRef}
             defaultValue={recipeToEditInfo?.prepTime}
           />
-        </div>
-        <div className={styles["label-input"]}>
-          {/* <label htmlFor="cook-time">Cook Time</label> */}
+        </div> */}
+
           {/* <input
             type="text"
             id="cook-time"
             ref={cookTimeRef}
             defaultValue={recipeToEditInfo?.cookTime}
           /> */}
-          <div className={styles["cookTime-group"]}>
-            <label htmlFor="cook-time">Cook Time</label>
-            <input type="number" />
-            <input type="number" />
+          <div className={styles["hours-minutes"]}>
+            <div className={styles["label-input-time"]}>
+              <input
+                type="number"
+                min={0}
+                id="prep-time-hours"
+                ref={prepTimeHoursRef}
+                defaultValue={recipeToEditInfo?.prepTimeHours}
+              />
+              <label htmlFor="prep-time-hours">hours</label>
+            </div>
+            <div className={styles["label-input-time"]}>
+              <input
+                type="number"
+                min={0}
+                id="prep-time-minutes"
+                ref={prepTimeMinutesRef}
+                defaultValue={recipeToEditInfo?.prepTimeMinutes}
+              />
+              <label htmlFor="prep-time-minutes">minutes</label>
+            </div>
+          </div>
+        </div>
+        <div className={styles["cook-time-group"]}>
+          <label htmlFor="cook-time">Cook Time</label>
+          <div className={styles["hours-minutes"]}>
+            <div className={styles["label-input-time"]}>
+              <input
+                type="number"
+                min={0}
+                id="cook-time-hours"
+                ref={cookTimeHoursRef}
+                defaultValue={recipeToEditInfo?.cookTimeHours}
+              />
+              <label htmlFor="cook-time-hours">hours</label>
+            </div>
+            <div className={styles["label-input-time"]}>
+              <input
+                type="number"
+                min={0}
+                id="cook-time-minutes"
+                ref={cookTimeMinutesRef}
+                defaultValue={recipeToEditInfo?.cookTimeMinutes}
+              />
+              <label htmlFor="cook-time-minutes">minutes</label>
+            </div>
           </div>
         </div>
         <div>

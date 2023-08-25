@@ -18,7 +18,7 @@ export default function Home({ onCloseSpinner }: HomeProps) {
       ([entry]) => {
         setIsIntersecting(entry.isIntersecting);
       },
-      { rootMargin: "-50px" }
+      { rootMargin: "-20px" }
     );
     console.log(isIntersecting);
     observer.observe(ref.current!);

@@ -23,7 +23,7 @@ const RecipeListCard = ({
             <div className={styles.overlay}>
               <div className={styles["overlay-name"]}>{recipe.name}</div>
               <div className={styles["overlay-cooktime"]}>
-                {recipe.cookTime}
+                {recipe.cookTimeHours}
               </div>
             </div>
           </Link>
