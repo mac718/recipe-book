@@ -36,8 +36,10 @@ const AddRecipe = ({
 
   const nameRef = useRef<HTMLInputElement>(null);
   const cuisineRef = useRef<HTMLInputElement>(null);
-  const prepTimeRef = useRef<HTMLInputElement>(null);
-  const cookTimeRef = useRef<HTMLInputElement>(null);
+  const prepTimeHoursRef = useRef<HTMLInputElement>(null);
+  const prepTimeMinutesRef = useRef<HTMLInputElement>(null);
+  const cookTimeHoursRef = useRef<HTMLInputElement>(null);
+  const cookTimeMinutesRef = useRef<HTMLInputElement>(null);
   const ingredientsRef = useRef<HTMLTextAreaElement>(null);
   const directionsRef = useRef<HTMLTextAreaElement>(null);
 
@@ -87,8 +89,10 @@ const AddRecipe = ({
             id: recipeToEdit,
             name: nameRef.current?.value,
             cuisine: cuisineRef.current?.value,
-            prepTime: prepTimeRef.current?.value,
-            cookTime: cookTimeRef.current?.value,
+            prepTimeHours: prepTimeHoursRef.current?.value,
+            prepTimeMinutes: prepTimeMinutesRef.current?.value,
+            cookTimeHours: cookTimeHoursRef.current?.value,
+            cookTimeMinutes: cookTimeMinutesRef.current?.value,
             ingredients: ingredientsRef.current?.value,
             directions: directionsRef.current?.value,
             image,
@@ -118,8 +122,10 @@ const AddRecipe = ({
           {
             name: nameRef.current?.value,
             cuisine: cuisineRef.current?.value,
-            prepTime: prepTimeRef.current?.value,
-            cookTime: cookTimeRef.current?.value,
+            prepTimeHours: prepTimeHoursRef.current?.value,
+            prepTimeMinutes: prepTimeMinutesRef.current?.value,
+            cookTimeHours: cookTimeHoursRef.current?.value,
+            cookTimeMinutes: cookTimeMinutesRef.current?.value,
             ingredients: ingredientsRef.current?.value,
             directions: directionsRef.current?.value,
             image,
@@ -185,13 +191,18 @@ const AddRecipe = ({
           />
         </div>
         <div className={styles["label-input"]}>
-          <label htmlFor="cook-time">Cook Time</label>
-          <input
+          {/* <label htmlFor="cook-time">Cook Time</label> */}
+          {/* <input
             type="text"
             id="cook-time"
             ref={cookTimeRef}
             defaultValue={recipeToEditInfo?.cookTime}
-          />
+          /> */}
+          <div className={styles["cookTime-group"]}>
+            <label htmlFor="cook-time">Cook Time</label>
+            <input type="number" />
+            <input type="number" />
+          </div>
         </div>
         <div>
           <label htmlFor="image">Picture</label>

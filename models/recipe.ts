@@ -2,8 +2,10 @@ import * as mongoose from "mongoose";
 
 export interface IRecipe {
   name: string;
-  prepTime: string;
-  cookTime: string;
+  prepTimeHours: number;
+  prepTimeMinutes: number;
+  cookTimeHours: number;
+  cookTimeMinutes: number;
   ingredients: string;
   directions: string;
   cuisine: string;
@@ -13,8 +15,10 @@ export interface IRecipe {
 
 const RecipeSchema = new mongoose.Schema<IRecipe>({
   name: String, //{ type: String, required: true },
-  prepTime: String,
-  cookTime: String,
+  prepTimeHours: Number,
+  prepTimeMinutes: Number,
+  cookTimeHours: Number,
+  cookTimeMinutes: Number,
   ingredients: String,
   directions: String,
   cuisine: String,

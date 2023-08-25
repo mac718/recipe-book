@@ -56,18 +56,22 @@
   transition: all ease-in 1s;
   position: relative;
   overflow: hidden;
+  opacity: 0;
 }
 
 .left {
   height: 100px;
   transform: translateX(-150%);
+  background-color: red;
 }
 
 .right {
   height: 100px;
   transform: translateX(150%);
+  background-color: blue;
 }
 
 .slideIn {
   transform: translateX(0);
+  opacity: 1;
 }

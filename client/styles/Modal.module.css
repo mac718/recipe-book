@@ -35,6 +35,13 @@
   }
 }
 
+@media (min-width: 390px) {
+  .modal {
+    width: 100%;
+    left: 0;
+  }
+}
+
 @keyframes slide-down {
   from {
     opacity: 0;

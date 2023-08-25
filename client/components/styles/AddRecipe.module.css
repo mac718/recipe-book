@@ -3,6 +3,7 @@
   flex-direction: column;
   justify-content: space-around;
   background-color: #f9f6ee;
+  background-color: #eae7dc;
   padding: 1rem;
   position: relative;
 }
@@ -10,6 +11,7 @@
 .form h1 {
   text-align: center;
   color: #595e60;
+  color: #8a9a5b;
 }
 
 .form label {
@@ -52,6 +54,7 @@
   width: 200px;
   border-radius: 5px;
   background-color: green;
+  background-color: #e85a4f;
   color: #fdfefe;
   font-size: 20px;
   border: none;
@@ -64,4 +67,11 @@
   position: absolute;
   top: 10px;
   right: 15px;
+  cursor: pointer;
+}
+
+.cookTime-group {
+  display: flex;
+  flex: 1;
+  justify-content: space-evenly;
 }
