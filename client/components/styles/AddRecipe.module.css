@@ -73,12 +73,13 @@
 .cook-time-group {
   display: flex;
   flex: 1;
+  justify-content: space-between;
 }
 
 .hours-minutes {
   display: flex;
   width: 50%;
-  margin-left: 68px;
+  margin-right: 10rem;
 }
 
 .label-input-time {
