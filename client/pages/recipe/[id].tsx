@@ -36,8 +36,10 @@ const RecipePage: NextPageWithLayout<RecipePageProps> = ({
   const [currentRecipe, setCurrentRecipe] = useState<Recipe>({
     _id: "",
     name: "",
-    prepTime: "",
-    cookTime: "",
+    prepTimeHours: 0,
+    prepTimeMinutes: 0,
+    cookTimeHours: 0,
+    cookTimeMinutes: 0,
     ingredients: "",
     directions: "",
     cuisine: "",

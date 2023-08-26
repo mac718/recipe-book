@@ -138,8 +138,10 @@ const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
         _id: cachedRecipe._id,
         db_id: savedRecipeId,
         name: cachedRecipe.name,
-        prepTime: cachedRecipe.prepTime,
-        cookTime: cachedRecipe.cookTime,
+        prepTimeHours: cachedRecipe.prepTimeHours,
+        prepTimeMinutes: cachedRecipe.prepTimeMinutes,
+        cookTimeHours: cachedRecipe.cookTimeHours,
+        cookTimeMinutes: cachedRecipe.cookTimeMinutes,
         cuisine: cachedRecipe.cuisine,
         directions: cachedRecipe.directions,
         ingredients: cachedRecipe.ingredients,
@@ -157,8 +159,10 @@ const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
             _id: recipeInfoData.id,
             db_id: savedRecipeId,
             name: recipeInfoData.title,
-            prepTime: recipeInfoData.prepTime,
-            cookTime: recipeInfoData.readyInMinutes,
+            prepTimeHours: recipeInfoData.prepTimeHours,
+            prepTimeMinutes: recipeInfoData.prepTimeMinutes,
+            cookTimeHours: recipeInfoData.readyInMinutes,
+            cookTimeMinutes: 0,
             cuisine: recipeInfoData.cuisines[0],
             directions: recipeInfoData.analyzedInstructions,
             ingredients: recipeInfoData.extendedIngredients,
@@ -297,8 +301,10 @@ const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
               cuisine={recipeInfo?.cuisine}
               ingredients={recipeInfo?.ingredients}
               directions={recipeInfo?.directions}
-              prepTime={recipeInfo?.prepTime}
-              cookTime={recipeInfo?.cookTime}
+              prepTimeHours={recipeInfo?.prepTimeHours}
+              prepTimeMinutes={0}
+              cookTimeHours={recipeInfo?.cookTimeHours}
+              cookTimeMinutes={0}
               image={recipeInfo?.image}
               user_email={undefined}
               onOpenDeleteWarning={() => {}}

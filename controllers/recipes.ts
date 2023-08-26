@@ -52,8 +52,10 @@ const _delete_image = async (axiosInstance: any, objectname: string) => {
 export const addRecipe = async (req: Request, res: Response) => {
   const {
     name,
-    cookTime,
-    prepTime,
+    cookTimeHours,
+    cookTimeMinutes,
+    prepTimeHours,
+    prepTimeMinutes,
     ingredients,
     directions,
     cuisine,
@@ -76,8 +78,10 @@ export const addRecipe = async (req: Request, res: Response) => {
 
   const newRecipe = new Recipe({
     name,
-    cookTime,
-    prepTime,
+    cookTimeHours,
+    cookTimeMinutes,
+    prepTimeHours,
+    prepTimeMinutes,
     ingredients,
     directions,
     user_email,
@@ -150,8 +154,10 @@ export const editRecipe = async (req: Request, res: Response) => {
   const {
     id,
     name,
-    cookTime,
-    prepTime,
+    cookTimeHours,
+    cookTimeMinutes,
+    prepTimeHours,
+    prepTimeMinutes,
     ingredients,
     directions,
     cuisine,
@@ -170,8 +176,10 @@ export const editRecipe = async (req: Request, res: Response) => {
     }
     await existingRecipe?.updateOne({
       name,
-      cookTime,
-      prepTime,
+      cookTimeHours,
+      cookTimeMinutes,
+      prepTimeHours,
+      prepTimeMinutes,
       ingredients,
       directions,
       cuisine,

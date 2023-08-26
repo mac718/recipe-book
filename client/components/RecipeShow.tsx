@@ -12,8 +12,10 @@ type RecipeShowProps = {
   _id: string | undefined;
   db_id: string | null | undefined;
   name: string | undefined;
-  prepTime: string | undefined;
-  cookTime: string | undefined;
+  prepTimeHours: number | undefined;
+  prepTimeMinutes: number | undefined;
+  cookTimeHours: number | undefined;
+  cookTimeMinutes: number | undefined;
   ingredients:
     | string
     | {
@@ -38,8 +40,10 @@ const RecipeShow = ({
   _id,
   db_id,
   name,
-  prepTime,
-  cookTime,
+  prepTimeHours,
+  prepTimeMinutes,
+  cookTimeHours,
+  cookTimeMinutes,
   ingredients,
   directions,
   cuisine,
@@ -100,8 +104,10 @@ const RecipeShow = ({
         {
           name,
           cuisine,
-          prepTime,
-          cookTime,
+          prepTimeHours,
+          prepTimeMinutes,
+          cookTimeHours,
+          cookTimeMinutes,
           ingredients: splitIngredients.join("\\"),
           directions: splitDirections.join("\\"),
           image,
@@ -175,11 +181,15 @@ const RecipeShow = ({
               </div>
               <div>
                 Prep Time:{" "}
-                <span className={styles["info-prop"]}>{prepTime}</span>
+                <span className={styles["info-prop"]}>
+                  {prepTimeHours} hours {prepTimeMinutes} minutes
+                </span>
               </div>
               <div>
                 Cook Time:{" "}
-                <span className={styles["info-prop"]}>{cookTime}</span>
+                <span className={styles["info-prop"]}>
+                  {cookTimeHours} hours {cookTimeMinutes} minutes
+                </span>
               </div>
             </div>
           </div>
