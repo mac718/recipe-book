@@ -10,11 +10,15 @@ export const Backdrop = ({ onClose }: BackDropProps) => {
 
 interface ModalOverlayProps {
   children: React.ReactNode;
+  onClose: () => void;
 }
 
-const ModalOverlay = ({ children }: ModalOverlayProps) => {
+const ModalOverlay = ({ children, onClose }: ModalOverlayProps) => {
   return (
     <div className={styles.modal}>
+      <span className={styles.close} onClick={onClose}>
+        X
+      </span>
       <div className={styles.content}>{children}</div>
     </div>
   );
@@ -29,7 +33,7 @@ const Modal = ({ onClose, children }: ModalProps) => {
   return (
     <>
       <Backdrop onClose={onClose} />
-      <ModalOverlay>{children}</ModalOverlay>
+      <ModalOverlay onClose={onClose}>{children}</ModalOverlay>
     </>
   );
 };

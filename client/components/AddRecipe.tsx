@@ -157,9 +157,6 @@ const AddRecipe = ({
   return (
     <div>
       <form className={styles.form} onSubmit={handleSubmit}>
-        <span className={styles.close} onClick={onClose}>
-          X
-        </span>
         {editMode ? <h1>Edit Recipe</h1> : <h1>Add A New Recipe</h1>}
         {errors.length ? errorDivs : null}
         <div className={styles["label-input"]}>

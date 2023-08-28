@@ -154,6 +154,9 @@ const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
       try {
         recipeInfo = await axios.get(`/spoonacular/get-recipe-info/${id}`);
         const recipeInfoData = recipeInfo.data;
+        console.log("ready in minutes", recipeInfoData.readyInMinutes);
+        const hours = Math.floor(recipeInfoData.readyInMinutes / 60);
+        const minutes = recipeInfoData.readyInMinutes % 60;
         const recipeToView: Recipe & { db_id: string | null; saved: boolean } =
           {
             _id: recipeInfoData.id,
@@ -161,8 +164,8 @@ const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
             name: recipeInfoData.title,
             prepTimeHours: recipeInfoData.prepTimeHours,
             prepTimeMinutes: recipeInfoData.prepTimeMinutes,
-            cookTimeHours: recipeInfoData.readyInMinutes,
-            cookTimeMinutes: 0,
+            cookTimeHours: hours,
+            cookTimeMinutes: minutes,
             cuisine: recipeInfoData.cuisines[0],
             directions: recipeInfoData.analyzedInstructions,
             ingredients: recipeInfoData.extendedIngredients,
@@ -304,7 +307,7 @@ const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
               prepTimeHours={recipeInfo?.prepTimeHours}
               prepTimeMinutes={0}
               cookTimeHours={recipeInfo?.cookTimeHours}
-              cookTimeMinutes={0}
+              cookTimeMinutes={recipeInfo?.cookTimeMinutes}
               image={recipeInfo?.image}
               user_email={undefined}
               onOpenDeleteWarning={() => {}}
@@ -312,7 +315,6 @@ const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
               saved={recipeInfo!.saved}
               search={true}
             />
-            <button>save</button>
           </div>
         </Modal>
       )}
