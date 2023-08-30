@@ -6,6 +6,7 @@
   background-color: #eae7dc;
   padding: 1rem;
   position: relative;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .form h1 {
@@ -53,7 +54,6 @@
 .save {
   width: 200px;
   border-radius: 5px;
-  background-color: green;
   background-color: #e85a4f;
   color: #fdfefe;
   font-size: 20px;

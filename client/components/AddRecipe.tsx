@@ -1,5 +1,13 @@
 import axios, { AxiosResponse } from "axios";
-import { ChangeEvent, FormEvent, useRef, useState } from "react";
+import {
+  ChangeEvent,
+  Dispatch,
+  FormEvent,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import styles from "./styles/AddRecipe.module.css";
 import { Recipe } from "@component/pages/recipes";
 import { useRouter } from "next/router";
@@ -8,9 +16,13 @@ import ErrorDiv from "./ErrorDiv";
 type AddRecipeProps = {
   onClose: () => void;
   getRecipes: () => void;
+  setGetRecipes: Dispatch<SetStateAction<() => void>>;
   editMode: boolean;
   recipeToEditInfo: Recipe | null | undefined;
   recipeToEdit: string | null;
+  setEditMode: Dispatch<SetStateAction<boolean>>;
+  setRecipeToEdit: Dispatch<SetStateAction<string | null>>;
+  setRecipeToEditInfo: Dispatch<SetStateAction<Recipe | undefined>>;
   onShowSpinner: () => void;
   onCloseSpinner: () => void;
 };
@@ -26,6 +38,9 @@ const AddRecipe = ({
   editMode,
   recipeToEditInfo,
   recipeToEdit,
+  setEditMode,
+  setRecipeToEdit,
+  setRecipeToEditInfo,
   onShowSpinner,
   onCloseSpinner,
 }: AddRecipeProps) => {
@@ -66,11 +81,9 @@ const AddRecipe = ({
   const _updateState = (res: AxiosResponse) => {
     if (res.data.errors) {
       onCloseSpinner();
-      //setShowSpinner(false);
       setErrors(res.data.errors!);
     } else {
       onCloseSpinner();
-      //setShowSpinner(false);
       getRecipes();
       onClose();
     }
@@ -81,7 +94,6 @@ const AddRecipe = ({
     if (editMode) {
       try {
         onShowSpinner();
-        //setShowSpinner(true);
         const res = await axios.put(
           "/recipes/editRecipe",
           {
@@ -107,7 +119,6 @@ const AddRecipe = ({
         _updateState(res);
       } catch (err: any) {
         onCloseSpinner();
-        //setShowSpinner(false);
 
         console.log(err);
         setErrors([err]);
@@ -115,7 +126,6 @@ const AddRecipe = ({
     } else {
       try {
         onShowSpinner();
-        //setShowSpinner(true);
         const res = await axios.post(
           "/recipes/addRecipe",
           {
@@ -136,7 +146,6 @@ const AddRecipe = ({
         _updateState(res);
       } catch (err: any) {
         onCloseSpinner();
-        //setShowSpinner(false);
         setErrors([err]);
         console.log(err);
         if (err.response.status === 401) {
@@ -180,20 +189,6 @@ const AddRecipe = ({
 
         <div className={styles["cook-time-group"]}>
           <label htmlFor="prep-time">Prep Time</label>
-          {/* <input
-            type="text"
-            id="prep-time"
-            ref={prepTimeRef}
-            defaultValue={recipeToEditInfo?.prepTime}
-          />
-        </div> */}
-
-          {/* <input
-            type="text"
-            id="cook-time"
-            ref={cookTimeRef}
-            defaultValue={recipeToEditInfo?.cookTime}
-          /> */}
           <div className={styles["hours-minutes"]}>
             <div className={styles["label-input-time"]}>
               <input

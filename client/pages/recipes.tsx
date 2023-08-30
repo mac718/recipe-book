@@ -29,6 +29,13 @@ type RecipesPageProps = {
   user_email: string;
   onShowSpinner: () => void;
   onCloseSpinner: () => void;
+  onShowRecipeForm: () => void;
+  onCloseRecipeForm: () => void;
+  setGetRecipes: () => void;
+  setRecipeToEditInfo: React.Dispatch<
+    React.SetStateAction<Recipe | null | undefined>
+  >;
+  setEditMode: React.Dispatch<React.SetStateAction<boolean | undefined>>;
 };
 
 export const handleSearchTermChange = (
@@ -59,11 +66,16 @@ const RecipesPage: NextPageWithLayout<RecipesPageProps> = ({
   user_email,
   onShowSpinner,
   onCloseSpinner,
+  onCloseRecipeForm,
+  onShowRecipeForm,
+  setGetRecipes,
+  setRecipeToEditInfo,
+  setEditMode,
 }) => {
   const [openRecipeForm, setOpenRecipeForm] = useState(false);
   const [allRecipes, setAllRecipes] = useState<Recipe[] | undefined>();
   const [recipes, setRecipes] = useState<Recipe[] | undefined>();
-  const [editMode, setEditMode] = useState(false);
+  //const [editMode, setEditMode] = useState(false);
   const [recipeToEdit, setRecipeToEdit] = useState<string | null>(null);
 
   const router = useRouter();
@@ -73,6 +85,18 @@ const RecipesPage: NextPageWithLayout<RecipesPageProps> = ({
   const onClose = () => {
     setOpenRecipeForm(false);
   };
+
+  let recipeToEditInfo: Recipe | undefined = undefined;
+
+  // ensures receipeToEditInfo populates AddRecipe form after form opens
+  useEffect(() => {
+    if (recipeToEdit) {
+      recipeToEditInfo = recipes?.filter(
+        (recipe) => recipe._id === recipeToEdit
+      )[0];
+    }
+    setRecipeToEditInfo(recipeToEditInfo);
+  }, [recipeToEdit]);
 
   const onOpenEditForm = (rec: string) => {
     setEditMode(true);
@@ -120,12 +144,12 @@ const RecipesPage: NextPageWithLayout<RecipesPageProps> = ({
       })
     : [];
 
-  let recipeToEditInfo = null;
-  if (recipeToEdit) {
-    recipeToEditInfo = recipes?.filter(
-      (recipe) => recipe._id === recipeToEdit
-    )[0];
-  }
+  // let recipeToEditInfo = null;
+  // if (recipeToEdit) {
+  //   recipeToEditInfo = recipes?.filter(
+  //     (recipe) => recipe._id === recipeToEdit
+  //   )[0];
+  // }
 
   const handleClearSearchBar = () => {
     setRecipes(allRecipes);
@@ -134,7 +158,7 @@ const RecipesPage: NextPageWithLayout<RecipesPageProps> = ({
 
   return (
     <div className={styles.recipes}>
-      {openRecipeForm && (
+      {/* {openRecipeForm && (
         <Modal onClose={onClose}>
           <AddRecipe
             onClose={onClose}
@@ -146,7 +170,7 @@ const RecipesPage: NextPageWithLayout<RecipesPageProps> = ({
             onCloseSpinner={onCloseSpinner}
           />
         </Modal>
-      )}
+      )} */}
       <h1 className={styles.heading}>Your Recipes</h1>
       <div className={styles["search-container"]}>
         <SearchBar
@@ -164,6 +188,7 @@ const RecipesPage: NextPageWithLayout<RecipesPageProps> = ({
           setEditMode(false);
           setRecipeToEdit(null);
           setOpenRecipeForm(true);
+          onShowRecipeForm();
         }}
       >
         <span className={styles.plus}>+</span> Add Your Own Recipe
@@ -187,7 +212,14 @@ const RecipesPage: NextPageWithLayout<RecipesPageProps> = ({
 };
 
 RecipesPage.getLayout = function getLayout(page: ReactElement) {
-  return <Layout user={page.props.user_email}>{page}</Layout>;
+  return (
+    <Layout
+      user={page.props.user_email}
+      onShowRecipeForm={page.props.onShowRecipeForm}
+    >
+      {page}
+    </Layout>
+  );
 };
 
 export default RecipesPage;

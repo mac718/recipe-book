@@ -4,11 +4,12 @@ import NavBar from "./NavBar";
 type LayoutProps = {
   children: ReactNode;
   user: string;
+  onShowRecipeForm: () => void;
 };
-const Layout = ({ children, user }: LayoutProps) => {
+const Layout = ({ children, user, onShowRecipeForm }: LayoutProps) => {
   return (
     <>
-      <NavBar user={user} />
+      <NavBar user={user} onShowRecipeForm={onShowRecipeForm} />
       <main>{children}</main>
     </>
   );
