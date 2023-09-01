@@ -78,6 +78,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 
     {
       let recipes: any;
+
       try {
         recipes = await axios.get("/recipes/getAllRecipes", {
           withCredentials: true,
@@ -86,6 +87,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
         console.log(err);
       }
       //setAllRecipes(recipes ? recipes.data : []);
+
       setRecipes(recipes ? recipes.data : []);
     };
 

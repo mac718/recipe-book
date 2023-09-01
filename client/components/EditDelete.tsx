@@ -1,4 +1,3 @@
-import { GrEdit } from "react-icons/gr";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { AiOutlineEdit } from "react-icons/ai";
 import styles from "./styles/EditDelete.module.css";

@@ -24,12 +24,16 @@ type SearchRecipesPageProps = {
   savedRecipes: string[];
   onShowSpinner: () => void;
   onCloseSpinner: () => void;
+  getRecipes: () => void;
+  recipes: Recipe[];
 };
 
 const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
   user_email,
   onShowSpinner,
   onCloseSpinner,
+  getRecipes,
+  recipes,
 }) => {
   const [intolerances, setIntolerances] = useState<{ [key: string]: boolean }>(
     {}
@@ -46,7 +50,7 @@ const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
   const [recipeInfo, setRecipeInfo] = useState<
     Recipe & { db_id: string | null | undefined; saved: boolean }
   >();
-  const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [fetchedRecipes, setFetchedRecipes] = useState<Recipe[]>(recipes);
 
   const savedRecipeNames = [];
   for (const recipe of recipes) {
@@ -273,17 +277,17 @@ const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
   ));
 
   console.log("recipeInfo", recipeInfo);
-  const getRecipes = async () => {
-    let recipes: any;
-    try {
-      recipes = await axios.get("/recipes/getAllRecipes", {
-        withCredentials: true,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-    setRecipes(recipes ? recipes.data : []);
-  };
+  // const getRecipes = async () => {
+  //   let recipes: any;
+  //   try {
+  //     recipes = await axios.get("/recipes/getAllRecipes", {
+  //       withCredentials: true,
+  //     });
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  //   setRecipes(recipes ? recipes.data : []);
+  // };
 
   /* fetching recipes with useEffect instead of getServerSideProps
     since req.user, which recipes controller
@@ -291,6 +295,12 @@ const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
   useEffect(() => {
     getRecipes();
   }, []);
+
+  useEffect(() => {
+    if (!fetchedRecipes) {
+      setFetchedRecipes(recipes);
+    }
+  }, [recipes]);
 
   return (
     <>
@@ -424,7 +434,11 @@ const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
 };
 
 SearchRecipesPage.getLayout = function getLayout(page: ReactElement) {
-  return <Layout user={page.props.user_email}>{page}</Layout>;
+  return (
+    <Layout user={page.props.user_email} getRecipes={page.props.getRecipes}>
+      {page}
+    </Layout>
+  );
 };
 
 export default SearchRecipesPage;

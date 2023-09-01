@@ -97,7 +97,7 @@ const RecipePage: NextPageWithLayout<RecipePageProps> = ({
         allRecipes!.filter((rec: Recipe) => rec._id === currentRecipeId)[0]
       );
     }
-  }, [currentRecipeId]);
+  }, [currentRecipeId, allRecipes]);
 
   useEffect(() => {
     setFilteredRecipes(recipes);
