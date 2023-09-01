@@ -19,6 +19,7 @@ type RecipePageProps = {
   user_email: string;
   onShowSpinner: () => void;
   onCloseSpinner: () => void;
+  getRecipes: () => void;
 };
 
 const RecipePage: NextPageWithLayout<RecipePageProps> = ({
@@ -26,6 +27,7 @@ const RecipePage: NextPageWithLayout<RecipePageProps> = ({
   user_email,
   onShowSpinner,
   onCloseSpinner,
+  getRecipes,
 }: RecipePageProps) => {
   const [allRecipes, setAllRecipes] = useState<Recipe[] | undefined>([]);
   const [filteredRecipes, setFilteredRecipes] = useState<Recipe[] | undefined>(
@@ -62,29 +64,32 @@ const RecipePage: NextPageWithLayout<RecipePageProps> = ({
     onCloseSpinner();
   }, []);
 
-  const getRecipes = async () => {
-    let allRecipes: any;
-    setShowSpinner(true);
-    try {
-      allRecipes = await axios.get("/recipes/getAllRecipes", {
-        withCredentials: true,
-      });
-      setShowSpinner(false);
-    } catch (err) {
-      console.log(err);
-      setShowSpinner(false);
-    }
+  // const getListRecipes = async () => {
+  //   let allRecipes: any;
+  //   setShowSpinner(true);
+  //   try {
+  //     allRecipes = await axios.get("/recipes/getAllRecipes", {
+  //       withCredentials: true,
+  //     });
+  //     setShowSpinner(false);
+  //   } catch (err) {
+  //     console.log(err);
+  //     setShowSpinner(false);
+  //   }
 
-    setAllRecipes(allRecipes.data);
-    setFilteredRecipes(allRecipes.data);
+  //   setAllRecipes(allRecipes.data);
+  //   setFilteredRecipes(allRecipes.data);
 
-    setCurrentRecipe(
-      allRecipes.data.filter((rec: Recipe) => rec._id === currentRecipeId)[0]
-    );
-  };
+  //   // setCurrentRecipe(
+  //   //   allRecipes.data.filter((rec: Recipe) => rec._id === currentRecipeId)[0]
+  //   // );
+  // };
 
   useEffect(() => {
-    getRecipes();
+    //getListRecipes();
+    setCurrentRecipe(
+      allRecipes!.filter((rec: Recipe) => rec._id === currentRecipeId)[0]
+    );
   }, [currentRecipeId]);
 
   const debouncedHandleSearchTermChange = () => {
@@ -243,7 +248,11 @@ const RecipePage: NextPageWithLayout<RecipePageProps> = ({
 };
 
 RecipePage.getLayout = function getLayout(page: ReactElement) {
-  return <Layout user={page.props.user_email}>{page}</Layout>;
+  return (
+    <Layout user={page.props.user_email} getRecipes={page.props.getRecipes}>
+      {page}
+    </Layout>
+  );
 };
 
 export default RecipePage;

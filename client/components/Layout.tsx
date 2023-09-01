@@ -5,9 +5,9 @@ import { Recipe } from "@component/pages/recipes";
 type LayoutProps = {
   children: ReactNode;
   user: string;
-  onShowRecipeForm: () => void;
-  setEditMode: (val: boolean) => void;
-  setRecipeToEditInfo: (rec: Recipe | undefined) => void;
+  // onShowRecipeForm: () => void;
+  // setEditMode: (val: boolean) => void;
+  // setRecipeToEditInfo: (rec: Recipe | undefined) => void;
   getRecipes: () => void;
 };
 const Layout = ({ children, user, getRecipes }: LayoutProps) => {
