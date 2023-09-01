@@ -37,10 +37,6 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const [recipeToEditInfo, setRecipeToEditInfo] = useState<Recipe>();
   const [recipes, setRecipes] = useState<Recipe[]>();
 
-  // const [getRecipes, setGetRecipes] = useState<
-  //   (() => Promise<void>) | undefined
-  // >();
-
   const onShowSpinner = () => {
     setShowSpinner(true);
   };
@@ -79,6 +75,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getRecipes = async () =>
     // setAllRecipes: Dispatch<SetStateAction<Recipe[]>>,
     // setRecipes: Dispatch<SetStateAction<Recipe[]>>
+
     {
       let recipes: any;
       try {
@@ -99,14 +96,14 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
     getRecipes();
   }, []);
 
-  useEffect(() => {
-    if (recipeToEditInfo) {
-      setShowRecipeForm(true);
-    }
-    // if (getRecipes !== undefined) {
-    //   getRecipes();
-    // }
-  }, [recipeToEditInfo, getRecipes]);
+  // useEffect(() => {
+  //   if (recipeToEditInfo) {
+  //     setShowRecipeForm(true);
+  //   }
+  //   // if (getRecipes !== undefined) {
+  //   //   getRecipes();
+  //   // }
+  // }, [recipeToEditInfo]);
 
   const getLayout = Component.getLayout ?? ((page) => page);
   return (

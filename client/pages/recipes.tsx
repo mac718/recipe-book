@@ -222,13 +222,7 @@ const RecipesPage: NextPageWithLayout<RecipesPageProps> = ({
 
 RecipesPage.getLayout = function getLayout(page: ReactElement) {
   return (
-    <Layout
-      user={page.props.user_email}
-      onShowRecipeForm={page.props.onShowRecipeForm}
-      setEditMode={page.props.setEditMode}
-      setRecipeToEditInfo={page.props.setRecipeToEditInfo}
-      getRecipes={page.props.getRecipes}
-    >
+    <Layout user={page.props.user_email} getRecipes={page.props.getRecipes}>
       {page}
     </Layout>
   );

@@ -20,6 +20,7 @@ type RecipePageProps = {
   onShowSpinner: () => void;
   onCloseSpinner: () => void;
   getRecipes: () => void;
+  recipes: Recipe[];
 };
 
 const RecipePage: NextPageWithLayout<RecipePageProps> = ({
@@ -28,10 +29,12 @@ const RecipePage: NextPageWithLayout<RecipePageProps> = ({
   onShowSpinner,
   onCloseSpinner,
   getRecipes,
+  recipes,
 }: RecipePageProps) => {
-  const [allRecipes, setAllRecipes] = useState<Recipe[] | undefined>([]);
+  console.log("id", recipes);
+  const [allRecipes, setAllRecipes] = useState<Recipe[] | undefined>(recipes);
   const [filteredRecipes, setFilteredRecipes] = useState<Recipe[] | undefined>(
-    []
+    recipes
   );
   const [currentRecipeIdState, setCurrentRecipeIdState] =
     useState(currentRecipeId);
@@ -56,6 +59,8 @@ const RecipePage: NextPageWithLayout<RecipePageProps> = ({
   const [mobile, setMobile] = useState(false);
   const [slide, setSlide] = useState(false);
   const [retract, setRetract] = useState(false);
+
+  console.log("dfsdfkjhkjsdf", recipes);
 
   useEffect(() => {
     if (window.innerWidth < 1000) {
@@ -87,10 +92,17 @@ const RecipePage: NextPageWithLayout<RecipePageProps> = ({
 
   useEffect(() => {
     //getListRecipes();
-    setCurrentRecipe(
-      allRecipes!.filter((rec: Recipe) => rec._id === currentRecipeId)[0]
-    );
+    if (allRecipes) {
+      setCurrentRecipe(
+        allRecipes!.filter((rec: Recipe) => rec._id === currentRecipeId)[0]
+      );
+    }
   }, [currentRecipeId]);
+
+  useEffect(() => {
+    setFilteredRecipes(recipes);
+    setAllRecipes(recipes);
+  }, [recipes]);
 
   const debouncedHandleSearchTermChange = () => {
     setTimeout(
@@ -145,14 +157,16 @@ const RecipePage: NextPageWithLayout<RecipePageProps> = ({
     leftClasses = `${styles["search-retract"]}`;
   }
 
-  const recipeListCards = filteredRecipes!.map((recipe) => (
-    <RecipeListCard
-      recipe={recipe}
-      onOpenDeleteWarning={onOpenDeleteWarning}
-      onOpenEditForm={onOpenEditForm}
-      key={recipe._id}
-    />
-  ));
+  const recipeListCards = filteredRecipes
+    ? filteredRecipes!.map((recipe) => (
+        <RecipeListCard
+          recipe={recipe}
+          onOpenDeleteWarning={onOpenDeleteWarning}
+          onOpenEditForm={onOpenEditForm}
+          key={recipe._id}
+        />
+      ))
+    : [];
 
   let recipeToEditInfo = null;
   if (recipeToEdit) {
