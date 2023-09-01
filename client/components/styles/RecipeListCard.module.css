@@ -21,6 +21,10 @@
   border-radius: 5px;
 }
 
+.image img {
+  width: 100%;
+}
+
 .name {
   display: flex;
   flex-direction: column;
