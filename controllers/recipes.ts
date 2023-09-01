@@ -165,6 +165,7 @@ export const editRecipe = async (req: Request, res: Response) => {
     imageName,
   } = req.body;
 
+  console.log("server ingredients", id);
   const existingRecipe = await Recipe.findById(id);
 
   if (!existingRecipe) {

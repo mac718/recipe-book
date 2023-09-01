@@ -3,7 +3,6 @@ import Modal from "@component/components/Modal";
 import RecipeGridCard from "@component/components/RecipeGridCard";
 import { ReactElement, useEffect, useRef, useState } from "react";
 import styles from "../styles/RecipesPage.module.css";
-import axios from "axios";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import SearchBar from "@component/components/SearchBar";
@@ -32,10 +31,13 @@ type RecipesPageProps = {
   onShowRecipeForm: () => void;
   onCloseRecipeForm: () => void;
   setGetRecipes: () => void;
-  setRecipeToEditInfo: React.Dispatch<
-    React.SetStateAction<Recipe | null | undefined>
-  >;
-  setEditMode: React.Dispatch<React.SetStateAction<boolean | undefined>>;
+  setRecipeToEditInfo: (rec: Recipe | undefined) => void; //React.Dispatch<React.SetStateAction<Recipe | null | undefined>>;
+  setEditMode: (val: boolean) => void;
+  editMode: boolean;
+  setRecipeToEdit: (rec: string | undefined) => void;
+  recipeToEdit: string;
+  recipes: Recipe[];
+  getRecipes: () => void;
 };
 
 export const handleSearchTermChange = (
@@ -62,6 +64,26 @@ export const handleSearchTermChange = (
   setFilteredRecipes(filteredRecipes);
 };
 
+// const getRecipes = async (
+//   setAllRecipes: Dispatch<SetStateAction<Recipe[]>>,
+//   setRecipes: Dispatch<SetStateAction<Recipe[]>>
+// ) => {
+//   let recipes: any;
+//   try {
+//     recipes = await axios.get("/recipes/getAllRecipes", {
+//       withCredentials: true,
+//     });
+//   } catch (err) {
+//     console.log(err);
+//   }
+//   setAllRecipes(recipes ? recipes.data : []);
+//   setRecipes(recipes ? recipes.data : []);
+// };
+
+// const onGetRecipes = () => {
+//   getRecipes();
+// }
+
 const RecipesPage: NextPageWithLayout<RecipesPageProps> = ({
   user_email,
   onShowSpinner,
@@ -71,12 +93,20 @@ const RecipesPage: NextPageWithLayout<RecipesPageProps> = ({
   setGetRecipes,
   setRecipeToEditInfo,
   setEditMode,
+  editMode,
+  setRecipeToEdit,
+  recipeToEdit,
+  recipes,
+  getRecipes,
 }) => {
   const [openRecipeForm, setOpenRecipeForm] = useState(false);
-  const [allRecipes, setAllRecipes] = useState<Recipe[] | undefined>();
-  const [recipes, setRecipes] = useState<Recipe[] | undefined>();
+  const [allRecipes, setAllRecipes] = useState<Recipe[] | undefined>(recipes);
+  const [currentRecipes, setCurrentRecipes] = useState<Recipe[] | undefined>(
+    recipes
+  );
+
   //const [editMode, setEditMode] = useState(false);
-  const [recipeToEdit, setRecipeToEdit] = useState<string | null>(null);
+  //const [recipeToEdit, setRecipeToEdit] = useState<string | null>(null);
 
   const router = useRouter();
 
@@ -86,18 +116,6 @@ const RecipesPage: NextPageWithLayout<RecipesPageProps> = ({
     setOpenRecipeForm(false);
   };
 
-  let recipeToEditInfo: Recipe | undefined = undefined;
-
-  // ensures receipeToEditInfo populates AddRecipe form after form opens
-  useEffect(() => {
-    if (recipeToEdit) {
-      recipeToEditInfo = recipes?.filter(
-        (recipe) => recipe._id === recipeToEdit
-      )[0];
-    }
-    setRecipeToEditInfo(recipeToEditInfo);
-  }, [recipeToEdit]);
-
   const onOpenEditForm = (rec: string) => {
     setEditMode(true);
     setRecipeToEdit(rec);
@@ -106,32 +124,15 @@ const RecipesPage: NextPageWithLayout<RecipesPageProps> = ({
 
   const debouncedHandleSearchTermChange = () => {
     setTimeout(
-      () => handleSearchTermChange(allRecipes, searchBarRef, setRecipes),
+      () => handleSearchTermChange(allRecipes, searchBarRef, setCurrentRecipes),
       500
     );
   };
 
   let recipeCards: ReactElement[] = [];
 
-  const getRecipes = async () => {
-    let recipes: any;
-    try {
-      recipes = await axios.get("/recipes/getAllRecipes", {
-        withCredentials: true,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-    setAllRecipes(recipes ? recipes.data : []);
-    setRecipes(recipes ? recipes.data : []);
-  };
-
-  useEffect(() => {
-    getRecipes();
-  }, []);
-
-  recipeCards = recipes
-    ? recipes.map((recipe) => {
+  recipeCards = currentRecipes
+    ? currentRecipes!.map((recipe) => {
         return (
           <RecipeGridCard
             recipe={recipe}
@@ -144,21 +145,30 @@ const RecipesPage: NextPageWithLayout<RecipesPageProps> = ({
       })
     : [];
 
-  // let recipeToEditInfo = null;
-  // if (recipeToEdit) {
-  //   recipeToEditInfo = recipes?.filter(
-  //     (recipe) => recipe._id === recipeToEdit
-  //   )[0];
-  // }
+  let recipeToEditInfo = null;
+  if (recipeToEdit) {
+    recipeToEditInfo = recipes?.filter(
+      (recipe) => recipe._id === recipeToEdit
+    )[0];
+  }
 
   const handleClearSearchBar = () => {
-    setRecipes(allRecipes);
+    setCurrentRecipes(allRecipes);
     searchBarRef.current!.value = "";
   };
 
+  // ensures recipes prop passed from _app is actually populated with receipes when currentRecipes
+  // and allRecipes are set.
+  useEffect(() => {
+    if (!currentRecipes) {
+      setCurrentRecipes(recipes);
+      setAllRecipes(recipes);
+    }
+  }, [recipes]);
+
   return (
     <div className={styles.recipes}>
-      {/* {openRecipeForm && (
+      {openRecipeForm && (
         <Modal onClose={onClose}>
           <AddRecipe
             onClose={onClose}
@@ -170,7 +180,7 @@ const RecipesPage: NextPageWithLayout<RecipesPageProps> = ({
             onCloseSpinner={onCloseSpinner}
           />
         </Modal>
-      )} */}
+      )}
       <h1 className={styles.heading}>Your Recipes</h1>
       <div className={styles["search-container"]}>
         <SearchBar
@@ -186,9 +196,8 @@ const RecipesPage: NextPageWithLayout<RecipesPageProps> = ({
         onClick={(event) => {
           event.preventDefault();
           setEditMode(false);
-          setRecipeToEdit(null);
+          setRecipeToEdit(undefined);
           setOpenRecipeForm(true);
-          onShowRecipeForm();
         }}
       >
         <span className={styles.plus}>+</span> Add Your Own Recipe
@@ -216,6 +225,9 @@ RecipesPage.getLayout = function getLayout(page: ReactElement) {
     <Layout
       user={page.props.user_email}
       onShowRecipeForm={page.props.onShowRecipeForm}
+      setEditMode={page.props.setEditMode}
+      setRecipeToEditInfo={page.props.setRecipeToEditInfo}
+      getRecipes={page.props.getRecipes}
     >
       {page}
     </Layout>

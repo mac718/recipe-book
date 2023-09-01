@@ -15,14 +15,14 @@ import ErrorDiv from "./ErrorDiv";
 
 type AddRecipeProps = {
   onClose: () => void;
-  getRecipes: () => void;
-  setGetRecipes: Dispatch<SetStateAction<() => void>>;
+  getRecipes: () => void; //(() => Promise<void>) | undefined;
+  //setGetRecipes: (getRecipes: (() => Promise<void>) | undefined) => void; // Dispatch<SetStateAction<() => void>>;
   editMode: boolean;
   recipeToEditInfo: Recipe | null | undefined;
   recipeToEdit: string | null;
-  setEditMode: Dispatch<SetStateAction<boolean>>;
-  setRecipeToEdit: Dispatch<SetStateAction<string | null>>;
-  setRecipeToEditInfo: Dispatch<SetStateAction<Recipe | undefined>>;
+  //setEditMode: Dispatch<SetStateAction<boolean>>;
+  //setRecipeToEdit: (rec: string) => void; //Dispatch<SetStateAction<string | null>>;
+  //setRecipeToEditInfo: (rec: Recipe | undefined) => void; //Dispatch<SetStateAction<Recipe | undefined>>;
   onShowSpinner: () => void;
   onCloseSpinner: () => void;
 };
@@ -38,9 +38,10 @@ const AddRecipe = ({
   editMode,
   recipeToEditInfo,
   recipeToEdit,
-  setEditMode,
-  setRecipeToEdit,
-  setRecipeToEditInfo,
+  // setEditMode,
+  // setRecipeToEdit,
+  // setRecipeToEditInfo,
+  // setGetRecipes,
   onShowSpinner,
   onCloseSpinner,
 }: AddRecipeProps) => {
@@ -85,6 +86,7 @@ const AddRecipe = ({
     } else {
       onCloseSpinner();
       getRecipes();
+      //setGetRecipes(getRecipes);
       onClose();
     }
   };
@@ -92,6 +94,7 @@ const AddRecipe = ({
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (editMode) {
+      console.log("ingredients", ingredientsRef.current?.value);
       try {
         onShowSpinner();
         const res = await axios.put(
@@ -115,7 +118,6 @@ const AddRecipe = ({
         if (res.status === 401) {
           router.push("/");
         }
-
         _updateState(res);
       } catch (err: any) {
         onCloseSpinner();

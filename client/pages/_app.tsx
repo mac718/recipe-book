@@ -2,7 +2,14 @@ import "@component/styles/globals.css";
 import type { AppProps } from "next/app";
 import axios from "axios";
 import { Quicksand } from "next/font/google";
-import { ReactElement, ReactNode, useEffect, useState } from "react";
+import {
+  Dispatch,
+  ReactElement,
+  ReactNode,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { NextPage } from "next";
 import Portal from "@component/components/HOC/Portal";
 import Spinner from "@component/components/Spinner";
@@ -28,7 +35,11 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const [editMode, setEditMode] = useState(false);
   const [recipeToEdit, setRecipeToEdit] = useState<string | null>(null);
   const [recipeToEditInfo, setRecipeToEditInfo] = useState<Recipe>();
-  const [getRecipes, setGetRecipes] = useState<() => void>(() => {});
+  const [recipes, setRecipes] = useState<Recipe[]>();
+
+  // const [getRecipes, setGetRecipes] = useState<
+  //   (() => Promise<void>) | undefined
+  // >();
 
   const onShowSpinner = () => {
     setShowSpinner(true);
@@ -43,13 +54,59 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 
   const onCloseRecipeForm = () => {
     setShowRecipeForm(false);
+    setRecipeToEditInfo(undefined);
+    setRecipeToEdit(null);
+    setEditMode(false);
   };
+
+  const onSetEditMode = (val: boolean) => {
+    setEditMode(val);
+  };
+
+  const onSetRecipeToEditInfo = (rec: Recipe | undefined) => {
+    setRecipeToEditInfo(rec);
+  };
+
+  const onSetRecipeToEdit = (rec: string) => {
+    setRecipeToEdit(rec);
+  };
+
+  // const onSetGetRecipes = (getRecipes: (() => Promise<void>) | undefined) => {
+  //   console.log("getrecs", getRecipes);
+  //   setGetRecipes(getRecipes);
+  // };
+
+  const getRecipes = async () =>
+    // setAllRecipes: Dispatch<SetStateAction<Recipe[]>>,
+    // setRecipes: Dispatch<SetStateAction<Recipe[]>>
+    {
+      let recipes: any;
+      try {
+        recipes = await axios.get("/recipes/getAllRecipes", {
+          withCredentials: true,
+        });
+      } catch (err) {
+        console.log(err);
+      }
+      //setAllRecipes(recipes ? recipes.data : []);
+      setRecipes(recipes ? recipes.data : []);
+    };
+
+  // const onGetRecipes = () => {
+  //   getRecipes();
+  // }
+  useEffect(() => {
+    getRecipes();
+  }, []);
 
   useEffect(() => {
     if (recipeToEditInfo) {
       setShowRecipeForm(true);
     }
-  }, [recipeToEditInfo]);
+    // if (getRecipes !== undefined) {
+    //   getRecipes();
+    // }
+  }, [recipeToEditInfo, getRecipes]);
 
   const getLayout = Component.getLayout ?? ((page) => page);
   return (
@@ -63,13 +120,13 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
               onCloseSpinner={onCloseSpinner}
               onShowSpinner={onShowSpinner}
               getRecipes={getRecipes}
-              setGetRecipes={setGetRecipes}
+              //setGetRecipes={onSetGetRecipes}
               editMode={editMode}
               recipeToEdit={recipeToEdit}
               recipeToEditInfo={recipeToEditInfo}
-              setEditMode={setEditMode}
-              setRecipeToEdit={setRecipeToEdit}
-              setRecipeToEditInfo={setRecipeToEditInfo}
+              //setEditMode={setEditMode}
+              //setRecipeToEdit={onSetRecipeToEdit}
+              //setRecipeToEditInfo={onSetRecipeToEditInfo}
             />
           </Modal>
         )}
@@ -81,9 +138,14 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
           onCloseSpinner={onCloseSpinner}
           onShowRecipeForm={onShowRecipeForm}
           onCloseRecipeForm={onCloseRecipeForm}
-          setGetRecipes={setGetRecipes}
+          //setGetRecipes={setGetRecipes}
           setRecipeToEditInfo={setRecipeToEditInfo}
-          setEditMode={setEditMode}
+          setEditMode={onSetEditMode}
+          editMode={editMode}
+          setRecipeToEdit={onSetRecipeToEdit}
+          recipeToEdit={recipeToEdit}
+          recipes={recipes}
+          getRecipes={getRecipes}
         />
       )}
     </main>
