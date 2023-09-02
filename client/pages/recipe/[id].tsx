@@ -1,7 +1,6 @@
 import RecipeShow from "@component/components/RecipeShow";
 import { Recipe } from "../recipes";
 import { GetServerSideProps } from "next";
-import axios from "axios";
 import { ReactElement, useEffect, useRef, useState } from "react";
 import SearchBar from "@component/components/SearchBar";
 import styles from "../../styles/RecipeViewPage.module.css";
@@ -69,29 +68,7 @@ const RecipePage: NextPageWithLayout<RecipePageProps> = ({
     onCloseSpinner();
   }, []);
 
-  // const getListRecipes = async () => {
-  //   let allRecipes: any;
-  //   setShowSpinner(true);
-  //   try {
-  //     allRecipes = await axios.get("/recipes/getAllRecipes", {
-  //       withCredentials: true,
-  //     });
-  //     setShowSpinner(false);
-  //   } catch (err) {
-  //     console.log(err);
-  //     setShowSpinner(false);
-  //   }
-
-  //   setAllRecipes(allRecipes.data);
-  //   setFilteredRecipes(allRecipes.data);
-
-  //   // setCurrentRecipe(
-  //   //   allRecipes.data.filter((rec: Recipe) => rec._id === currentRecipeId)[0]
-  //   // );
-  // };
-
   useEffect(() => {
-    //getListRecipes();
     if (allRecipes) {
       setCurrentRecipe(
         allRecipes!.filter((rec: Recipe) => rec._id === currentRecipeId)[0]

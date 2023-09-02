@@ -277,17 +277,6 @@ const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
   ));
 
   console.log("recipeInfo", recipeInfo);
-  // const getRecipes = async () => {
-  //   let recipes: any;
-  //   try {
-  //     recipes = await axios.get("/recipes/getAllRecipes", {
-  //       withCredentials: true,
-  //     });
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  //   setRecipes(recipes ? recipes.data : []);
-  // };
 
   /* fetching recipes with useEffect instead of getServerSideProps
     since req.user, which recipes controller

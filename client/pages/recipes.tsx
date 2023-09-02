@@ -64,34 +64,10 @@ export const handleSearchTermChange = (
   setFilteredRecipes(filteredRecipes);
 };
 
-// const getRecipes = async (
-//   setAllRecipes: Dispatch<SetStateAction<Recipe[]>>,
-//   setRecipes: Dispatch<SetStateAction<Recipe[]>>
-// ) => {
-//   let recipes: any;
-//   try {
-//     recipes = await axios.get("/recipes/getAllRecipes", {
-//       withCredentials: true,
-//     });
-//   } catch (err) {
-//     console.log(err);
-//   }
-//   setAllRecipes(recipes ? recipes.data : []);
-//   setRecipes(recipes ? recipes.data : []);
-// };
-
-// const onGetRecipes = () => {
-//   getRecipes();
-// }
-
 const RecipesPage: NextPageWithLayout<RecipesPageProps> = ({
   user_email,
   onShowSpinner,
   onCloseSpinner,
-  onCloseRecipeForm,
-  onShowRecipeForm,
-  setGetRecipes,
-  setRecipeToEditInfo,
   setEditMode,
   editMode,
   setRecipeToEdit,
@@ -104,9 +80,6 @@ const RecipesPage: NextPageWithLayout<RecipesPageProps> = ({
   const [currentRecipes, setCurrentRecipes] = useState<Recipe[] | undefined>(
     recipes
   );
-
-  //const [editMode, setEditMode] = useState(false);
-  //const [recipeToEdit, setRecipeToEdit] = useState<string | null>(null);
 
   const router = useRouter();
 

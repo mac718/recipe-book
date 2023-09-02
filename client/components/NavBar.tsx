@@ -2,10 +2,9 @@ import Link from "next/link";
 import styles from "./styles/NavBar.module.css";
 import { AiOutlineHome } from "react-icons/ai";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "./Modal";
 import AddRecipe from "./AddRecipe";
-import { Recipe } from "@component/pages/recipes";
 
 type NavBarProps = {
   user: string;
