@@ -156,7 +156,7 @@ const RecipePage: NextPageWithLayout<RecipePageProps> = ({
     <div className={styles.main}>
       {showSpinner && <Spinner />}
       {openRecipeForm && (
-        <Modal onClose={onClose}>
+        <Modal onClose={onClose} deleteWarn={false}>
           <AddRecipe
             onClose={onClose}
             getRecipes={getRecipes}
@@ -170,7 +170,7 @@ const RecipePage: NextPageWithLayout<RecipePageProps> = ({
       )}
 
       {openDeleteWarning && (
-        <Modal onClose={onCloseDeleteWarning}>
+        <Modal onClose={onCloseDeleteWarning} deleteWarn={true}>
           <DeleteWarning
             id={currentRecipeIdState}
             onClose={onCloseDeleteWarning}

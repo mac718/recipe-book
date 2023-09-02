@@ -62,12 +62,15 @@ const RecipeShow = ({
 
   let splitDirections: string[] = [];
   if (directions) {
+    // if recipe is coming from API
     if (Array.isArray(directions)) {
-      for (const direction of directions[0]["steps"]) {
-        const directionText = direction.step;
-        splitDirections = splitDirections.concat(
-          directionText.split(".").slice(0, -1)
-        );
+      if (directions.length) {
+        for (const direction of directions[0].steps) {
+          const directionText = direction.step;
+          splitDirections = splitDirections.concat(
+            directionText.split(".").slice(0, -1)
+          );
+        }
       }
     } else {
       splitDirections = directions.split("\\");

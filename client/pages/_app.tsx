@@ -80,7 +80,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
       <Portal>{showSpinner && <Spinner />}</Portal>
       <Portal>
         {showRecipeForm && (
-          <Modal onClose={onCloseRecipeForm}>
+          <Modal onClose={onCloseRecipeForm} deleteWarn={false}>
             <AddRecipe
               onClose={onCloseRecipeForm}
               onCloseSpinner={onCloseSpinner}

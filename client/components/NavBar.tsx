@@ -32,7 +32,7 @@ const NavBar = ({ user, getRecipes }: NavBarProps) => {
   return (
     <>
       {openRecipeForm && (
-        <Modal onClose={onCloseRecipeForm}>
+        <Modal onClose={onCloseRecipeForm} deleteWarn={false}>
           <AddRecipe
             onClose={onCloseRecipeForm}
             getRecipes={getRecipes}

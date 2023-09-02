@@ -158,7 +158,6 @@ const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
       try {
         recipeInfo = await axios.get(`/spoonacular/get-recipe-info/${id}`);
         const recipeInfoData = recipeInfo.data;
-        console.log("ready in minutes", recipeInfoData.readyInMinutes);
         const hours = Math.floor(recipeInfoData.readyInMinutes / 60);
         const minutes = recipeInfoData.readyInMinutes % 60;
         const recipeToView: Recipe & { db_id: string | null; saved: boolean } =
@@ -294,7 +293,7 @@ const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
   return (
     <>
       {openRecipeInfo && (
-        <Modal onClose={() => setOpenRecipeInfo(false)}>
+        <Modal onClose={() => setOpenRecipeInfo(false)} deleteWarn={false}>
           <div>
             <RecipeShow
               _id={recipeInfo?._id}

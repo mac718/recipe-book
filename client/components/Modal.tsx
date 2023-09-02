@@ -11,11 +11,15 @@ export const Backdrop = ({ onClose }: BackDropProps) => {
 interface ModalOverlayProps {
   children: React.ReactNode;
   onClose: () => void;
+  deleteWarn: boolean;
 }
 
-const ModalOverlay = ({ children, onClose }: ModalOverlayProps) => {
+const ModalOverlay = ({ children, onClose, deleteWarn }: ModalOverlayProps) => {
   return (
-    <div className={styles.modal}>
+    <div
+      className={styles.modal}
+      style={deleteWarn ? { height: "fit-content", top: "30%" } : {}}
+    >
       <span className={styles.close} onClick={onClose}>
         X
       </span>
@@ -27,13 +31,16 @@ const ModalOverlay = ({ children, onClose }: ModalOverlayProps) => {
 interface ModalProps {
   onClose: () => void;
   children: React.ReactNode;
+  deleteWarn: boolean;
 }
 
-const Modal = ({ onClose, children }: ModalProps) => {
+const Modal = ({ onClose, children, deleteWarn }: ModalProps) => {
   return (
     <>
       <Backdrop onClose={onClose} />
-      <ModalOverlay onClose={onClose}>{children}</ModalOverlay>
+      <ModalOverlay onClose={onClose} deleteWarn={deleteWarn}>
+        {children}
+      </ModalOverlay>
     </>
   );
 };

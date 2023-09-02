@@ -142,7 +142,7 @@ const RecipesPage: NextPageWithLayout<RecipesPageProps> = ({
   return (
     <div className={styles.recipes}>
       {openRecipeForm && (
-        <Modal onClose={onClose}>
+        <Modal onClose={onClose} deleteWarn={false}>
           <AddRecipe
             onClose={onClose}
             getRecipes={getRecipes}

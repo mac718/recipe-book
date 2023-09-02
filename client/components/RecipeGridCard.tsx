@@ -22,7 +22,10 @@ const RecipeGridCard = ({
 }: RecipeGridCardProps) => {
   const [openDeleteWarning, setOpenDeleteWarning] = useState(false);
 
-  const { _id, name, cookTimeHours, cookTimeMinutes, image } = recipe;
+  let { _id, name, cookTimeHours, cookTimeMinutes, image } = recipe;
+
+  cookTimeHours = cookTimeHours ? cookTimeHours : 0;
+  cookTimeMinutes = cookTimeMinutes ? cookTimeMinutes : 0;
 
   const handleModalClose = () => {
     setOpenDeleteWarning(false);
@@ -35,7 +38,7 @@ const RecipeGridCard = ({
   return (
     <>
       {openDeleteWarning && (
-        <Modal onClose={handleModalClose}>
+        <Modal onClose={handleModalClose} deleteWarn={true}>
           <DeleteWarning
             id={_id}
             onClose={handleModalClose}
@@ -49,7 +52,9 @@ const RecipeGridCard = ({
           <div className={styles.pic} onClick={onShowSpinner}>
             <div className={styles.overlay}>
               <div className={styles["overlay-name"]}>{name}</div>
-              <div className={styles["overlay-cooktime"]}>{cookTimeHours}</div>
+              <div className={styles["overlay-cooktime"]}>
+                {cookTimeHours} hours {cookTimeMinutes} minutes
+              </div>
             </div>
             <Image
               loader={() => image}
