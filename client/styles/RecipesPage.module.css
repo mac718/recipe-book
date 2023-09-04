@@ -1,7 +1,7 @@
 .heading {
   font-size: 3rem;
   text-align: center;
-  background: -webkit-linear-gradient(#e98074, #8e8d8a);
+  background: -webkit-linear-gradient(var(--red-main), var(--gray));
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -43,8 +43,7 @@
   /* background-color: transparent;
   color: #ff5c4d;
   border: 1px solid #ff5c4d; */
-  background-color: #e85a4f;
-  background-color: #d8c385;
+  background-color: var(--sand);
   /* background-color: #05386b; */
   color: white;
   /* opacity: 0.9; */
@@ -58,7 +57,7 @@
 .recipes {
   padding-top: 2rem;
   position: relative;
-  background-color: #fdfefe;
+  background-color: var(--off-white);
 }
 
 .recipe-grid {
@@ -70,7 +69,7 @@
   width: 80vw;
   height: 100vh;
   margin: 5rem auto 0 auto;
-  background-color: #fdfefe;
+  background-color: var(--off-white);
 }
 
 .or {
@@ -92,7 +91,7 @@
   text-decoration: none;
   cursor: pointer;
   font-size: 22px;
-  background-color: #8a9a5b;
+  background-color: var(--light-green);
 }
 
 .search-for-new:hover,

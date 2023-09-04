@@ -10,7 +10,7 @@
 }
 
 .main h1 {
-  color: #104210;
+  color: var(--dark-green);
   font-size: 4em;
 }
 

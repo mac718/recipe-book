@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   height: 100vh;
-  background-color: #fdfefe;
+  background-color: var(--off-white);
   padding-top: 60px;
 }
 
@@ -34,7 +34,7 @@
   height: 3rem;
   display: block;
   margin: 0 auto 10px auto;
-  background-color: #ff5c4d;
+  background-color: var(--red-main);
   border: none;
   color: white;
   border-radius: 5px;
@@ -70,7 +70,7 @@
   border: 0.5px solid darkgray;
   border-radius: 0 5px 5px 0;
   margin: auto;
-  background-color: #e98074;
+  background-color: var(--red-main);
   color: white;
   visibility: hidden;
   z-index: 40;

@@ -53,8 +53,10 @@ const SearchRecipesPage: NextPageWithLayout<SearchRecipesPageProps> = ({
   const [fetchedRecipes, setFetchedRecipes] = useState<Recipe[]>(recipes);
 
   const savedRecipeNames = [];
-  for (const recipe of recipes) {
-    savedRecipeNames.push(recipe.name);
+  if (fetchedRecipes) {
+    for (const recipe of fetchedRecipes) {
+      savedRecipeNames.push(recipe.name);
+    }
   }
 
   const router = useRouter();

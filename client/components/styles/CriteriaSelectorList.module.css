@@ -13,6 +13,6 @@
 }
 
 .selected {
-  background-color: #d8c3a5;
-  color: #fdfefe;
+  background-color: var(--sand);
+  color: var(--off-white);
 }

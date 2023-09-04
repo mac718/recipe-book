@@ -8,11 +8,11 @@
   position: fixed;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
   z-index: 30;
-  color: #104210;
+  color: var(--dark-green);
   opacity: 0.9;
 }
 .nav a:visited {
-  color: #104210;
+  color: var(--dark-green);
 }
 .title {
   font-size: 2rem;
