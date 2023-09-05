@@ -57,6 +57,12 @@ const RecipeShow = ({
   const [isSaved, setIsSaved] = useState(saved);
   const router = useRouter();
 
+  prepTimeHours = prepTimeHours ? prepTimeHours : 0;
+  prepTimeMinutes = prepTimeMinutes ? prepTimeMinutes : 0;
+
+  cookTimeHours = cookTimeHours ? cookTimeHours : 0;
+  cookTimeMinutes = cookTimeMinutes ? cookTimeMinutes : 0;
+
   let directionListItems: JSX.Element[] = [];
   let ingredientsListItems: JSX.Element[] = [];
 

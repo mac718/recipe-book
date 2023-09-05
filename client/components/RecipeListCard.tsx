@@ -15,6 +15,11 @@ const RecipeListCard = ({
   onOpenDeleteWarning,
   onOpenEditForm,
 }: RecipeListCardProps) => {
+  recipe.prepTimeHours = recipe.prepTimeHours ? recipe.prepTimeHours : 0;
+  recipe.prepTimeMinutes = recipe.prepTimeMinutes ? recipe.prepTimeMinutes : 0;
+
+  recipe.cookTimeHours = recipe.cookTimeHours ? recipe.cookTimeHours : 0;
+  recipe.cookTimeMinutes = recipe.cookTimeMinutes ? recipe.cookTimeMinutes : 0;
   return (
     <>
       <div className={styles.card}>
@@ -23,7 +28,7 @@ const RecipeListCard = ({
             <div className={styles.overlay}>
               <div className={styles["overlay-name"]}>{recipe.name}</div>
               <div className={styles["overlay-cooktime"]}>
-                {recipe.cookTimeHours}
+                {recipe.cookTimeHours} hours {recipe.cookTimeMinutes} minutes
               </div>
             </div>
           </Link>

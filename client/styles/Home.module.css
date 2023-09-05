@@ -48,27 +48,34 @@
   position: relative;
   display: flex;
   width: 100%;
+  background-color: var(--off-white);
 }
 
 .left,
 .right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   flex: 1;
   transition: all ease-in 1s;
   position: relative;
   overflow: hidden;
   opacity: 0;
+  height: 400px;
 }
 
 .left {
-  height: 100px;
   transform: translateX(-150%);
-  background-color: red;
 }
 
 .right {
-  height: 100px;
   transform: translateX(150%);
-  background-color: blue;
+}
+
+.left-inner,
+.right-inner {
+  width: 90%;
+  height: 90%;
 }
 
 .slideIn {

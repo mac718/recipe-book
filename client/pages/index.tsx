@@ -3,6 +3,7 @@ import styles from "@component/styles/Home.module.css";
 import { FcGoogle } from "react-icons/fc";
 import { GiNotebook } from "react-icons/gi";
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 type HomeProps = {
   onCloseSpinner: () => void;
@@ -61,8 +62,26 @@ export default function Home({ onCloseSpinner }: HomeProps) {
         </div>
       </section>
       <div className={styles.features} ref={ref}>
-        <div className={styles.left}>left</div>
-        <div className={styles.right}>right</div>
+        <div className={styles.left}>
+          <div className={styles["left-inner"]}>
+            <Image
+              src={"/recipes-grid.png"}
+              alt={"recipes grid"}
+              fill={true}
+              // style={{ objectFit: "cover" }}
+            />
+          </div>
+        </div>
+        <div className={styles.right}>
+          <div className={styles["right-inner"]}>
+            <Image
+              src={"/recipe-show.png"}
+              alt={"recipes grid"}
+              fill={true}
+              //style={{ objectFit: "cover" }}
+            />
+          </div>
+        </div>
       </div>
     </>
   );
