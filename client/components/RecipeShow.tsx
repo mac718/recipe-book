@@ -146,7 +146,9 @@ const RecipeShow = ({
               alt=""
               src={image!}
               style={{ objectFit: "cover" }}
-              fill={true}
+              //fill={true}
+              width={500}
+              height={500}
               priority={true}
             />
           </div>

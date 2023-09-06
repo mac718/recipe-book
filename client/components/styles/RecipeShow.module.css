@@ -9,7 +9,7 @@
   padding: 10px;
   background-color: var(--off-white);
   overflow: scroll;
-  height: 100dvh;
+  height: 100vh;
 }
 
 .recipe-name {
