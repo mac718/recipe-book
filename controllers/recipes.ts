@@ -66,7 +66,7 @@ export const addRecipe = async (req: Request, res: Response) => {
   const result = validationResult(req);
 
   if (!result.isEmpty()) {
-    return res.json({ errors: result.array() });
+    return res.status(400).json({ errors: result.array() });
   }
 
   const user_email = req.user?.google.email;
